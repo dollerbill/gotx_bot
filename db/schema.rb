@@ -69,10 +69,10 @@ ActiveRecord::Schema.define(version: 2023_08_21_030714) do
     t.string "name", null: false
     t.bigint "discord_id"
     t.string "old_discord_name"
-    t.integer "current_points", default: 0
-    t.integer "redeemed_points", default: 0
-    t.integer "earned_points", default: 0
-    t.integer "premium_points", default: 0
+    t.float "current_points", default: 0.0
+    t.float "redeemed_points", default: 0.0
+    t.float "earned_points", default: 0.0
+    t.float "premium_points", default: 0.0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
