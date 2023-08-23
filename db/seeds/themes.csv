@@ -1,0 +1,37 @@
+id,creation_date,title,description
+1,2020-08-01,No theme,
+2,2020-09-01,No theme,
+3,2020-10-01,Spooky,
+4,2020-11-01,Female Protagonist,
+5,2021-01-01,Critically Terrible,
+6,2021-02-01,Love Story / Romance,
+7,2021-03-01,New Life,
+8,2021-04-01,Dinosaurs,
+9,2021-05-01,Romhack,
+10,2021-06-01,Fan Translation,Must not have been released in the West and have a fan translation.
+11,2021-07-01,Rockin' Soundtracks,
+12,2021-08-01,Aquatic Adventures,Games featuring water.
+13,2021-09-01,Spin-off September,Only spin-off titles
+14,2021-10-01,Demonic October,Game must feature demons.
+15,2021-11-01,Vehicular Ventures,Games must heavily feature a vehicle.
+16,2021-12-01,"Ice, Ice, Baby",Games featuring snow or ice.
+17,2022-01-01,Resolutions,Any game you haven't played before may be nominated.
+18,2022-02-01,It Takes Two,Games featuring co-op play.
+19,2022-03-01,Mecha March,"Games featuring robots, mechs, or androids."
+20,2022-04-01,Chill April,Games must not feature violence or combat.
+21,2022-05-01,Mini May,Games must feature small characters in oversized worlds.
+22,2022-06-01,Japan-Only June,Games never released in western markets.
+23,2022-07-01,Defunct Developer,Games with developers no longer in business or writing games.
+24,2022-08-01,Another Chance August,games must have been nominated before (but haven't won).
+25,2022-09-01,Sword and Shield September,Main character must use both a sword and a shield.
+26,2022-10-01,Spectober,"Games featuring specters, ghosts, or spirits."
+27,2022-11-01,Nighttime November,Games must feature a day night cycle.
+28,2022-12-01,Christmas List,Users post a wish list. Nominations must be from somebody else's wish list.
+29,2023-01-01,"New Year, New GotM",The game you wish to nominate may not be in a series that has already won a GotM!
+30,2023-02-01,Futuristic February,Games must be set in the future (at release) or in a futuristic environment.
+31,2023-03-01,Multimedia March,"The game you wish to nominate must have been another form of media BEFORE it was a video game. TV shows, movies, anime, toys, board games... Get creative and have fun with it!"
+32,2023-04-01,Ancient April,"Basically, the opposite of Futuristic February, the game you wish to nominate must be ""past"" themed. Medieval, cavemen, etc. The newest age you can nominate is 199X, anything beyond that is too new."
+33,2023-05-01,Macbre May,"Spooky season is every season! Basically anything spooky, anything vaguely Halloween-y or otherwise has an undead and/or creepy vibe to it (for the whole game, not just that one area) is fair game this month."
+34,2023-06-01,Judge a Game by its Cover June,The game you wish to nominate must have either AWESOME or AWFUL cover art!
+35,2023-07-01,Joyful July,"The game you wish to nominate must either make you happy when you play it, thanks to its upbeat tone, or otherwise have a happy ending that gives you that warm-fuzzy feeling."
+36,2023-08-01,Ambitious August,The game you wish to nominate must explore multiple genres!

@@ -1,0 +1,29 @@
+default: &default
+  adapter: postgresql
+  encoding: utf8
+  url: <%= ENV['DATABASE_URL'] %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: gotx_bot_development
+
+test:
+  <<: *default
+  database: gotx_bot_test
+
+#
+#   DATABASE_URL="postgres://myuser:mypass@localhost/somedatabase"
+#
+# If the connection URL is provided in the special DATABASE_URL environment
+# variable, Rails will automatically merge its configuration values on top of
+# the values provided in this file. Alternatively, you can specify a connection
+# URL environment variable explicitly:
+#
+#   production:
+#     url: <%= ENV['MY_APP_DATABASE_URL'] %>
+#
+
+production:
+  <<: *default
+  database: gotx_bot
