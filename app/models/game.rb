@@ -5,6 +5,14 @@ class Game < ApplicationRecord
 
   validate :presence_of_title
 
+  def self.current_games
+    {
+      'GotM' => joins(:nominations).merge(Nomination.current_gotm_winners),
+      'RPGotQ' => joins(:nominations).merge(Nomination.current_rpg_winners),
+      'Retro Bit' => joins(:nominations).merge(Nomination.current_retro_winners)
+    }
+  end
+
   def presence_of_title
     return if preferred_name
 

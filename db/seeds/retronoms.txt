@@ -1,0 +1,742 @@
+[
+    {
+        "date": "3/26/2022",
+        "game_description": "Join White Bomberman in a reimagining of his original arcade release as he places bombs to deal with foes and save his creator's daughter from the clutches of Black Bormebrman! A classic puzzle game that's fun for everyone!",
+        "game_id": 766,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "4/2/2022",
+        "game_description": "Everyone remembers this game for the unfitting, but kindly old man on the cover of this epic, frantic, spaceship shoot'em up. Swap between weapons on the fly or sacrifice them ot perform powerful special moves!",
+        "game_id": 767,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "4/9/2022",
+        "game_description": "A homicidal alien race is invading the Earth, and the only thing that stands between them and world domination are a special forces team known as the \"Alien Busters\"! A unique beat'em up with 3PS and shmup style sections!",
+        "game_id": 768,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "4/16/2022",
+        "game_description": "After the success of Samurai Showdown, SNK took another stab at a 2D weapon-based fighter. Though not garnering as much attention as other SNK titles, The Last Blade has become something of a fighting game cult classic.",
+        "game_id": 769,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "4/23/2022",
+        "game_description": "What if Outrun was a futuristic shoot'em up and your car could fly? In Night Striker, take to the skies and streets, blast foes, and at the end of each stage, your path will determine which level you'll see next, and your ending!",
+        "game_id": 770,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "4/30/2022",
+        "game_description": "The first adventrue of the bravest opossum rocket knight: Sparkster! Using your sword and jetpack, dash, boost, and slash your way through a multitude of levels to defeat an evil empire of pigs in this cult classic!",
+        "game_id": 771,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "5/7/2022",
+        "game_description": "What better time to defeat Jason Voorhees? Shift control between 6 camp counselors at Camp Crystal Lake and try to kill Jason... Before he does the same to you! This cryptic puzzle adventure will surely frighten you...",
+        "game_id": 772,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "5/14/2022",
+        "game_description": "Terrorist robots are running rampant! Take control of one of Capcom's familiar faces (or the all-new Simone) and take the fight to them, blasting and attacking while using your motor boots in this unique Dreamcast hidden gem.",
+        "game_id": 773,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "5/21/2022",
+        "game_description": "Dimps' first title, and their first of three attempts to introduce classic Sonic to a new audience with Sonic Adventure-esque flair. Play as Sonic, Tails, Knuckles, or Amy, take down Eggman, and raise a Tiny Chao in between!",
+        "game_id": 774,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "5/28/2022",
+        "game_description": "Pick one of four pilots and take flight in 7 different levels, some of which are presented in random order! Each pilot has their own stats, shot pattern, and bomb, so try them all out until one clicks! There are two sequels on Neo Geo!",
+        "game_id": 775,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "6/4/2022",
+        "game_description": "When the evil baron Morbius captures Princess Eleanor, the wizard Shadax must navigate 250 rooms within the fortress Kastlerock and assemble the six pieces of the Staff of Demnos to defeat him.",
+        "game_id": 776,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "6/11/2022",
+        "game_description": "R.C. pro Am in your pocket! Race across 24 different tracks, grabbing upgrades, powerups, and the letters to spell NINTENDO so you can upgrade your R.C. car to the next racing class and win the Nintendo Champion cup!",
+        "game_id": 777,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "6/18/2022",
+        "game_description": "Engage in thrilling, over-the-shoulder swordplay, timing your dodging and blocking while countering with strikes of your own! Multiple pathways and an intuitive, yet complex combat system offers plenty of replay value!",
+        "game_id": 778,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "6/25/2022",
+        "game_description": "Team up as SD (super deformed) versions of various characters from Banpresto's Compati Hero series, featuring a crossover between Kamen Rider, Ultraman, Metal Hero, and Gundam as you fight to save Emi!",
+        "game_id": 779,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "7/2/2022",
+        "game_description": "This Turbografx-16/PC Engine-exclusive shoot'em up takes you through 6 stages. The twist here is that your powerups count as your hit points; take some damage and instead of dying, you'll only lose a powerup.",
+        "game_id": 780,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "7/9/2022",
+        "game_description": "Take control of Alisia in a quest to avenge her father and save the world. Alisia can summon lightning from her hands, but must charge it fro maximum effect. Luckily, she has 4 swappable monster allies to watch her back!",
+        "game_id": 781,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "7/16/2022",
+        "game_description": "Capcoms first in-house polygonal fighter, Star Gladiator is like Soul Calibur with a futuristic aesthetic. Learn how to do Plasma Reverses, Plasma Reflects, and Plasma Combos to defeat the evil Bilstein!",
+        "game_id": 782,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "7/23/2022",
+        "game_description": "An unlicensed puzzle game published by American Video Entertainment Inc, Krazy Kreatures has you klearing kreatures by matching them in rows, kolumns, or diagonals by 3 or more. Simple to learn and great with a friend!",
+        "game_id": 783,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "7/30/2022",
+        "game_description": "Really \"use your head\" as Hudonsosoft's caveman mascot Bonk to headbutt, bounce, and just get really angry through a plethora of stages. Make sure you don't play NES port; levels have been cut and shuffled for a lesser experience.",
+        "game_id": 784,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "8/6/2022",
+        "game_description": "A key title in the \"cute'em up\" genre, Cotton follows the eponymous with as she saves a magical world from a dark mist... In exchange for her favorite candy, of course. Blast foes, cast spells, and get help from fairy allies!",
+        "game_id": 785,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "8/13/2022",
+        "game_description": "Go go Power Rangers! Take control of your favorite Megazord and do battle with other zords and foes from the beloved franchise. Time your special moves carefully to power up and do even more damage!",
+        "game_id": 786,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "8/20/2022",
+        "game_description": "The Genesis remake of the 1986 MSX title, control schoolgirl Yoko Asou as she is begrudgingly fated to protect the three realms. Slide, jump, slash, and upgrade your sword, defeating bosses to utilize their powerful magics.",
+        "game_id": 787,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "8/27/2022",
+        "game_description": "In Radishland, each town has a time key which keeps time flowing regularly. When a bad man shows up and starts stealing time keys, it's up to Zac and Mel and their magic sticks to retrieve the time keys and save Radishland!",
+        "game_id": 788,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "9/3/2022",
+        "game_description": "Oops! Witch Ripple has accidentally released six demons from a forbidden tome and now it's up to her and her two star companions, Topsy and Turvy, to stop them, seal them back into the tome, and save the world!",
+        "game_id": 789,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "9/10/2022",
+        "game_description": "Has sonic finally met his match? Sonic CD introduces Sonic's greatest rival yet: Metal Sonic! The Blue Blur must travel through space and time to try and create a Good Future and to free Little Planet from Robotnik!",
+        "game_id": 790,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "9/17/2022",
+        "game_description": "The demon Balrog has taken over the earth, with the exception of the last human kingdom of Dirzir. When Dirzir's princess is captured, it's up to the four heroes to quest forth and find her in this action adventure arcade RPG!",
+        "game_id": 791,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "9/24/2022",
+        "game_description": "Pick your favorite Digimon from the first 3 seasons of the show and duke it out on a variety of different stages in this Smash Brothers-like platform fighter! Digivolve at opportune times and unleash your special move!",
+        "game_id": 792,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "10/1/2022",
+        "game_description": "Start spooky season off the right way with the #1 horror virtual pinball game: Devil's Crush! With a free scrolling triple-tiered playfield and many bonus rooms, Devil's Crush is one virtual pinball game you won't soon forget!",
+        "game_id": 793,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "10/8/2022",
+        "game_description": "When Rick and his girlfriend Jennifer are trapped inside the infamous Splatterhouse, Rick meets his end while Jennifer is taken away. Resurrected by the Terror Mask, Rick begins a violent, gruesome quest.",
+        "game_id": 794,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "10/15/2022",
+        "game_description": "15 years after the events of Castlevania: The Adventure, Dracula kidnaps Christopher Belmont's son Soleil. Featuring a level select system, Chris must head out to stop Dracula once again.",
+        "game_id": 795,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "10/22/2022",
+        "game_description": "Those slimy Sardinis! Tehy think they got the last laugh on Polterguy by selling him a janky skateboard, but he's gonna have th elast laugh! Possess objects around the Sardini's homes and really teach them a lesson!",
+        "game_id": 796,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "10/29/2022",
+        "game_description": "THE premier horror-themed 2D fighting game! As any number of classic montsers, stop the evil alien Pyron on his quest to devour Earth. Humankind stands no chance, so now it's up to the monsters to step up!",
+        "game_id": 797,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "11/5/2022",
+        "game_description": "Reborn as a cyborg ninja, Hagane must take revenge on an enemy ninja clan. With four different weapons to swap through, air-dashes, wall-clings, and more, Hagane has all the tools he needs at his disposal.",
+        "game_id": 798,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "11/12/2022",
+        "game_description": "Love Metal Slug? How about some Metal Slug in your pocket! This tiny Metal Slug features all the things you know and love about the popular run'n gun franchise, turned tiny! Find powerups, multiple paths, and pilot machines!",
+        "game_id": 799,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "11/19/2022",
+        "game_description": "The follow-up to Pulstar, Blazing star improves on the shoot'em up formula by offering combos the player can pull off by mashing the B button during a powered up shot. Collect powerups and try different machines!",
+        "game_id": 800,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "11/26/2022",
+        "game_description": "When the princess of the dream land is kidnapped, it's up to you to save her. Tapir will let you choose any form in your dream, so create a character and use each part's unique strengths to save the princess!",
+        "game_id": 801,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "12/3/2022",
+        "game_description": "When the twin princesses are captured, it's up to Nick and Tom to use their snowy powers to save the day! In this Bubble Bobble-like, defeat enemies by turning them into sonwballs, then rolling them into each other!",
+        "game_id": 802,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "12/10/2022",
+        "game_description": "When Santa's elves go on strike due to overworking for high demands of Christmas toys, Santa has to find a way to whip them back into shape! The elves may be on strike, but Santa will get a few strikes of his own!",
+        "game_id": 803,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "12/17/2022",
+        "game_description": "When Santa gets zapped and kidnapped by an evil witch, it's up to little Nick to find the missing presents, defeat the witch, and rescue everyone's favorite Claus. If this won't get you int othe holiday spirit, nothing will.",
+        "game_id": 804,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "12/24/2022",
+        "game_description": "One day, Kickle wakes up to find his entire homeland, the Fantasy Kingdom, has been turned to ice by the evil Wicked Wizard King. With Kickle's ice breath attack, he sets out to collect the red Dream Bags and save the day!",
+        "game_id": 805,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "12/31/2022",
+        "game_description": "Unholy Night: The Darkness Hunter is a fighting game created by former members of SNK. When they failed to meet their kickstarter goal, Retroism stepped in to publish it and give this retro 2D fighter a chance.",
+        "game_id": 806,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "1/7/2023",
+        "game_description": "The first of the Game Boy TMNT games, take control of the turtles to defeat TMNT villains such as Bebop, Rocksteady, Baxter Stockman, Shredder, and Krang, on a quest ot rescue April O'Neil.",
+        "game_id": 807,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "1/14/2023",
+        "game_description": "Choose one of eight characters, each with their own special weapon, then pick one of three paths to take the fight to the Bloody Scorpions terrorist group who have a deadly plot to steal a drug capable of creating supersoldiers.",
+        "game_id": 808,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "1/21/2023",
+        "game_description": "Leave it to Lammy! In this sequel/spiritual successor to PaRappa the Rapper, take control of anxiety-ridden guitarist Lammy of band Milk Can as she tries to make it to her shouw, but not before a TON of shenanigans!",
+        "game_id": 809,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "1/28/2023",
+        "game_description": "When the climate control system on SD island went haywire, evil creatures started appearing. V3, Taro, and Knight Gundam went out to investigate but never returned... Can Rider 1, Ultraman, and Gundam save the day?",
+        "game_id": 810,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "2/4/2023",
+        "game_description": "The original run'n gun that all others nstrive for! Take control of Lance or Bill and take out the evil Red Falcon Organization's secret island base! Don't forget your Konami Code; you might need those extra 30 lives!",
+        "game_id": 811,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "2/11/2023",
+        "game_description": "The sequel to Balloon Fight, take control of Alice on a journey to save the hero of Balloon Fight, complete with stages, bosses, and the ability to detach your balloons and inflate new ones! Go, Balloon Kid!",
+        "game_id": 812,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "2/18/2023",
+        "game_description": "Wark! Now's your chance to race with classic Squaresoft characters! Play the story mode and hepl Chocobo as he tries to win the pieces of the legendary Blue Crystal from the other racers. Kweh!",
+        "game_id": 813,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "2/25/2023",
+        "game_description": "Fly through 6 stages in this cute'em up based on the manga of the same name. Taruruuto-kun has a tendency to turn objects into sentient creatures, so you'll have to fix his mistakes! Get some powerups and blast away!",
+        "game_id": 814,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "3/4/2023",
+        "game_description": "Take control of the Prince, Fairy, or Dragon and quest across the land to find the three keys so you can prevent the King of Darkness from resurrecting an ancient demon. Beat montsers, level up, save the world!",
+        "game_id": 815,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "3/11/2023",
+        "game_description": "The evil witch Morticia has trapped Spanky in a tower guarded by her magical fruit minions! Use your wits and balls from various sports to defeat enemies, collect keys, battle Morticia, and escape her tower!",
+        "game_id": 816,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "3/18/2023",
+        "game_description": "This just in: Aliens are invading Earth and forcing Earthlings to... Dance? Stay tuned to Space Channel 5 to find out all of developments, featuring our star reporter: Ulala! She'll dance to save the day!",
+        "game_id": 817,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "3/25/2023",
+        "game_description": "In the 1930s, ships sailing near the Bahamas have been mysteriously going missing. The U.S. Marines send out a search party and discover Greenhell Isle, populated by dinosaurs, long though to be extinct! Well, they will be!",
+        "game_id": 818,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "4/1/2023",
+        "game_description": "Well, looks like Robotnik is back at it again. Having collected all of the Chaos Emeralds, he's out to create some sort of nuclear weaponry and it's up to our old friends Sonic and Miles \"Tails\" Prower to take care of him once more.",
+        "game_id": 819,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "4/8/2023",
+        "game_description": "Experience the Last Blade in the palm of your hand, then put it in your pocket! In this Neo Geo Pokcet Color rendition of The Last Blade, complete story mode and collect endings and gallery scrolls fro some nice replay value.",
+        "game_id": 820,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "4/15/2023",
+        "game_description": "Deadeus centers around a small boy who has a prophetic nightmare telling him everyone will die in 3 days and that he has to investigate his village to see how he can save them, if at all. Deadeus has 11 endings and no direct path.",
+        "game_id": 821,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "4/22/2023",
+        "game_description": "Grab your broom and take to the skies in this cute'em up! Features powerups and the ability to throw and swing your broom to block projectiles, as well as seamlessly transitioning from flying to run and gun style segments!",
+        "game_id": 822,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "4/29/2023",
+        "game_description": "Oh no! Penny has been kidnapped by Dr. Claw and his MAD soldiers! Good thing Gadget is on the case! Use a wide variety of gadgets to tackle platforming challenges in a plethora of interesting and unique ways!",
+        "game_id": 823,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "5/6/2023",
+        "game_description": "When Ryan's girlfriend Cyndi is kidnapped by local gang leader Slick, it's up to Ryan and his friend Alex to beat up the thugs and save her! Features RPG elements, like increasing your stats by buing items and learning new attacks!",
+        "game_id": 824,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "5/13/2023",
+        "game_description": "Winners don't use drugs! As Max Force and Hit Man, take teh war on drugs to the streets as you attempt to bust king pin Mr. Big and his plethora of drug selling lackies! Pakcing a rifle and missile launcher, just say NO!",
+        "game_id": 825,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "5/20/2023",
+        "game_description": "Follow a hacker's journey into a malfunctioning AI as you blast enemies to the musical beats. The game was designed to emulate synesthesia and share its story via minimal dialogue and instead through thematic references to life.",
+        "game_id": 826,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "5/27/2023",
+        "game_description": "Control Nova and his powerful boomerangs through action-platforming challenges reminiscent of Mega Man! Nova can throw his boomerangs in 8 directions, power them up to fly farther, and throw more!",
+        "game_id": 827,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "6/3/2023",
+        "game_description": "Take control of one of 13 King of Fighters characters, in chibi-style of coures, and go punch Geese Howard in his little chibi face! As is true of all the NGPC figthers, you can expect smooth controls and solid sprite work.",
+        "game_id": 828,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "6/10/2023",
+        "game_description": "It's time for the Great Ragtime Show! Pilot a biplane with a giant hook attached to grab items, deal damage, and drop bombs on foes! A unique and fun shoot'em up with a World War I mixed with steampun aesthetic.",
+        "game_id": 829,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "6/17/2023",
+        "game_description": "The Legend of Zelda meets Disney? Capcom created an amazing multiplayer, Zelda-like experience here, don't let the licencsing fool you! As Max or Goofy, use various tools like grappling hooks to solve puzzles and defeat Pete and his crew!",
+        "game_id": 830,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "6/24/2023",
+        "game_description": "Based on the manga and anime series Ghost Sweeper Mikami, take control of Reiki, the exorcist with the  \"Nice Body,\" and take on all sorts of ghosts and ghoullies with your magically charged baton! No translation available.",
+        "game_id": 831,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "7/1/2023",
+        "game_description": "In this unique fighter, control a fighter flying within a 3D psychic field. Fly around to dodge psychic blasts and answer with attacks of your own, or dash in and get up close and personal with combo attacks!",
+        "game_id": 832,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "7/8/2023",
+        "game_description": "Pilot a mech that can transform into a fighter jet in this unique 3D action game. Hidden across each level is a navigator who will guide you to your mission objectives and provide support, as well as alter your ending!",
+        "game_id": 833,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "7/15/2023",
+        "game_description": "Part of the notoriously reskinned Crazy Castle series, join Kid Klown in an effort to defeat the evil Night Mayor after he klownnaps your family! Use balloons as projectiles and to assist you in platforming challenges.",
+        "game_id": 834,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "7/22/2023",
+        "game_description": "Take control of an attack helicopter in this military-themed shoot'em upShoot down foes to obtain powerups and bombs, including multiple shot types, and fly in lower to get up clos and personal with some powerful foes.",
+        "game_id": 835,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "7/29/2023",
+        "game_description": "A game in both the Bomberman and Blaster Master frinheses, Blaster Master Boy/Jr., a direct sequel to RoboWarrior, has players controlling Jason from Bsatre Master as he exploes dungeons and bombs obstacles.",
+        "game_id": 836,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "8/5/2023",
+        "game_description": "Eight travelling fighters brought together by a common destiny, now meet at the Battle Arena Toshinden... A PS1 classic fighter criically acclaimed in its time, but... Does its legacy still hold up? You decide!",
+        "game_id": 837,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "8/12/2023",
+        "game_description": "CYBER-LIP! So much more than \"Contra at home,\" Cyber-Lip is a solid, futuristic run 'n gun for Neo Geo that many missed out on due to its platform. Fun solo or with a friend, collect weapons and fire while hanging!",
+        "game_id": 838,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "8/19/2023",
+        "game_description": "Based on the hit 1986 game show of the same name, Double Dare has players competing in a plethora of physical challenges and answering trivia questions in an effort to challenge the Double Dare obstacle course and win big prizes!",
+        "game_id": 347,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    }
+]
