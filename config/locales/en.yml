@@ -30,4 +30,16 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  date:
+    formats:
+      month_year: '%B %Y'
+
+  nominations:
+    missing: '%{search} has not been a GotX game. Nominate it if you want to see it win!'
+    won: '%{game} won %{type} in %{date}.'
+    lost: "%{game} was nominated for %{type} in %{date}, but didn't win."
+    retro: '%{game} was a Retrobit game starting the week of %{date}.'
+    completed:
+      gotm: "has completed %{game} and been awarded 1 point! They now have %{points} total points."
+      retro: "has completed %{game} and been awarded half a point! They now have %{points} total points."
+      rpg: "has completed %{game} and been awarded 3 points! They now have %{points} total points."

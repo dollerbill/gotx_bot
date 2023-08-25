@@ -1,15 +1,10 @@
 # frozen_string_literal: true
 
-Dir[Rails.root.join('app/bot/commands/*')].each { |file| require_relative file }
+Dir[Rails.root.join('app/gotx/**/*.rb')].each { |file| require_relative file }
 
-MODULES = [GotxCommands].freeze
+MODULES = [Gotx::Commands].freeze
 
-bot = Discordrb::Commands::CommandBot.new(
-  token: ENV['DISCORD_TOKEN'],
-  client_id: ENV['DISCORD_CLIENT_ID'],
-  intents: %i[server_messages direct_messages],
-  prefix: '/'
-)
+bot = Gotx::Bot.initialize_bot
 
 bot.ready do
   puts 'Bot is ready!'
@@ -21,9 +16,6 @@ end
 
 ActiveRecord::Base.connection.execute('SELECT set_limit(0.6);')
 
-MODULES.each do |mod|
-  mod.register_application_commands(bot)
-  bot.include! mod
-end
+MODULES.each { |mod| bot.include! mod }
 
 bot.run :async

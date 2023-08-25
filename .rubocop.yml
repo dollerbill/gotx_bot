@@ -1,0 +1,10 @@
+AllCops:
+  Exclude:
+    - 'db/**/*.rb'
+    - 'bin/*'
+
+Style/Documentation:
+  Enabled: false
+
+Style/LambdaCall:
+  Enabled: false
