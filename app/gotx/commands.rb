@@ -4,6 +4,7 @@ module Gotx
   module Commands
     extend Discordrb::Commands::CommandContainer
     extend Discordrb::EventContainer
+    DEV_CHANNEL_ID = ENV['DEV_CHANNEL_ID']
 
     application_command(:previous) do |event|
       game = ::Games::FuzzyFind.(event.options['game'])
@@ -63,6 +64,29 @@ module Gotx
           end
         end
       end
+    end
+
+    application_command(:nominate) do |event|
+      member = event.bot.user(event.user)
+      user = ::Users::FindOrCreate.(member)
+      validation = ::Games::ValidateNomination.(event.options.merge!('user_id' => user.id))
+      next event.respond(content: validation, ephemeral: true) if validation
+
+      game_atts = ::Scrapers::Screenscraper.(event.options)
+      game = Game.create!(**game_atts)
+
+      event.respond(content: "#{member.mention} nominated #{game.preferred_name}")
+      event.channel.send_embed do |embed|
+        description = game_atts[:nomination_atts][:description]
+        embed.description = description.length > 300 ? "#{description[..300]}..." : description
+        embed.image = Discordrb::Webhooks::EmbedImage.new(url: game_atts[:img_url])
+      end
+
+    rescue ActiveRecord::RecordInvalid => e
+      event.bot.channel(DEV_CHANNEL_ID).send_message(<<~ERROR)
+        "Error creating GotM nomination from #{member.name}\n#{e.message}\n#{event.options}"
+      ERROR
+      event.respond(content: 'An error occurred submitting your nomination.')
     end
 
     select_menu(custom_id: 'game_complete') do |event|
