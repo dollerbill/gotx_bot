@@ -5,6 +5,8 @@ class Game < ApplicationRecord
 
   validate :presence_of_title
 
+  accepts_nested_attributes_for :nominations
+
   def self.current_games
     {
       'GotM' => joins(:nominations).merge(Nomination.current_gotm_winners),
