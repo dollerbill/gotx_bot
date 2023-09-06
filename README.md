@@ -9,3 +9,4 @@ A simple discord bot to handle Game of the X operations.
 4. `/games` - Returns the list of current GotX games.
 5. `/complete` - Mark a GotX game as having been completed.
 6. `/nominate` - Nominate a game for GotM.
+7. `/membership` - Check and update premium membership status.
