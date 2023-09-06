@@ -4,7 +4,11 @@ module Gotx
   module Commands
     extend Discordrb::Commands::CommandContainer
     extend Discordrb::EventContainer
-    DEV_CHANNEL_ID = ENV['DEV_CHANNEL_ID']
+
+    CHANNELS = {
+      dev: ENV['DEV_CHANNEL_ID'],
+      rank: ENV['RANK_CHANNEL_ID']
+    }.freeze
 
     application_command(:previous) do |event|
       game = ::Games::FuzzyFind.(event.options['game'])
@@ -81,12 +85,62 @@ module Gotx
         embed.description = description.length > 300 ? "#{description[..300]}..." : description
         embed.image = Discordrb::Webhooks::EmbedImage.new(url: game_atts[:img_url])
       end
-
     rescue ActiveRecord::RecordInvalid => e
-      event.bot.channel(DEV_CHANNEL_ID).send_message(<<~ERROR)
+      event.bot.channel(CHANNELS[:dev]).send_message(<<~ERROR)
         "Error creating GotM nomination from #{member.name}\n#{e.message}\n#{event.options}"
       ERROR
       event.respond(content: 'An error occurred submitting your nomination.')
+    end
+
+    application_command(:membership) do |event|
+      member = event.bot.user(event.options['member'])
+      user = ::Users::FindOrCreate.(member)
+      event.respond(content: 'Update premium membership status:') do |_, view|
+        view.row do |r|
+          r.button(label: 'Membership status', style: :secondary, custom_id: "#{user.id}_premium_member_status")
+          r.button(label: 'Remove membership', style: :danger, custom_id: "#{user.id}_update_premium_member_remove")
+          r.button(label: 'Add membership', style: :success, custom_id: "#{user.id}_update_premium_member_add")
+        end
+      end
+    end
+
+    button(custom_id: /\d_premium_member_status/) do |event|
+      user = User.find(event.interaction.button.custom_id.split('_')[0])
+      membership_status = user.premium_subscriber
+      next event.update_message(content: "#{user.name} is not a premium subscriber.") unless membership_status
+
+      event.update_message(content: "#{user.name} is a #{membership_status.capitalize} level subscriber.")
+    end
+
+    button(custom_id: /\d_update_premium_member_/) do |event|
+      atts = event.interaction.button.custom_id.split('_update_premium_member_')
+      user = User.find(atts[0])
+      update = atts[1] == 'add'
+      unless update
+        ::Users::UpdatePremiumStatus.(user, nil)
+        member = event.bot.user(user.discord_id)
+        event.bot.channel(CHANNELS[:rank]).send_message("#{member.mention} is no longer a premeium subscriber.")
+
+        next event.update_message(content: "#{user.display_name} is no longer a premium member.")
+      end
+
+      event.update_message(content: 'Update membership level:') do |_, view|
+        view.row do |row|
+          row.button(label: 'Supporter', style: :danger, custom_id: "#{user.id}_add_premium_membership_supporter")
+          row.button(label: 'Champion', style: :success, custom_id: "#{user.id}_add_premium_membership_champion")
+          row.button(label: 'Legend', style: :primary, custom_id: "#{user.id}_add_premium_membership_legend")
+        end
+      end
+    end
+
+    button(custom_id: /\d_add_premium_membership_/) do |event|
+      atts = event.interaction.button.custom_id.split('_add_premium_membership_')
+      user = User.find(atts[0])
+      status = atts[1]
+      member = event.bot.user(user.discord_id)
+      ::Users::UpdatePremiumStatus.(user, status)
+      event.update_message(content: "#{user.name} has been upgraded to #{status.capitalize} status.")
+      event.bot.channel(CHANNELS[:rank]).send_message("#{member.mention} is now a #{status.capitalize} subscriber.")
     end
 
     select_menu(custom_id: 'game_complete') do |event|

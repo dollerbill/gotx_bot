@@ -12,7 +12,8 @@ CSV.foreach('db/seeds/users.csv', headers: true) do |row|
     id: user['id'],
     name: user['discord_name'] || user['display_name'] || user['discord_name_original'].split(/#\d{4}/)[0],
     old_discord_name: user['discord_name_original'],
-    discord_id: user['discord_id']&.to_i
+    discord_id: user['discord_id']&.to_i,
+    premium_subscriber: user['premium']
   )
 end
 
