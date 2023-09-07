@@ -40,7 +40,8 @@ en:
     lost: "%{game} was nominated for %{type} in %{date}, but didn't win."
     retro: '%{game} was a Retrobit game starting the week of %{date}.'
     closed: 'Nominations are closed, check back at %{time}'
-    existing_nomination: 'You may only nominate one game, try again next month.'
+    existing_game_nomination: '%{game} has already been nominated this month!'
+    existing_user_nomination: 'You may only nominate one game at a time, try again next month.'
     previous_nomination: "%{game} (screenscraper id %{id}) has already won GotM and can't be nominated again."
     completed:
       gotm: "has completed %{game} and been awarded 1 point! They now have %{points} total points."
