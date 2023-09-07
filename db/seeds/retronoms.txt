@@ -738,5 +738,35 @@
         "theme_title": null,
         "user_name": null,
         "is_winner": true
+    },
+    {
+        "date": "8/26/2023",
+        "game_description": "Technically a GBA version of The King of Fighters '99, Neo Blood features a new character as players learn who the mysetrious sponsor of this year's King of Fighters Tournament is and the reason for Iori Yagami's disappearance",
+        "game_id": 877,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "9/02/2023",
+        "game_description": "Long ago, far away in space, there existed a 'Fantasy Zone' where a courageous hero called Opa-Opa (the player) fought in a valiant cause to rescue the 'Fantasy Zone' from its enemies. Collect coins and upgrades!",
+        "game_id": 878,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
+    },
+    {
+        "date": "9/09/2023",
+        "game_description": "In Kirby's debut adventure, venture forth on a quest to defeat King Dedede who has stolen all of Dream Land's food! Kirby can fly and inhale foes and spit them back out as stars, in this fun, quick, easy romp.",
+        "game_id": 879,
+        "nomination_type": 1,
+        "theme_description": null,
+        "theme_title": null,
+        "user_name": null,
+        "is_winner": true
     }
 ]

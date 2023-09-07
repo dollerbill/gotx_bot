@@ -14,6 +14,8 @@ class User < ApplicationRecord
     legend: 'legend'
   }
 
+  validates_uniqueness_of :discord_id, message: 'already exists with this Discord ID', allow_nil: true
+
   def current_completions
     current_ids = Nomination.current_winners.map(&:id)
     completions.where(nomination_id: current_ids)

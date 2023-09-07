@@ -25,7 +25,8 @@ CSV.foreach('db/seeds/themes.csv', headers: true) do |row|
     id: theme['id'],
     creation_date: theme['creation_date'],
     title: theme['title'],
-    description: theme['description']&.gsub('"', '')
+    description: theme['description']&.gsub('"', ''),
+    nomination_type: theme['type']
   )
 end
 
@@ -62,8 +63,10 @@ CSV.foreach('db/seeds/nominations.csv', headers: true) do |row|
            'gotm'
          when '1'
            'retro'
-         else
+           when '2'
            'rpg'
+         else
+           'goty'
          end
 
   if type == 'retro'
@@ -111,11 +114,6 @@ CSV.foreach('db/seeds/completions.csv', headers: true) do |row|
   next unless (user = User.find(completion['user_id'])) && (nomination = Nomination.find(completion['nomination_id']))
 
   Completion.create(user:, nomination:, completed_at: nomination.theme.creation_date)
-end
-
-Theme.all.each do |theme|
-  type = theme.nominations.first&.nomination_type
-  theme.update(nomination_type: type)
 end
 
 ActiveRecord::Base.connection.reset_pk_sequence!('games')

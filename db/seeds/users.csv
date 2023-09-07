@@ -207,7 +207,7 @@ id,discord_name_original,display_name,discord_name,discord_id,premium
 206,dbunke#3115,dbunke,,631250693881331714,supporter
 207,DeeeConrad#2344,DeeeConrad,,552966401888092161,
 208,denbowski#5628,denbowski,denbowski,219854562616410113,
-209,dmac#0001,dmac,dmac,81277893765763072,
+209,,,,,
 210,Draga#1564,Draga,dragamaroon,281457647247425536,
 211,drainboy#0432,drain,drainboy,104906199094267904,
 212,DrunkenLlama#6666,DrunkenLlama,drunkenllama74,188447091893338112,
@@ -277,44 +277,64 @@ id,discord_name_original,display_name,discord_name,discord_id,premium
 276,seedyz#0,Seedy,seedyz,212750656325287936,
 277,zer0_impedance#0,Zer0,zer0_impedance,446737534597201940,
 278,Yaba Love#5598,,,956273323636043887,
-279,24Block#0535,24Block,24Block,834602534621544478,champion
-280,adixal#6483,adixal,xonglebongle,1068708330538795058,champion
-281,AdmiralGonzoIII#5155,Admiral Gonzo III,admiralgonzoiii,286022490202046464,champion
-282,Gatz#4728,Gatz,darfoo,892961109588475954,legend
-283,Ban675#0675,🐸 Ban 🐸,ban675,91725857306972160,legend
-284,C$#1495,C_wag,c_wag,879535154882826250,supporter
-285,Cadence#0666,Cadence,cadence.rose,234482108402368512,champion
-286,crippnipp#2358,crippnipp,crippnipp,895323610351288350,champion
-287,Empleh_doG#8470,Empleh_doG,Empleh_doG,769955467870076979,champion
-288,VY$E#2138,VY$E,vyse1995,1020422812248326225,legend
-289,garzilla3#0000,Garzilla,garzilla3,390238562563522578,champion
-290,scott.#7978,anarchy inciter scott. (he/him),holaimscott,626242058134487040,supporter
-291,JeffTheSmeff#2171,JeffTheSmeff,jeffthesmeff,225045051640643584,champion
-292,syKro#4685,Joey's Retro Handhelds,joeysretrohandhelds,157841474875162624,supporter
-293,kihnyx#0089,kihnyx,kihnyx,111567092456632320,supporter
-294,kindofabigdyl#8888,Retro Big Dyl,kindofabigdyl,126005036797919232,supporter
-295,lpre30#0136,lpre30,lpre30,528026380361793565,legend
-296,Lulpha#4809,Lulpha,lulpha,150395217181278208,supporter
-297,Caleb2023#7876,Caleb2023,caleb232,1108228493130616973,champion
-298,megadrive#0695,Megadrive,megadrive1,386616491069407241,supporter
-299,MilkyDonut#7277,milky,milky.bread,257677236549713930,legend
-300,MrFaust#9253,MrFaust,the.mrfaust,476950669367181313,legend
-301,mschimen#5230,Revo,mschimen,705471938184871948,champion
-302,theCRAWDADDY#9118,theCRAWDADDY,olecrawdaddyy,134489404134653963,supporter
-303,pelicularities#9068,pelicularities,pelicularities,299000525154811904,legend
-304,pkegg#7827,pkegg,pkegg,439123264334462978,supporter
-305,PMallette#4532,PMallette,pmallette,729904910644281354,supporter
-306,FarGate#9632,FarGate,fargate64,489952541212147725,supporter
-307,gammage0#1517,gammage0,gammage0,384036174202798091,supporter
-308,RetroGameCorps#2918,RetroGameCorps,retrogamecorps,485534021569478656,legend
-309,FannypackMan824#0635,FannypackMan824,rocketman824,958146215248297985,champion
-310,roofpooper#4054,roofpooper,roofpooper,188701650158878720,supporter
-311,SgtDaddy#5876,SgTdAdDy,sgtdaddy,703320052241530943,supporter
-312,Shem (RetroBreeze)#8686,Shem (RetroBreeze),retrobreeze,831485268971618304,legend
-313,SuperSexySoapTurtle#6660,SuperSexySoapTurtle,supersexysoapturtle,237013541998034945,supporter
-314,duarffff_#7764,Stunseed,stunseed____,137961338646429696,champion
-315,Mikhailov1#3937,Team Retrogue,teamretrogue,282646475979227137,champion
-316,TeenieTinyTina#0017,🐷Tina🐷,teenietinytina,107970228293484544,legend
-317,TheAntarctic#3597,TheAntarctic,theantarctic,193482966834348032,legend
-318,Bobby_Vans#2818,CloudReigns,theretrogadgeteer,611741715199688704,supporter
-319,Webnet#8493,Webnet,webnet,181087250547736577,champion
+279,vialde#9627,vialde,vialde,289284219442561024,
+280,GuiSeagal - Oásis Digital#9150,GuiSeagal - Oásis Digital,guiseagal_oasis_digital,378696653038682112,
+281,T0nic#0046,t0nic,t0nic,288093658480115712,
+282,alpha7bravo#2190,alpha7bravo,alpha7bravo,388198049433911297,
+283,Rasputin#9438,Rasputin,rasputin99,276489289242509312,
+284,Ban675#0675,🐸 Ban 🐸,ban675,91725857306972160,legend
+285,Clayby#1900,Clayby,clayby,536720733691314197,
+286,mschimen#5230,Revo,mschimen,705471938184871948,champion
+287,redik_king#6153,redik_king,redik_king,411607904765083648,
+288,Odoyle#5456,odoodle,odoodle,206806417288593408,
+289,kloptops#0674,kloptops,kloptops,449527391157485568,
+290,corey#5654,corey,koolkidkorey,291770970690289664,
+291,AdmiralGonzoIII#5155,Admiral Gonzo III,admiralgonzoiii,286022490202046464,champion
+292,Kantalope#5393,Kantalope,Kantalope,409536752806527007,
+293,jabes#8562,jabes,jabesy,634169934347501569,
+294,sandpaperback#0825,sandpaperback,sandpaperback,312731611789787138,
+295,AnalogNate#3632,AnalogNate,,322915605923758080,
+296,MattHatt#8679,MattHat,matthatt,115747749068144646,
+297,Dubbs64#8146,Dubbs64,dubbs64,728092147986726933,
+298,penguinlad364#0,PenguinLad364,penguinlad364,300086492150235146,
+299,BubbleBottle#5177,SuperBottle,superbottle,354997023394496513,
+300,laserbeans#7359,laserbeans,laserbeans,466378758811549697,
+301,medsouz#4208,medsouz,medsouz,112694322452799488,
+302,24Block#0535,24Block,24Block,834602534621544478,champion
+303,adixal#6483,adixal,xonglebongle,1068708330538795058,champion
+304,Gatz#4728,Gatz,darfoo,892961109588475954,legend
+305,C$#1495,C_wag,c_wag,879535154882826250,supporter
+306,Cadence#0666,Cadence,cadence.rose,234482108402368512,champion
+307,crippnipp#2358,crippnipp,crippnipp,895323610351288350,champion
+308,Empleh_doG#8470,Empleh_doG,Empleh_doG,769955467870076979,champion
+309,VY$E#2138,VY$E,vyse1995,1020422812248326225,legend
+310,garzilla3#0000,Garzilla,garzilla3,390238562563522578,champion
+311,scott.#7978,anarchy inciter scott. (he/him),holaimscott,626242058134487040,supporter
+312,JeffTheSmeff#2171,JeffTheSmeff,jeffthesmeff,225045051640643584,champion
+313,syKro#4685,Joey's Retro Handhelds,joeysretrohandhelds,157841474875162624,supporter
+314,kihnyx#0089,kihnyx,kihnyx,111567092456632320,supporter
+315,kindofabigdyl#8888,Retro Big Dyl,kindofabigdyl,126005036797919232,supporter
+316,lpre30#0136,lpre30,lpre30,528026380361793565,legend
+317,Lulpha#4809,Lulpha,lulpha,150395217181278208,supporter
+318,Caleb2023#7876,Caleb2023,caleb232,1108228493130616973,champion
+319,megadrive#0695,Megadrive,megadrive1,386616491069407241,supporter
+320,MilkyDonut#7277,milky,milky.bread,257677236549713930,legend
+321,MrFaust#9253,MrFaust,the.mrfaust,476950669367181313,legend
+322,theCRAWDADDY#9118,theCRAWDADDY,olecrawdaddyy,134489404134653963,supporter
+323,pelicularities#9068,pelicularities,pelicularities,299000525154811904,legend
+324,pkegg#7827,pkegg,pkegg,439123264334462978,supporter
+325,PMallette#4532,PMallette,pmallette,729904910644281354,supporter
+326,FarGate#9632,FarGate,fargate64,489952541212147725,supporter
+327,gammage0#1517,gammage0,gammage0,384036174202798091,supporter
+328,RetroGameCorps#2918,RetroGameCorps,retrogamecorps,485534021569478656,legend
+329,FannypackMan824#0635,FannypackMan824,rocketman824,958146215248297985,champion
+330,roofpooper#4054,roofpooper,roofpooper,188701650158878720,supporter
+331,SgtDaddy#5876,SgTdAdDy,sgtdaddy,703320052241530943,supporter
+332,Shem (RetroBreeze)#8686,Shem (RetroBreeze),retrobreeze,831485268971618304,legend
+333,SuperSexySoapTurtle#6660,SuperSexySoapTurtle,supersexysoapturtle,237013541998034945,supporter
+334,duarffff_#7764,Stunseed,stunseed____,137961338646429696,champion
+335,Mikhailov1#3937,Team Retrogue,teamretrogue,282646475979227137,champion
+336,TeenieTinyTina#0017,🐷Tina🐷,teenietinytina,107970228293484544,legend
+337,TheAntarctic#3597,TheAntarctic,theantarctic,193482966834348032,legend
+338,Bobby_Vans#2818,CloudReigns,theretrogadgeteer,611741715199688704,supporter
+339,Webnet#8493,Webnet,webnet,181087250547736577,champion
