@@ -35,7 +35,13 @@ id,creation_date,title,description
 34,2023-06-01,Judge a Game by its Cover June,The game you wish to nominate must have either AWESOME or AWFUL cover art!
 35,2023-07-01,Joyful July,"The game you wish to nominate must either make you happy when you play it, thanks to its upbeat tone, or otherwise have a happy ending that gives you that warm-fuzzy feeling."
 36,2023-08-01,Ambitious August,The game you wish to nominate must explore multiple genres!
-37,2023-01-01, RPGotQ 1, First Quarterly RPG for 2023
-38,2023-04-01, RPGotQ 2, Second Quarterly RPG for 2023
-39,2023-07-01, RPGotQ 3, Third Quarterly RPG for 2023
-40,2023-10-01, RPGotQ 4, Fourth Quarterly RPG for 2023
+37,2023-01-01,RPGotQ 1,First Quarterly RPG for 2023
+38,2023-04-01,RPGotQ 2,Second Quarterly RPG for 2023
+39,2023-07-01,RPGotQ 3,Third Quarterly RPG for 2023
+40,2023-10-01,RPGotQ 4,Fourth Quarterly RPG for 2023
+50,2020-12-01,GotY 2020,GotY for 2020
+51,2021-12-01,GotY 2021,GotY for 2021
+52,2022-12-01,GotY 2022,GotY for 2022
+53,2023-12-01,GotY 2023,GotY for 2023
+54,2022-12-01,GotWotY 2022,GotWotY for 2022
+55,2023-12-01,GotWotY 2023,GotWotY for 2023

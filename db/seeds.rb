@@ -62,8 +62,10 @@ CSV.foreach('db/seeds/nominations.csv', headers: true) do |row|
            'gotm'
          when '1'
            'retro'
-         else
+           when '2'
            'rpg'
+         else
+           'goty'
          end
 
   if type == 'retro'
