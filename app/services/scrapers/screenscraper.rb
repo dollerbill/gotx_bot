@@ -2,6 +2,8 @@
 
 module Scrapers
   class Screenscraper
+    class GameNotFound < StandardError; end
+
     DEV_ID = ENV['SCREENSCRAPER_ID']
     DEV_PASS = ENV['SCREENSCRAPER_PASS']
     SS_ID = ENV['SCREENSCRAPER_DEV_ID']
@@ -29,7 +31,7 @@ module Scrapers
     end
 
     def parse_response(response)
-      return if ['API closed', 'Erreur'].any? { |error| response.match?(error) } || response.blank?
+      raise GameNotFound if ['API closed', 'Erreur'].any? { |error| response.match?(error) } || response.blank?
 
       @game = JSON.parse(response)['response']['jeu']
       {
@@ -39,14 +41,14 @@ module Scrapers
         title_world: region_name('wor'),
         title_jp: region_name('jp'),
         title_other: region_name('ss'),
-        year: game['dates'].map { |date| date['text']&.split('-')&.first }&.min,
-        system: game['systeme']['text'],
-        developer: game['developpeur']['text'],
+        year: game['dates']&.map { |date| date['text']&.split('-')&.first }&.min,
+        system: game.dig('systeme', 'text'),
+        developer: game.dig('developpeur', 'text'),
         genre: game['genres']&.first&.dig('noms')&.find { |g| g['langue'] == 'en' }&.dig('text'),
-        img_url: "https://screenscraper.fr/image.php?gameid=#{game['id']}&region=wor&media=ss&maxwidth=640&maxheight=480",
+        img_url: image_url,
         nominations_attributes: [
           {
-            user: atts['user'],
+            user_id: atts['user_id'],
             theme: Theme.current_gotm,
             description: atts['description'] || game['synopsis'].find { |s| s['langue'] == 'en' }&.dig('text')
           }
@@ -59,7 +61,11 @@ module Scrapers
     end
 
     def image_url
-      ['medias'].select { |m| m['type'] == 'ss' }.find { |m| m['region'] == 'en' || m.first }['url']
+      "https://screenscraper.fr/image.php?gameid=#{game['id']}&region=#{region}&media=ss&maxwidth=640&maxheight=480"
+    end
+
+    def region
+      game['medias'].find { |m| m['type'] == 'ss' }['region']
     end
   end
 end

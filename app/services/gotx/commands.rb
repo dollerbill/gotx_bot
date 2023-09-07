@@ -73,23 +73,34 @@ module Gotx
     application_command(:nominate) do |event|
       member = event.bot.user(event.user)
       user = ::Users::FindOrCreate.(member)
-      validation = ::Games::ValidateNomination.(event.options.merge!('user_id' => user.id))
-      next event.respond(content: validation, ephemeral: true) if validation
+      begin
+        validation = ::Games::ValidateNomination.(event.options.merge!('user_id' => user.id))
+        if validation
+          response_message = validation
+        else
+          game_atts = ::Scrapers::Screenscraper.(event.options)
+          game = Game.create!(**game_atts)
+          response_message = "#{member.mention} nominated #{game.preferred_name}"
+        end
+      rescue StandardError => e
+        event.bot.channel(CHANNELS[:dev]).send_message(<<~ERROR)
+          "Error creating GotM nomination from #{member.name}\n#{e}\n#{event.options}"
+        ERROR
+        response_message = 'An error occurred submitting your nomination.'
+      ensure
+        next event.respond(content: response_message, ephemeral: true) unless game
 
-      game_atts = ::Scrapers::Screenscraper.(event.options)
-      game = Game.create!(**game_atts)
-
-      event.respond(content: "#{member.mention} nominated #{game.preferred_name}")
-      event.channel.send_embed do |embed|
-        description = game_atts[:nomination_atts][:description]
-        embed.description = description.length > 300 ? "#{description[..300]}..." : description
-        embed.image = Discordrb::Webhooks::EmbedImage.new(url: game_atts[:img_url])
+        event.respond(content: response_message)
+        event.channel.send_embed do |embed|
+          description = ":video_game: #{game.preferred_name}\n"
+          description += ":calendar_spiral: #{game.year}\n" if game.year
+          description += ":office: #{game.developer}\n" if game.developer
+          description += ":joystick: #{game.system}\n" if game.system
+          description += game_atts[:nominations_attributes][0][:description].truncate(200, separator: ' ')
+          embed.description = description
+          embed.image = Discordrb::Webhooks::EmbedImage.new(url: game_atts[:img_url])
+        end
       end
-    rescue ActiveRecord::RecordInvalid => e
-      event.bot.channel(CHANNELS[:dev]).send_message(<<~ERROR)
-        "Error creating GotM nomination from #{member.name}\n#{e.message}\n#{event.options}"
-      ERROR
-      event.respond(content: 'An error occurred submitting your nomination.')
     end
 
     application_command(:membership) do |event|
