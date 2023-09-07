@@ -13,6 +13,7 @@ class Theme < ApplicationRecord
   enum nomination_type: {
     gotm: 'gotm',
     rpg: 'rpg',
-    retro: 'retro'
+    retro: 'retro',
+    goty: 'goty'
   }
 end

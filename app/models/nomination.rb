@@ -21,7 +21,8 @@ class Nomination < ApplicationRecord
   enum nomination_type: {
     gotm: 'gotm',
     rpg: 'rpg',
-    retro: 'retro'
+    retro: 'retro',
+    goty: 'goty'
   }
 
   def self.current_time
