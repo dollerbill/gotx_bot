@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+<div class="card text-center">
+  <div class="card-header">
+    <h2><%= @game.preferred_name %></h2>
+  </div>
+<div class="row">
+  <div class="col"></div>
+  <div class="col" style="text-align: left">
+  <img class="card-img-top mx-auto d-block" src="<%= @game.img_url %>" alt="Screenshot" style="width: 480px;">
+  <div class="card-body">
+    <%= lazy_render(@game.title_usa, "USA Title") %>
+    <%= lazy_render(@game.title_eu, "European Title") %>
+    <%= lazy_render(@game.title_jp, "Japanese Title") %>
+    <%= lazy_render(@game.title_world, "World Title") %>
+    <%= lazy_render(@game.title_other, "Alternate Title") %>
+    <%= lazy_render(@game.year, 'Year') %>
+    <%= lazy_render(@game.system, 'System') %>
+    <%= lazy_render(@game.developer, 'Developer') %>
+    <%= lazy_render(@game.genre, 'Genre') %>
+    <%= lazy_hltb(@game.time_to_beat, 'Time to Beat') %>
+    <%= lazy_render(@game.screenscraper_id, 'ScreenScraper.fr Game ID') %>
+  </div>
+  </div>
+  <div class="col"></div>
+</div>
+  <div class="card-footer text-muted">
+    <%= link_to 'Edit', edit_game_path(@game) %> |
+    <%= link_to 'Back', games_path %>
+  </div>
+</div>

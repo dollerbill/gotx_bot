@@ -4,7 +4,8 @@ class Nomination < ApplicationRecord
   NOMINATION_TYPE_NAMES = {
     'gotm' => 'GotM',
     'rpg' => 'RPGotQ',
-    'retro' => 'RetroBits'
+    'retro' => 'RetroBits',
+    'goty' => 'GotY'
   }.freeze
 
   belongs_to :game
@@ -31,6 +32,10 @@ class Nomination < ApplicationRecord
 
   def self.nominations_open
     current_time.change(day: 17, hour: 20, min: 0, sec: 0)
+  end
+
+  def self.nominations_open_est
+    in_est_zone(nominations_open)
   end
 
   def self.nominations_close

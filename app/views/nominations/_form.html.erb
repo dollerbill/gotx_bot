@@ -1,0 +1,28 @@
+<%= form_with(model: nomination) do |form| %>
+  <% if nomination.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(nomination.errors.count, "error") %> prohibited this nomination from being saved:</h2>
+
+      <ul>
+        <% nomination.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :nomination_type %><br>
+    <%= form.select :nomination_type, %w[gotm retro rpg goty]%>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %><br>
+    <%= form.text_area :description %>
+  </div>
+
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
