@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Themes</h1>
+<%= link_to 'Create New Theme', new_theme_path, class: 'btn btn-outline-primary my-2 my-sm-0' %>
+<br>
+<br>
+
+<%= form_with url: themes_path, method: :get, local: true, class: 'form-inline' do |f| %>
+  <%= text_field_tag :search, params[:search], class: 'form-control mr-sm-2', placeholder: 'Search by title' %>
+  <%= f.submit 'Search', class: 'btn btn-outline-primary my-2 my-sm-0' %>
+<% end %>
+
+<table class="table tables-striped table-hover">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @themes.each do |theme| %>
+      <tr>
+        <td><%= link_to theme.title, theme %></td>
+        <td><%= link_to 'Edit', edit_theme_path(theme) %></td>
+        <td><%= link_to 'Delete', theme, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate @themes %>

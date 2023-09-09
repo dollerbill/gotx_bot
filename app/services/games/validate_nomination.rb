@@ -13,7 +13,7 @@ module Games
     end
 
     def call
-      return I18n.t('nominations.closed', time: Nomination.nominations_open) unless Nomination.open?
+      return I18n.t('nominations.closed', time: Nomination.nominations_open_est) unless Nomination.open?
       return I18n.t('nominations.existing_user_nomination') if user_already_nominated?
       return I18n.t('nominations.existing_game_nomination', game: @game.preferred_name) if game_already_nominated?
       return unless previously_won?

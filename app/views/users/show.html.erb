@@ -1,0 +1,92 @@
+<p id="notice"><%= notice %></p>
+
+<div class="card">
+  <div class="card-header">
+    <h2><%= @user.name %></h2>
+    <%= lazy_render(@user.premium_subscriber&.capitalize, 'Subscription level') %>
+  </div>
+  <div class="card-body">
+
+    <h3 class="card-title">GotX Points</h3>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        <table class="table table-striped table-hover">
+          <tbody>
+          <% %w[current_points redeemed_points earned_points premium_points].each do |points| %>
+          <tr>
+            <td><%= points.humanize %></td>
+            <td><%= @user.public_send(points) %></td>
+          </tr>
+          <% end %>
+          </tbody>
+        </table>
+
+        <%= form_with url: redeem_points_user_path(@user), method: :post, local: true, class: 'form-inline' do |f| %>
+          <%= text_field_tag :points, params[:points], class: 'form-control mr-sm-2', placeholder: 'Redeem GotX Points' %>
+          <%= f.submit 'Redeem', class: 'btn btn-outline-primary my-2 my-sm-0' %>
+        <% end %>
+      </li>
+
+      <li class="list-group-item">
+        <% if @completions.any? %>
+          <h3>Completed Games</h3>
+          <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+              <th scope="col">Title</th>
+              <th scope="col">System</th>
+              <th scope="col">Completed At</th>
+              <th scope="col">Theme</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @completions.each do |completion| %>
+              <tr>
+                <td><%= link_to completion.nomination.game.preferred_name, completion.nomination.game %></td>
+                <td><%= completion.nomination.game.system %></td>
+                <td><%= in_est_zone(completion.nomination.created_at) %></td>
+                <td><%= completion.nomination.theme.title %></td>
+              </tr>
+            <% end %>
+
+            </tbody>
+          </table>
+      <%= paginate @completions %>
+      <% end %>
+      </li>
+
+      <li class="list-group-item">
+        <% if @nominations.any? %>
+          <h3>Nominated Games</h3>
+          <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+              <th scope="col">Title</th>
+              <th scope="col">System</th>
+              <th scope="col">Nominated</th>
+              <th scope="col">Theme</th>
+              <th scope="col">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @nominations.each do |nomination| %>
+              <tr>
+                <td><%= link_to nomination.game.preferred_name, nomination.game %></td>
+                <td><%= nomination.game.system %></td>
+                <td><%= nomination.theme.creation_date %></td>
+                <td><%= nomination.theme.title %></td>
+                <td><%= nomination.winner? ? 'Won' : 'Did not win' %></td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+          <%= paginate @nominations %>
+        <% end %>
+      </li>
+    </ul>
+  </div>
+  <div class="card-footer text-muted">
+    <%= link_to 'Edit', edit_user_path(@user) %> |
+    <%= link_to 'Back', users_path %>
+  </div>
+</div>

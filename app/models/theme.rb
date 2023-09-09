@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Theme < ApplicationRecord
+  before_create :set_retrobit_template
+
   has_many :nominations
 
   scope :current_month, lambda {
@@ -16,4 +18,12 @@ class Theme < ApplicationRecord
     retro: 'retro',
     goty: 'goty'
   }
+
+  def set_retrobit_template
+    date = Date.today
+    self.creation_date ||= date
+    self.title ||= "Retro Bits #{date}"
+    self.description ||= "Retro Bits Theme - #{date.cweek.ordinalize} week of #{date.year}"
+    self.nomination_type ||= 'retro'
+  end
 end

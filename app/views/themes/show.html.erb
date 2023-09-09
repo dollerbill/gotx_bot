@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+<div class="card text-center">
+  <div class="card-header">
+    <h2><%= @theme.title %></h2>
+  </div>
+  <div class="row">
+    <div class="col"></div>
+    <div class="col" style="text-align: left">
+      <div class="card-body">
+        <%= lazy_render(@theme.description, 'Description') %>
+        <p><strong>Creation Date:</strong> <%= @theme.creation_date %></p>
+
+        <strong>Winning games:</strong>
+        <br>
+        <% @theme.nominations.winners.map do |nomination| %>
+          <%= link_to nomination.game.preferred_name, nomination.game %> <br>
+        <% end %>
+      </div>
+    </div>
+    <div class="col"></div>
+  </div>
+  <div class="card-footer text-muted">
+    <%= link_to 'Edit', edit_theme_path(@theme) %> |
+    <%= link_to 'Back', themes_path %>
+  </div>
+</div>
