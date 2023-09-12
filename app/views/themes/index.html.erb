@@ -13,7 +13,8 @@
 <table class="table tables-striped table-hover">
   <thead>
     <tr>
-      <th scope="col"></th>
+    <th scope="col"></th>
+    <th scope="col"></th>
     </tr>
   </thead>
 
@@ -22,7 +23,6 @@
       <tr>
         <td><%= link_to theme.title, theme %></td>
         <td><%= link_to 'Edit', edit_theme_path(theme) %></td>
-        <td><%= link_to 'Delete', theme, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

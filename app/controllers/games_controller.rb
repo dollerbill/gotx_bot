@@ -43,7 +43,10 @@ class GamesController < ApplicationController
   end
 
   def game_params
-    params.fetch(:game, {})
+    params.require(:game)
+          .permit(
+            :title_usa, :title_world, :title_eu, :title_other, :title_jp, :time_to_beat, :genre, :developer, :year, :system
+          )
   end
 
   def screenscraper_params

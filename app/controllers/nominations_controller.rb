@@ -61,6 +61,7 @@ class NominationsController < ApplicationController
     end
   end
 
+  # TODO: delete
   def new_rpg
     @nomination = Nomination.new(nomination_type: 'RPG')
     render 'new_rpg'
@@ -78,6 +79,6 @@ class NominationsController < ApplicationController
   end
 
   def nomination_params
-    params.fetch(:nomination, {})
+    params.require(:nomination).permit(:description, :winner, :nomination_type)
   end
 end
