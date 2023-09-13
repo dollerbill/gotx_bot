@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Gotx
   class Bot
     SERVER = { server_id: ENV['DISCORD_SERVER_ID'] }.freeze

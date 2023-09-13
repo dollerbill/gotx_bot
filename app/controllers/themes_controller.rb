@@ -23,26 +23,18 @@ class ThemesController < ApplicationController
   def create
     @theme = Theme.new(theme_params)
 
-    respond_to do |format|
-      if @theme.save
-        format.html { redirect_to theme_url(@theme), notice: 'Theme was successfully created.' }
-        format.json { render :show, status: :created, location: @theme }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @theme.errors, status: :unprocessable_entity }
-      end
+    if @theme.save
+      redirect_to theme_url(@theme), notice: 'Theme was successfully created.'
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   def update
-    respond_to do |format|
-      if @theme.update(theme_params)
-        format.html { redirect_to theme_url(@theme), notice: 'Theme was successfully updated.' }
-        format.json { render :show, status: :ok, location: @theme }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @theme.errors, status: :unprocessable_entity }
-      end
+    if @theme.update(theme_params)
+      redirect_to theme_url(@theme), notice: 'Theme was successfully updated.'
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -53,6 +45,6 @@ class ThemesController < ApplicationController
   end
 
   def theme_params
-    params.require(:theme).permit(:title, :description, :creation_date)
+    params.require(:theme).permit(:title, :description, :creation_date, :nomination_type)
   end
 end

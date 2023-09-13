@@ -19,20 +19,26 @@ class GamesController < ApplicationController
   def create_weekly_retrobit
     game_atts = ::Scrapers::Screenscraper.(screenscraper_params.merge('user_id' => 12))
     game_atts[:nominations_attributes][0][:theme] = Theme.create!
+    game_atts[:nominations_attributes][0][:nomination_type] = 'retro'
     @game = Game.create!(game_atts)
 
     redirect_to game_url(@game), notice: 'RetroBit was successfully created.'
   end
 
+  def create_monthly_rpg
+    game_atts = ::Scrapers::Screenscraper.(screenscraper_params.merge('user_id' => 12))
+    game_atts[:nominations_attributes][0][:theme_id] = params[:theme_id]
+    game_atts[:nominations_attributes][0][:nomination_type] = 'rpg'
+    @game = Game.create!(game_atts)
+
+    redirect_to game_url(@game), notice: 'RPGotQ was successfully created.'
+  end
+
   def update
-    respond_to do |format|
-      if @game.update(game_params)
-        format.html { redirect_to game_url(@game), notice: 'Game was successfully updated.' }
-        format.json { render :show, status: :ok, location: @game }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @game.errors, status: :unprocessable_entity }
-      end
+    if @game.update(game_params)
+      redirect_to game_url(@game), notice: 'Game was successfully updated.'
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -45,7 +51,16 @@ class GamesController < ApplicationController
   def game_params
     params.require(:game)
           .permit(
-            :title_usa, :title_world, :title_eu, :title_other, :title_jp, :time_to_beat, :genre, :developer, :year, :system
+            :title_usa,
+            :title_world,
+            :title_eu,
+            :title_other,
+            :title_jp,
+            :time_to_beat,
+            :genre,
+            :developer,
+            :year,
+            :system
           )
   end
 

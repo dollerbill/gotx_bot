@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  get 'nominations/new_rpg', to: 'nominations#new_rpg', as: 'new_rpg_nomination'
-  get 'nominations/new_retro', to: 'nominations#new_retro', as: 'new_retro_nomination'
-  get 'nominations/new_gotm', to: 'nominations#new_gotm', as: 'new_gotm_nomination'
   get 'current_nominations', to: 'nominations#current_nominations'
   resources :nominations do
     member do
@@ -13,6 +10,7 @@ Rails.application.routes.draw do
   resources :games do
     collection do
       post :create_weekly_retrobit
+      post :create_monthly_rpg
     end
   end
   resources :themes

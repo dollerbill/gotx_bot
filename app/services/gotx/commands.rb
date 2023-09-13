@@ -42,15 +42,14 @@ module Gotx
     application_command(:standing) do |event|
       user = ::Users::FindOrCreate.(event.user)
       rank = User.scores.pluck(:earned_points).find_index(user.earned_points) + 1
-
-      event.respond(content: <<~RESPONSE)
-        #{event.user.mention} has #{user.current_points} GotX points and is #{rank.ordinalize} on the GotX Leaderboard
+      event.respond(ephemeral: true, content: <<~RESPONSE)
+        #{event.user.mention} currently has #{user.current_points} total points, and is #{rank.ordinalize} on the GotX Leaderboard with #{user.earned_points} lifetime earned points and #{user.premium_points} lifetime premium points.
       RESPONSE
     end
 
     application_command(:leaderboard) do |event|
       msg = "**GotX Leaderboard**\n```"
-      User.top10.each_with_index { |n, index| msg += "\n#{index + 1}. #{n}" }
+      User.top10.each_with_index { |user, index| msg += "\n#{index + 1}. #{user.name} - #{user.earned_points}" }
       msg += "\n```"
       event.respond(content: msg)
     end
@@ -58,6 +57,8 @@ module Gotx
     application_command(:complete) do |event|
       member = event.bot.user(event.options['member'])
       user = ::Users::FindOrCreate.(member)
+      next event.respond(content: I18n.t('nominations.none'), ephemeral: true) if Nomination.current_winners.none?
+
       event.respond(content: 'Select the game to complete', ephemeral: true) do |_, view|
         view.row do |r|
           r.select_menu(custom_id: 'game_complete', placeholder: 'Pick a game to mark completed', max_values: 1) do |s|

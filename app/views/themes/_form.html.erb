@@ -23,6 +23,12 @@
     <%= form.text_area :description %>
   </div>
 
+  <div class="field">
+    <%= form.label :type %><br>
+    <%= form.select :nomination_type, %w[gotm rpg goty] %>
+  </div>
+  <br>
+
   <div class="actions">
     <%= form.submit %>
   </div>

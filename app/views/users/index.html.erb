@@ -5,12 +5,13 @@
   <%= text_field_tag :search, params[:search], class: 'form-control mr-sm-2', placeholder: 'Search by name' %>
   <%= f.submit 'Search', class: 'btn btn-outline-primary my-2 my-sm-0' %>
 <% end %>
+<br>
 
 <table class="table table-striped table-hover">
   <thead>
     <tr>
-      <th scope="col">View User</th>
-      <th scope="col">Edit User</th>
+      <th scope="col">User</th>
+      <th scope="col">Membership Status</th>
     </tr>
   </thead>
 
@@ -18,7 +19,7 @@
     <% @users.each do |user| %>
       <tr>
         <td><%= link_to user.name, user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
+        <td><%= user.premium_subscriber&.capitalize %></td>
       </tr>
     <% end %>
   </tbody>

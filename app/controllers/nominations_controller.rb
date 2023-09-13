@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class NominationsController < ApplicationController
-  before_action :set_nomination, only: %i[show edit update destroy select_winner]
+  before_action :set_nomination, only: %i[show edit update select_winner]
 
   def index
     @type = params[:type] || 'gotm'
@@ -20,29 +20,11 @@ class NominationsController < ApplicationController
 
   def edit; end
 
-  def create
-    @nomination = Nomination.new(nomination_params)
-
-    respond_to do |format|
-      if @nomination.save
-        format.html { redirect_to nomination_url(@nomination), notice: 'Nomination was successfully created.' }
-        format.json { render :show, status: :created, location: @nomination }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @nomination.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   def update
-    respond_to do |format|
-      if @nomination.update(nomination_params)
-        format.html { redirect_to nomination_url(@nomination), notice: 'Nomination was successfully updated.' }
-        format.json { render :show, status: :ok, location: @nomination }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @nomination.errors, status: :unprocessable_entity }
-      end
+    if @nomination.update(nomination_params)
+      redirect_to nomination_url(@nomination), notice: 'Nomination was successfully updated.'
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -55,21 +37,7 @@ class NominationsController < ApplicationController
   def destroy
     @nomination.destroy
 
-    respond_to do |format|
-      format.html { redirect_to nominations_url, notice: 'Nomination was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
-
-  # TODO: delete
-  def new_rpg
-    @nomination = Nomination.new(nomination_type: 'RPG')
-    render 'new_rpg'
-  end
-
-  def new_gotm
-    @nomination = Nomination.new(nomination_type: 'GOTM')
-    render 'new_gotm'
+    redirect_to nominations_url, notice: 'Nomination was successfully destroyed.'
   end
 
   private

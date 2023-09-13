@@ -5,7 +5,7 @@ class User < ApplicationRecord
   has_many :nominations
 
   scope :scores, -> { where.not(name: nil).order(earned_points: :desc) }
-  scope :top10, -> { scores.limit(10).map(&:name) }
+  scope :top10, -> { scores.limit(10) }
   scope :premium, -> { where.not(premium_subscriber: nil) }
 
   enum premium_subscriber: {
