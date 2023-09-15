@@ -48,3 +48,5 @@ en:
       gotm: "has completed %{game} and been awarded 1 point! They now have %{points} total points."
       retro: "has completed %{game} and been awarded half a point! They now have %{points} total points."
       rpg: "has completed %{game} and been awarded 3 points! They now have %{points} total points."
+  points:
+    redeem: 'Your request to redeem your points has been sent, you will be contacted shortly.'
