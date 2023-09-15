@@ -16,4 +16,8 @@ module NominationsHelper
     end
     # rubocop:enable Style/StringConcatenation
   end
+
+  def winner_status(nomination)
+    nomination.winner ? '<i class="fas fa-crown"></i>'.html_safe : nil
+  end
 end

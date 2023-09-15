@@ -7,7 +7,8 @@ module Gotx
 
     CHANNELS = {
       dev: ENV['DEV_CHANNEL_ID'],
-      rank: ENV['RANK_CHANNEL_ID']
+      rank: ENV['RANK_CHANNEL_ID'],
+      merch: ENV['MERCH_CHANNEL_ID']
     }.freeze
 
     application_command(:previous) do |event|
@@ -43,7 +44,8 @@ module Gotx
       user = ::Users::FindOrCreate.(event.user)
       rank = User.scores.pluck(:earned_points).find_index(user.earned_points) + 1
       event.respond(ephemeral: true, content: <<~RESPONSE)
-        #{event.user.mention} currently has #{user.current_points} total points, and is #{rank.ordinalize} on the GotX Leaderboard with #{user.earned_points} lifetime earned points and #{user.premium_points} lifetime premium points.
+        You've earned #{user.earned_points} GotX points which puts you in #{rank.ordinalize} place on the leaderboard.
+        You have #{user.current_points} total points currently available to spend.
       RESPONSE
     end
 
@@ -116,6 +118,14 @@ module Gotx
       end
     end
 
+    application_command(:redeem_points) do |event|
+      merch_manager = event.bot.user(ENV['MERCH_MANAGER_USER_ID'])
+      msg = "Hey #{merch_manager.mention}, #{event.user.mention} wants to redeem points for RH merch!"
+      msg += "\n> #{event.options['swag']}" if event.options['swag']
+      event.bot.channel(CHANNELS[:merch]).send_message(msg)
+      event.respond(content: I18n.t('points.redeem'), ephemeral: true)
+    end
+
     button(custom_id: /\d_premium_member_status/) do |event|
       user = User.find(event.interaction.button.custom_id.split('_')[0])
       membership_status = user.premium_subscriber
@@ -131,7 +141,7 @@ module Gotx
       unless update
         ::Users::UpdatePremiumStatus.(user, nil)
         member = event.bot.user(user.discord_id)
-        event.bot.channel(CHANNELS[:rank]).send_message("#{member.mention} is no longer a premeium subscriber.")
+        event.bot.channel(CHANNELS[:rank]).send_message("#{member.mention} is no longer a premium subscriber.")
 
         next event.update_message(content: "#{user.display_name} is no longer a premium member.")
       end

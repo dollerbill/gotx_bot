@@ -20,6 +20,24 @@
     <%= lazy_hltb(@game.time_to_beat, 'Time to Beat') %>
     <%= lazy_render(@game.screenscraper_id, 'ScreenScraper.fr Game ID') %>
   </div>
+    <div class="card-body">
+      <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+          <th scope="col">Nominated for:</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <% @game.nominations.gotm.each do |nomination| %>
+          <tr>
+            <td><%= link_to nomination.theme.title, nomination %></td>
+            <td><%= winner_status(nomination) %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
   <div class="col"></div>
 </div>
