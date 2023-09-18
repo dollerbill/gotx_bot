@@ -20,4 +20,29 @@ class User < ApplicationRecord
     current_ids = Nomination.current_winners.map(&:id)
     completions.where(nomination_id: current_ids)
   end
+
+  def completion_streak
+    return 0 unless completions.any?
+
+    themes = Theme.gotm.order(creation_date: :desc)
+    streak = 0
+    starting_theme = if completed?(themes.first)
+                       themes.first
+                     elsif completed?(themes.second)
+                       themes.second
+                     end
+    themes.drop_while { |theme| theme != starting_theme }.each do |theme|
+      break unless completed?(theme)
+
+      streak += 1
+    end
+
+    streak
+  end
+
+  private
+
+  def completed?(theme)
+    completions.joins(:nomination).where(nominations: { theme: }).exists?
+  end
 end

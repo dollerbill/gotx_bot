@@ -126,6 +126,13 @@ module Gotx
       event.respond(content: I18n.t('points.redeem'), ephemeral: true)
     end
 
+    application_command(:streak) do |event|
+      member = event.bot.user(event.user)
+      user = ::Users::FindOrCreate.(member)
+      streak = user.completion_streak
+      event.respond(content: I18n.t('users.streak.format', name: member.mention, count: streak))
+    end
+
     button(custom_id: /\d_premium_member_status/) do |event|
       user = User.find(event.interaction.button.custom_id.split('_')[0])
       membership_status = user.premium_subscriber
