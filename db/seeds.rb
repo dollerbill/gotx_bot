@@ -26,7 +26,7 @@ CSV.foreach('db/seeds/themes.csv', headers: true) do |row|
     creation_date: theme['creation_date'],
     title: theme['title'],
     description: theme['description']&.gsub('"', ''),
-    nomination_type: theme['type']
+    nomination_type: theme['type'] || 'gotm'
   )
 end
 
@@ -102,10 +102,10 @@ CSV.foreach('db/seeds/GotM Leaderboard.csv', headers: true) do |row|
   next if user.earned_points.positive?
 
   user.update(
-    current_points: data['Total Current Points'].to_i,
-    redeemed_points: data['Points Spent'].to_i,
-    earned_points: data['Points Earned'].to_i,
-    premium_points: data['Patreon Points'].to_i
+    current_points: data['Total Current Points'].to_f,
+    redeemed_points: data['Points Spent'].to_f,
+    earned_points: data['Points Earned'].to_f,
+    premium_points: data['Patreon Points'].to_f
   )
 end
 

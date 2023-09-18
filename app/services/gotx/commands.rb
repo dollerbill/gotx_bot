@@ -8,7 +8,7 @@ module Gotx
     CHANNELS = {
       dev: ENV['DEV_CHANNEL_ID'],
       rank: ENV['RANK_CHANNEL_ID'],
-      merch: ENV['MERCH_CHANNEL_ID']
+      gotx: ENV['GOTX_CHANNEL_ID']
     }.freeze
 
     application_command(:previous) do |event|
@@ -122,7 +122,7 @@ module Gotx
       merch_manager = event.bot.user(ENV['MERCH_MANAGER_USER_ID'])
       msg = "Hey #{merch_manager.mention}, #{event.user.mention} wants to redeem points for RH merch!"
       msg += "\n> #{event.options['swag']}" if event.options['swag']
-      event.bot.channel(CHANNELS[:merch]).send_message(msg)
+      event.bot.channel(CHANNELS[:gotx]).send_message(msg)
       event.respond(content: I18n.t('points.redeem'), ephemeral: true)
     end
 

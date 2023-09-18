@@ -25,7 +25,7 @@ module Games
 
     def previously_won?
       @game = Game.find_by(screenscraper_id: atts['screenscraper_id'])
-      @game.nominations.any?(&:winner)
+      @game&.nominations&.any?(&:winner)
     end
 
     def user_already_nominated?

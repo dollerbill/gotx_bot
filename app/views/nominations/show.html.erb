@@ -10,6 +10,7 @@
         <%= lazy_render(@nomination.user.name.capitalize, 'Nominated By') %>
         <%= lazy_render(@nomination.theme.title, 'Theme') %>
         <%= lazy_render(@nomination.description, 'Description') %>
+        <p><strong>Game: </strong><%= link_to @nomination.game.preferred_name, game_path(@nomination.game) %></p>
         <%= winner?(@nomination) %>
       </div>
     </div>
