@@ -50,3 +50,8 @@ en:
       rpg: "has completed %{game} and been awarded 3 points! They now have %{points} total points."
   points:
     redeem: 'Your request to redeem your points has been sent, you will be contacted shortly.'
+  users:
+    streak:
+      format:
+        zero: '%{name} does not currently have a GotM completion streak.'
+        other: '%{name} is on a %{count} game completion streak!'
