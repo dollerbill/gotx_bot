@@ -2,6 +2,7 @@
 
 Rails.application.routes.draw do
   get 'current_nominations', to: 'nominations#current_nominations'
+  get 'previous_finishers', to: 'users#previous_finishers'
   resources :nominations do
     member do
       patch :select_winner
