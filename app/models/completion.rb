@@ -3,6 +3,7 @@
 class Completion < ApplicationRecord
   belongs_to :user
   belongs_to :nomination
+  delegate :theme, to: :nomination
 
   scope :previous_completions, ->(type) { joins(nomination: :theme).merge(Theme.most_recent(type)) }
 
