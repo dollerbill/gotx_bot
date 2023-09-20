@@ -54,4 +54,5 @@ en:
     streak:
       format:
         zero: '%{name} does not currently have a GotM completion streak.'
-        other: '%{name} is on a %{count} game completion streak!'
+        one: '%{name} is on a %{count} month completion streak!'
+        other: '%{name} is on a %{count} month completion streak!'

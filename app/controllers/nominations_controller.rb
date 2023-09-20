@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class NominationsController < ApplicationController
-  before_action :set_nomination, only: %i[show edit update select_winner]
+  before_action :set_nomination, only: %i[show edit update select_winner destroy]
 
   def index
     @type = params[:type] || 'gotm'
@@ -36,7 +36,6 @@ class NominationsController < ApplicationController
 
   def destroy
     @nomination.destroy
-
     redirect_to nominations_url, notice: 'Nomination was successfully destroyed.'
   end
 

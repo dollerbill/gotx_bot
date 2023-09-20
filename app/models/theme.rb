@@ -24,6 +24,5 @@ class Theme < ApplicationRecord
     self.creation_date ||= date
     self.title ||= "Retro Bits #{date}"
     self.description ||= "Retro Bits Theme - #{date.cweek.ordinalize} week of #{date.year}"
-    self.nomination_type ||= 'retro'
   end
 end

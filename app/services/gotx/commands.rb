@@ -99,7 +99,9 @@ module Gotx
           description += ":calendar_spiral: #{game.year}\n" if game.year
           description += ":office: #{game.developer}\n" if game.developer
           description += ":joystick: #{game.system}\n" if game.system
-          description += game_atts[:nominations_attributes][0][:description].truncate(200, separator: ' ')
+          description += ":crossed_swords: #{game.genre}\n" if game.genre
+          description += ":timer: #{game.time_to_beat}\n" if game.time_to_beat
+          description += game_atts[:nominations_attributes][0][:description].truncate(200, separator: ' ') if game_atts[:nominations_attributes][0][:description]
           embed.description = description
           embed.image = Discordrb::Webhooks::EmbedImage.new(url: game_atts[:img_url])
         end

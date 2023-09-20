@@ -24,7 +24,7 @@ class User < ApplicationRecord
   def completion_streak
     return 0 unless completions.any?
 
-    themes = Theme.gotm.order(creation_date: :desc)
+    themes = Theme.gotm.where('creation_date <= ?', Date.today).order(creation_date: :desc)
     streak = 0
     starting_theme = if completed?(themes.first)
                        themes.first
