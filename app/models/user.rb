@@ -7,6 +7,7 @@ class User < ApplicationRecord
   scope :scores, -> { where.not(name: nil).order(earned_points: :desc) }
   scope :top10, -> { scores.limit(10) }
   scope :premium, -> { where.not(premium_subscriber: nil) }
+  scope :previous_finishers, ->(type) { joins(:completions).merge(Completion.previous_completions(type)).distinct }
 
   enum premium_subscriber: {
     supporter: 'supporter',
@@ -18,7 +19,7 @@ class User < ApplicationRecord
 
   def current_completions
     current_ids = Nomination.current_winners.map(&:id)
-    completions.where(nomination_id: current_ids)
+    completions.where(nomination_id: current_ids)&.map(&:nomination)
   end
 
   def completion_streak

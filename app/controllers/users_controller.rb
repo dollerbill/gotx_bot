@@ -23,6 +23,11 @@ class UsersController < ApplicationController
     redirect_to user_url(@user), notice: 'Points successfully redeemed.'
   end
 
+  def previous_finishers
+    @type = params[:type] || 'gotm'
+    @users = User.previous_finishers(@type).page(params[:page]).per(50)
+  end
+
   private
 
   def set_user
