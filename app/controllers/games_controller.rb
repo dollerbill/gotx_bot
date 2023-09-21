@@ -18,10 +18,7 @@ class GamesController < ApplicationController
 
   def create_weekly_retrobit
     game_atts = ::Scrapers::Screenscraper.(screenscraper_params.merge('user_id' => 12))
-    game_atts[:nominations_attributes][0][:theme] = Theme.create!(nomination_type: 'retro')
-    game_atts[:nominations_attributes][0][:nomination_type] = 'retro'
-    game_atts[:nominations_attributes][0][:winner] = true
-    @game = Game.create!(game_atts)
+    @game = ::Games::WeeklyRetrobit.(game_atts)
 
     redirect_to game_url(@game), notice: 'RetroBit was successfully created.'
   end

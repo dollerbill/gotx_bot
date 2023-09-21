@@ -29,7 +29,7 @@
         </thead>
 
         <tbody>
-        <% @game.nominations.gotm.each do |nomination| %>
+        <% @game.nominations.each do |nomination| %>
           <tr>
             <td><%= link_to nomination.theme.title, nomination %></td>
             <td><%= winner_status(nomination) %></td>
