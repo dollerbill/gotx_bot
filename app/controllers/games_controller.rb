@@ -25,9 +25,7 @@ class GamesController < ApplicationController
 
   def create_monthly_rpg
     game_atts = ::Scrapers::Screenscraper.(screenscraper_params.merge('user_id' => 12))
-    game_atts[:nominations_attributes][0][:theme_id] = params[:theme_id]
-    game_atts[:nominations_attributes][0][:nomination_type] = 'rpg'
-    @game = Game.create!(game_atts)
+    @game = ::Games::QuarterlyRpg.(game_atts.merge(theme_id: params[:theme_id]))
 
     redirect_to game_url(@game), notice: 'RPGotQ was successfully created.'
   end
@@ -63,6 +61,6 @@ class GamesController < ApplicationController
   end
 
   def screenscraper_params
-    params.permit('screenscraper_id')
+    params.permit('screenscraper_id', 'time_to_beat')
   end
 end
