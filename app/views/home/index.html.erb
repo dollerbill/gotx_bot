@@ -22,6 +22,8 @@
 				<%= form_with url: create_monthly_rpg_games_path, method: :post do |form| %>
 				<%= form.label :screenscraper_id, 'Screenscraper ID' %>
 				<%= form.text_field :screenscraper_id %>
+				<%= form.label :time_to_beat, 'Hours to Beat' %>
+				<%= form.text_field :time_to_beat %>
 				<%= form.select :theme_id, Theme.rpg.order(created_at: :desc).limit(3).collect { |t| [t.title, t.id] } %>
 				<%= form.submit 'Create RPGotQ', class: 'btn btn-outline-primary my-2 my-sm-0' %>
 				<% end %>

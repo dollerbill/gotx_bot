@@ -46,6 +46,7 @@ module Scrapers
         developer: game.dig('developpeur', 'text'),
         genre: game['genres']&.first&.dig('noms')&.find { |g| g['langue'] == 'en' }&.dig('text'),
         img_url: image_url,
+        time_to_beat: atts['time_to_beat'],
         nominations_attributes: [
           {
             user_id: atts['user_id'],
