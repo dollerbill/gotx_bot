@@ -22,7 +22,17 @@ module Nominations
 
     def call
       Completion.create!(user_id: user.id, nomination_id: nomination.id, completed_at: Time.now)
+      update_streak
       Users::AddPoints.(user, points)
+    end
+
+    private
+
+    def update_streak
+      streak = ::Streaks::FindOrCreate.(user.id)
+      return if streak.last_incremented&.month == Date.current.month
+
+      ::Streaks::Update.(streak)
     end
   end
 end

@@ -3,6 +3,7 @@
 class User < ApplicationRecord
   has_many :completions
   has_many :nominations
+  has_many :streaks
 
   scope :scores, -> { where.not(name: nil).order(earned_points: :desc) }
   scope :top10, -> { scores.limit(10) }
