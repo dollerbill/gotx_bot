@@ -50,7 +50,7 @@ module Scrapers
         nominations_attributes: [
           {
             user_id: atts['user_id'],
-            theme: Theme.current_gotm,
+            theme: Theme.gotm.find_by('creation_date >=?', Date.current),
             description: atts['description'] || game['synopsis'].find { |s| s['langue'] == 'en' }&.dig('text')
           }
         ]
