@@ -18,7 +18,9 @@ gem 'textacular', '~> 5.0'
 # gem 'rack-cors'
 
 group :development, :test do
+  gem 'factory_bot_rails'
   gem 'pry-byebug'
+  gem 'rspec-rails', '~> 6.0.0'
 end
 
 group :development do
@@ -26,6 +28,11 @@ group :development do
   gem 'rubocop'
   gem 'spring'
   gem 'whenever', require: false
+end
+
+group :test do
+  gem 'database_cleaner-active_record'
+  gem 'shoulda-matchers', '~> 5.3'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
