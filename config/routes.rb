@@ -20,5 +20,6 @@ Rails.application.routes.draw do
       post :redeem_points
     end
   end
+  resources :streaks, only: %i[index show]
   root 'home#index'
 end
