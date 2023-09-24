@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+<div class="card text-center">
+  <div class="card-header">
+    <h2>GotM Winners</h2>
+  </div>
+  <div class="card-body">
+    <form id="monthPickerForm">
+      <label for="month-picker">Select date:</label>
+      <input type="month" id="month-picker" name="month-year">
+      <input type="submit" value="Go">
+    </form>
+    <% if @winners.any? %>
+      <h3><%= @winners.first.theme.creation_date.strftime("%B %Y") %></h3>
+    <% end %>
+    <div class="leaderboard">
+      <table class="table table-striped table-hover">
+        <tbody>
+        <% @winners.each do |nomination| %>
+          <tr>
+            <td><%= link_to nomination.game.preferred_name, nomination %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card-footer text-muted">
+    <%= link_to 'Back', nominations_path %>
+  </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("monthPickerForm");
+        form.addEventListener("submit", function(e) {
+            e.preventDefault();
+            const monthYear = document.getElementById("month-picker").value.split("-");
+            window.location.href = `/nominations/winners?year=${monthYear[0]}&month=${monthYear[1]}`;
+        });
+    });
+</script>

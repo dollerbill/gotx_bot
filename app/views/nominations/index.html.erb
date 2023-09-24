@@ -3,6 +3,7 @@
 <h1><%= Nomination::NOMINATION_TYPE_NAMES[@type] %> Nominations</h1>
 <div>
   <%= link_to 'Current Nominations', current_nominations_path, class: 'btn btn-outline-primary my-2 my-sm-0' %>
+  <%= link_to 'GotM Winners', winners_nominations_path, class: 'btn btn-outline-success my-2 my-sm-0' %>
   <%= link_to "GotM", nominations_path(type: 'gotm'),class: 'btn btn-outline-secondary my-2 my-sm-0' %>
   <%= link_to "RetroBits", nominations_path(type: 'retro'),class: 'btn btn-outline-secondary my-2 my-sm-0' %>
   <%= link_to "RPGotQ", nominations_path(type: 'rpg'),class: 'btn btn-outline-secondary my-2 my-sm-0' %>

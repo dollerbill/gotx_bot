@@ -59,5 +59,9 @@ module Games
     def message
       raise NotImplementedError
     end
+
+    def winner
+      nil
+    end
   end
 end
