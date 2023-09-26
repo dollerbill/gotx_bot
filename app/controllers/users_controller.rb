@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[show redeem_points]
+  before_action :set_user, only: %i[show edit update redeem_points]
 
   def index
     @users = if params[:search]&.presence
@@ -15,6 +15,17 @@ class UsersController < ApplicationController
   def show
     @nominations = @user.nominations.gotm.page(params[:page]).per(10)
     @completions = @user.completions.joins(nomination: :theme).order(:creation_date).page(params[:page]).per(10)
+  end
+
+  def edit; end
+
+  def update
+    result = Users::Update.(@user, user_params)
+    if result
+      redirect_to @user, notice: 'User was successfully updated.'
+    else
+      redirect_to edit_user_path(@user), notice: 'User not updated, provided attributes match their current values.'
+    end
   end
 
   def redeem_points
@@ -32,5 +43,9 @@ class UsersController < ApplicationController
 
   def set_user
     @user = User.find(params[:id])
+  end
+
+  def user_params
+    params.require(:user).permit(:current_points, :earned_points, :redeemed_points, :premium_points)
   end
 end
