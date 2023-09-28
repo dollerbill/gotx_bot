@@ -45,9 +45,8 @@ en:
     existing_user_nomination: 'You may only nominate one game at a time, try again next month.'
     previous_nomination: "%{game} (screenscraper id %{id}) has already won GotM and can't be nominated again."
     completed:
-      gotm: "has completed %{game} and been awarded 1 point! They now have %{points} total points."
-      retro: "has completed %{game} and been awarded half a point! They now have %{points} total points."
-      rpg: "has completed %{game} and been awarded 3 points! They now have %{points} total points."
+      retro: "has completed %{game} and been awarded half a point! They have earned %{points} total points from GotX."
+      base: "has completed %{game} and been awarded 1 point! They have earned %{points} total points from GotX."
   points:
     redeem: 'Your request to redeem your points has been sent, you will be contacted shortly.'
   users:

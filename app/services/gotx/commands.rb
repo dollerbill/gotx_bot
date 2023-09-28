@@ -184,9 +184,10 @@ module Gotx
       end
 
       ::Nominations::Complete.(user, nomination)
-      event.respond(content: "#{member.mention} #{I18n.t("nominations.completed.#{nomination.nomination_type}",
+      translation_key = nomination.nomination_type == 'retro' ? 'retro' : 'base'
+      event.respond(content: "#{member.mention} #{I18n.t("nominations.completed.#{translation_key}",
                                                          game: nomination.game.preferred_name,
-                                                         points: user.current_points)}")
+                                                         points: user.earned_points)}")
       event.delete_message(event.message)
     end
   end
