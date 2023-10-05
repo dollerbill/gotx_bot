@@ -57,9 +57,14 @@ module Games
 
     def post_game
       bot.channel(GOTW_GAMES_CHANNEL).send_embed do |embed|
+        embed.title = "GotW ##{gotw_count}: #{@game.preferred_name}\n"
         embed.description = description
         embed.image = Discordrb::Webhooks::EmbedImage.new(url: @game.img_url)
       end
+    end
+
+    def gotw_count
+      Nomination.retro.count
     end
   end
 end
