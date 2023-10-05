@@ -3,6 +3,12 @@ AllCops:
     - 'db/**/*.rb'
     - 'bin/*'
 
+Lint/AmbiguousBlockAssociation:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
 Style/Documentation:
   Enabled: false
 

@@ -13,10 +13,6 @@ class Theme < ApplicationRecord
   has_many :nominations
   has_many :completions, through: :nominations
 
-  scope :current_month, lambda {
-    where(creation_date: Date.current.beginning_of_month..Date.current.end_of_month)
-      .where.not('title ILIKE ?', '%Retro%')
-  }
   scope :current_goty, -> { current_theme_for('goty') }
   scope :current_rpg, -> { current_theme_for('rpg') }
   scope :current_gotm, -> { current_theme_for('gotm') }

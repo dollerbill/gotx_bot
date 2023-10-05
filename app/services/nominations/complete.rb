@@ -4,6 +4,7 @@ module Nominations
   class Complete
     COMPLETION_POINTS = {
       'gotm' => 1,
+      'goty' => 1,
       'retro' => 0.5,
       'rpg' => 1
     }.freeze
