@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Theme, type: :model do
   it do
     is_expected.to define_enum_for(:nomination_type)
-      .with_values(gotm: 'gotm', rpg: 'rpg', retro: 'retro', goty: 'goty')
+      .with_values(gotm: 'gotm', rpg: 'rpg', retro: 'retro', goty: 'goty', gotwoty: 'gotwoty')
       .backed_by_column_of_type(:string)
   end
 

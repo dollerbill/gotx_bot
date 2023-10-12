@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-MODULES = [Gotx::Commands].freeze
+MODULES = [Gotx::GameCommands, Gotx::UserCommands].freeze
 
 bot = Gotx::Bot.initialize_bot
 

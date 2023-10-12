@@ -14,8 +14,9 @@ class Nomination < ApplicationRecord
   has_many :completions
 
   scope :winners, -> { where(winner: true) }
-  scope :current_retro_winner, -> { retro.order(created_at: :desc).limit(1) }
+  scope :current_retro_winners, -> { retro.order(created_at: :desc).limit(1) }
   scope :current_gotm_winners, -> { winners.gotm.joins(:theme).merge(Theme.current_gotm) }
+  scope :current_goty_winners, -> { where(theme_id: Theme.playable_goty.pluck(:id)) }
   scope :current_rpg_winners, -> { winners.rpg.joins(:theme).merge(Theme.current_rpg) }
   scope :current_nominations, -> { where(theme_id: Theme.current_gotm.pluck(:id) + Theme.current_rpg.pluck(:id)) }
   scope :previous_winners, ->(type) { winners.joins(:theme).merge(Theme.most_recent(type)) }
@@ -48,7 +49,7 @@ class Nomination < ApplicationRecord
   end
 
   def self.current_winners
-    current_gotm_winners + current_rpg_winners + current_retro_winner
+    current_gotm_winners + current_rpg_winners + current_retro_winners + current_goty_winners
   end
 
   def type

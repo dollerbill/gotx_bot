@@ -17,13 +17,17 @@ class Theme < ApplicationRecord
   scope :current_rpg, -> { current_theme_for('rpg') }
   scope :current_gotm, -> { current_theme_for('gotm') }
   scope :current_retro, -> { current_theme_for('retro') }
+  scope :playable_goty, lambda {
+    where(nomination_type: %w[goty gotwoty]).where('title LIKE ?', "%#{Date.current.last_year.year}%")
+  }
   scope :most_recent, ->(type) { where(id: most_recent_id_for(type)) }
 
   enum nomination_type: {
     gotm: 'gotm',
     rpg: 'rpg',
     retro: 'retro',
-    goty: 'goty'
+    goty: 'goty',
+    gotwoty: 'gotwoty'
   }
 
   def set_retrobit_template

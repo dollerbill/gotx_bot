@@ -11,7 +11,7 @@ class Game < ApplicationRecord
     {
       'GotM' => joins(:nominations).merge(Nomination.current_gotm_winners),
       'RPGotQ' => joins(:nominations).merge(Nomination.current_rpg_winners),
-      'Retro Bit' => joins(:nominations).merge(Nomination.current_retro_winner)
+      'Retro Bit' => joins(:nominations).merge(Nomination.current_retro_winners)
     }
   end
 

@@ -51,22 +51,24 @@ module Scrapers
           {
             user_id: atts['user_id'],
             theme: Theme.gotm.find_by('creation_date >=?', Date.current),
-            description: atts['description'] || game['synopsis'].find { |s| s['langue'] == 'en' }&.dig('text')
+            description: atts['description'] || game['synopsis']&.find { |s| s['langue'] == 'en' }&.dig('text')
           }
         ]
       }
     end
 
     def region_name(region)
-      game['noms'].find { |n| n['region'] == region }&.dig('text')
+      game['noms']&.find { |n| n['region'] == region }&.dig('text')
     end
 
     def image_url
+      return nil unless region
+
       "https://screenscraper.fr/image.php?gameid=#{game['id']}&region=#{region}&media=ss&maxwidth=640&maxheight=480"
     end
 
     def region
-      game['medias'].find { |m| m['type'] == 'ss' }['region']
+      game['medias']&.find { |m| m['type'] == 'ss' }&.dig('region')
     end
   end
 end

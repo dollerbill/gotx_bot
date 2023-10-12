@@ -22,9 +22,11 @@ module Nominations
     end
 
     def call
-      Completion.create!(user_id: user.id, nomination_id: nomination.id, completed_at: Time.now)
-      update_streak
-      Users::AddPoints.(user, points)
+      ActiveRecord::Base.transaction do
+        Completion.create!(user_id: user.id, nomination_id: nomination.id, completed_at: Time.now)
+        update_streak
+        Users::AddPoints.(user, points)
+      end
     end
 
     private
