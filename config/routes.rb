@@ -24,5 +24,6 @@ Rails.application.routes.draw do
     end
   end
   resources :streaks, only: %i[index show]
+  resources :completions, only: %i[create]
   root 'home#index'
 end
