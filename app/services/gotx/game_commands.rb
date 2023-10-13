@@ -39,6 +39,21 @@ module Gotx
       response
     end
 
+    application_command(:goty_games) do |event|
+      event.respond(content: goty_games_list)
+    end
+
+    def self.goty_games_list
+      response = "**The current GotY games are:**\n"
+      Game.current_goty_games.each do |category, games|
+        response += "**#{category}**:\n"
+        games.each_with_index do |game, index|
+          response += "#{index + 1}. #{game.preferred_name}\n"
+        end
+      end
+      response
+    end
+
     application_command(:complete) do |event|
       member = event.bot.user(event.options['member'])
       user = ::Users::FindOrCreate.(member)

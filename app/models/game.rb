@@ -15,6 +15,13 @@ class Game < ApplicationRecord
     }
   end
 
+  def self.current_goty_games
+    {
+      'GotY' => joins(:nominations).merge(Nomination.current_goty_winners.goty),
+      'GotWotY' => joins(:nominations).merge(Nomination.current_goty_winners.retro)
+    }
+  end
+
   def presence_of_title
     return if preferred_name
 

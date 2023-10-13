@@ -12,3 +12,4 @@ A simple discord bot to handle Game of the X operations.
 7. `/membership` - Check and update premium membership status.
 8. `/redeem_points` - Redeem GotX points.
 9. `/streak` - Check your GotM completion streak.
+10. `/goty_games` - Returns the list of current GotY games.
