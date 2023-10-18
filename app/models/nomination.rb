@@ -18,7 +18,7 @@ class Nomination < ApplicationRecord
   scope :current_gotm_winners, -> { winners.gotm.joins(:theme).merge(Theme.current_gotm) }
   scope :current_goty_winners, -> { where(theme_id: Theme.playable_goty.pluck(:id)) }
   scope :current_rpg_winners, -> { winners.rpg.joins(:theme).merge(Theme.current_rpg) }
-  scope :current_nominations, -> { where(theme_id: Theme.current_gotm.pluck(:id) + Theme.current_rpg.pluck(:id)) }
+  scope :current_nominations, -> { where(theme_id: Theme.current_gotm_theme.pluck(:id) + Theme.current_rpg.pluck(:id)) }
   scope :previous_winners, ->(type) { winners.joins(:theme).merge(Theme.most_recent(type)) }
 
   enum nomination_type: {
