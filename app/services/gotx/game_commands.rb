@@ -71,12 +71,14 @@ module Gotx
     application_command(:nominate) do |event|
       ActiveRecord::Base.connection_pool.with_connection do
         user = ::Users::FindOrCreate.(event.user)
-        validation = ::Games::ValidateNomination.(event.options.merge!('user_id' => user.id))
-        next event.respond(content: validation) if validation
+        event.options.merge!('user_id' => user.id)
+        # validation = ::Games::ValidateNomination.(event.options.merge!('user_id' => user.id))
+        # next event.respond(content: validation) if validation
 
         event.respond(content: 'Nomination is being created, please watch for the result.', ephemeral: true)
 
         game_atts = ::Scrapers::Screenscraper.(event.options)
+        binding.pry
         game = Game.create!(**game_atts)
         event.channel.send_message("#{event.user.mention} nominated #{game.preferred_name}!")
         event.channel.send_embed do |embed|
@@ -100,6 +102,7 @@ module Gotx
       description += ":joystick: #{game.system}\n" if game.system
       description += ":crossed_swords: #{game.genre}\n" if game.genre
       description += ":timer: #{game.time_to_beat}\n" if game.time_to_beat
+      description += "https://screenscraper.fr/gameinfos.php?gameid=#{game.screenscraper_id}\n"
       description + (game_atts.dig(:nominations_attributes, 0, :description)&.truncate(200, separator: ' ') || '')
     end
 
