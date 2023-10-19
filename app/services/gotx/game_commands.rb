@@ -95,6 +95,21 @@ module Gotx
       DM
     end
 
+    application_command(:gotx_vote) do |event|
+      member = event.bot.user(event.options['member'])
+      user = ::Users::FindOrCreate.(event.user)
+
+      event.respond(content: 'Cast your GotM vote:', ephemeral: true)# do |_, view|
+      event.send_message(content: 'Select the game to complete', ephemeral: true) do |_, view|
+        view.row do |r|
+          r.select_menu(custom_id: 'gotx_voting', placeholder: 'Pick a game to mark completed', max_values: 1) do |s|
+            value = { nomination_id: Nomination.winners.first.id, member_id: member.id }.to_json
+            s.option(label: Nomination.winners.first.game.preferred_name, value: value)
+          end
+        end
+      end
+    end
+
     def self.build_description(game, game_atts)
       description = ":video_game: #{game.preferred_name}\n"
       description += ":calendar_spiral: #{game.year}\n" if game.year
@@ -141,6 +156,17 @@ module Gotx
       event.respond(content: "#{member.mention} #{I18n.t("nominations.completed.#{translation_key}",
                                                          game: nomination.game.preferred_name,
                                                          points: user.earned_points)}")
+      event.delete_message(event.message)
+    end
+
+    select_menu(custom_id: 'gotx_voting') do |event|
+      data = JSON.parse(event.values[0])
+
+      nomination = Nomination.find(data['nomination_id'])
+      member = event.bot.user(data['member_id'])
+      user = ::Users::FindOrCreate.(member)
+      Vote.create!(nomination:, user:)
+      event.respond(content: 'Thanks for voting!', ephemeral: true)
       event.delete_message(event.message)
     end
   end

@@ -12,6 +12,7 @@ class Nomination < ApplicationRecord
   belongs_to :user
   belongs_to :theme
   has_many :completions
+  has_many :votes
 
   scope :winners, -> { where(winner: true) }
   scope :current_retro_winners, -> { retro.order(created_at: :desc).limit(1) }
