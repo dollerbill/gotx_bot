@@ -1,6 +1,9 @@
 # GotXBoT
 
 A simple discord bot to handle Game of the X operations.
+# TODO: Have bot check # of reactions per game, DM rapid with results
+
+
 
 ## Available bot commands:
 1. `/previous` - Finds if a title was previously a GotX game.
