@@ -25,7 +25,8 @@ class Nomination < ApplicationRecord
     gotm: 'gotm',
     rpg: 'rpg',
     retro: 'retro',
-    goty: 'goty'
+    goty: 'goty',
+    gotwoty: 'gotwoty'
   }
 
   def self.current_time
