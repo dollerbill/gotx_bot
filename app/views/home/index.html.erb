@@ -61,5 +61,20 @@
 			</div>
 		</div>
 	</div>
-	<div class="col"></div>
+	<div class="col">
+		<div class="card">
+			<h5 class="card-header">Messenger</h5>
+			<div class="card-body">
+				<p class="card-text">Send a message to the channel.</p>
+				<%= form_with url: create_message_path, method: :post do |form| %>
+					<%= form.label :message, 'Message' %>
+					<%= form.text_field :message %>
+					<%= form.label :member_id, '(Discord) User ID - optional' %>
+					<%= form.text_field :member_id %>
+					<%= form.select :channel, available_channels %>
+					<%= form.submit 'Send message', class: 'btn btn-outline-primary my-2 my-sm-0' %>
+				<% end %>
+			</div>
+		</div>
+	</div>
 </div>

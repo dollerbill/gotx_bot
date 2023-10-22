@@ -25,5 +25,6 @@ Rails.application.routes.draw do
   end
   resources :streaks, only: %i[index show]
   resources :completions, only: %i[create]
+  post 'create_message', to: 'messenger#create'
   root 'home#index'
 end
