@@ -6,6 +6,7 @@ module Nominations
       'gotm' => 1,
       'goty' => 1,
       'retro' => 0.5,
+      'gotwoty' => 0.5,
       'rpg' => 1
     }.freeze
 

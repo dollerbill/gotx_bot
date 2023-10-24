@@ -71,14 +71,12 @@ module Gotx
     application_command(:nominate) do |event|
       ActiveRecord::Base.connection_pool.with_connection do
         user = ::Users::FindOrCreate.(event.user)
-        event.options.merge!('user_id' => user.id)
-        # validation = ::Games::ValidateNomination.(event.options.merge!('user_id' => user.id))
-        # next event.respond(content: validation) if validation
+        validation = ::Games::ValidateNomination.(event.options.merge!('user_id' => user.id))
+        next event.respond(content: validation) if validation
 
         event.respond(content: 'Nomination is being created, please watch for the result.', ephemeral: true)
 
         game_atts = ::Scrapers::Screenscraper.(event.options)
-        binding.pry
         game = Game.create!(**game_atts)
         event.channel.send_message("#{event.user.mention} nominated #{game.preferred_name}!")
         event.channel.send_embed do |embed|
@@ -115,16 +113,29 @@ module Gotx
         next event.update_message(content: "There are no remaining #{type} games to complete for #{user.name}.")
       end
 
-      event.update_message(content: 'Select the game to complete') do |_, view|
-        view.row do |r|
-          r.select_menu(custom_id: 'game_complete', placeholder: 'Pick a game to mark completed', max_values: 1) do |s|
-            available.each do |nomination|
-              value = { nomination_id: nomination.id, member_id: user.discord_id }.to_json
-              s.option(label: nomination.game.preferred_name, value:)
+      if %w[retro rpg].include?(type)
+        member = event.bot.user(user.discord_id)
+        nomination = available.first
+        ::Nominations::Complete.(user, nomination)
+        event.respond(content: "#{member.mention} #{completion_message(nomination, user)}")
+        event.delete_message(event.message)
+      else
+        event.update_message(content: 'Select the game to complete') do |_, view|
+          view.row do |r|
+            r.select_menu(custom_id: 'game_complete', placeholder: 'Games', max_values: 1) do |s|
+              available.each do |nomination|
+                value = { nomination_id: nomination.id, member_id: user.discord_id }.to_json
+                s.option(label: nomination.game.preferred_name, value:)
+              end
             end
           end
         end
       end
+    end
+
+    def self.completion_message(nomination, user)
+      type = %w[retro gotwoty].include?(nomination.nomination_type) ? 'retro' : 'base'
+      I18n.t("nominations.completed.#{type}", game: nomination.game.preferred_name, points: user.earned_points)
     end
 
     select_menu(custom_id: 'game_complete') do |event|
@@ -137,10 +148,7 @@ module Gotx
       end
 
       ::Nominations::Complete.(user, nomination)
-      translation_key = nomination.nomination_type == 'retro' ? 'retro' : 'base'
-      event.respond(content: "#{member.mention} #{I18n.t("nominations.completed.#{translation_key}",
-                                                         game: nomination.game.preferred_name,
-                                                         points: user.earned_points)}")
+      event.respond(content: "#{member.mention} #{completion_message(nomination, user)}")
       event.delete_message(event.message)
     end
   end
