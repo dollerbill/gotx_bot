@@ -49,6 +49,10 @@ class Nomination < ApplicationRecord
     current_time >= nominations_open && current_time <= nominations_close
   end
 
+  def self.begun?
+    current_time >= nominations_open
+  end
+
   def self.current_winners
     current_gotm_winners + current_rpg_winners + current_retro_winners + current_goty_winners
   end

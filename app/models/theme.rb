@@ -38,7 +38,7 @@ class Theme < ApplicationRecord
   end
 
   def self.current_gotm_theme
-    if Nomination.open?
+    if Nomination.begun?
       gotm.where(creation_date: Date.current.next_month.beginning_of_month..Date.current.next_month.end_of_month)
     else
       gotm.where(creation_date: Date.current.beginning_of_month..Date.current.end_of_month)
