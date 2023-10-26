@@ -18,7 +18,7 @@ class Game < ApplicationRecord
   def self.current_goty_games
     {
       'GotY' => joins(:nominations).merge(Nomination.current_goty_winners.goty),
-      'GotWotY' => joins(:nominations).merge(Nomination.current_goty_winners.retro)
+      'GotWotY' => joins(:nominations).merge(Nomination.current_goty_winners.gotwoty)
     }
   end
 
