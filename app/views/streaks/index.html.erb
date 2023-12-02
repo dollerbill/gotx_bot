@@ -35,7 +35,7 @@
           <tbody>
           <% @active_streaks.each do |streak| %>
             <tr>
-              <td><%= link_to streak.user.name, streak%></td>
+              <td><%= link_to streak.user.name, streak%> - <%= streak.streak_count %> months</td>
             </tr>
           <% end %>
           </tbody>
