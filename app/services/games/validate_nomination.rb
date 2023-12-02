@@ -29,11 +29,11 @@ module Games
     end
 
     def user_already_nominated?
-      Nomination.current_nominations.find_by(user_id: atts['user_id'])
+      Nomination.current_nominations.gotm.find_by(user_id: atts['user_id'])
     end
 
     def game_already_nominated?
-      @game = Game.joins(:nominations).merge(Nomination.current_nominations)
+      @game = Game.joins(:nominations).merge(Nomination.current_nominations.gotm)
                   .find_by(screenscraper_id: atts['screenscraper_id'])
     end
   end
