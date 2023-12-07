@@ -4,7 +4,7 @@ class StreaksController < ApplicationController
   before_action :set_streak, only: :show
 
   def index
-    @active_streaks = Streak.active
+    @active_streaks = Streak.active.order(streak_count: :desc)
     @new_streaks = Streak.newly_started
     @broken_streaks = Streak.broken
   end

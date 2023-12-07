@@ -16,7 +16,7 @@
           <tbody>
           <% @new_streaks.each do |streak| %>
             <tr>
-              <td><%= link_to streak.user.name, streak%></td>
+              <td><%= link_to new_streaks_label(streak.user), streak%></td>
             </tr>
           <% end %>
           </tbody>
