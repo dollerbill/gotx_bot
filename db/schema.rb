@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_09_22_181736) do
+ActiveRecord::Schema.define(version: 2023_12_31_220455) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -68,6 +68,18 @@ ActiveRecord::Schema.define(version: 2023_09_22_181736) do
     t.index ["user_id"], name: "index_streaks_on_user_id"
   end
 
+  create_table "subscriptions", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
+    t.string "subscription_type"
+    t.date "start_date", null: false
+    t.date "end_date"
+    t.date "last_subscribed"
+    t.integer "subscribed_months", default: 0
+    t.index ["user_id"], name: "index_subscriptions_on_user_id"
+  end
+
   create_table "themes", force: :cascade do |t|
     t.date "creation_date", null: false
     t.string "title", null: false
@@ -91,4 +103,5 @@ ActiveRecord::Schema.define(version: 2023_09_22_181736) do
   end
 
   add_foreign_key "streaks", "users"
+  add_foreign_key "subscriptions", "users"
 end
