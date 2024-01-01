@@ -31,7 +31,7 @@ class Theme < ApplicationRecord
   }
 
   def set_retrobit_template
-    date = Date.today
+    date = Date.current
     self.creation_date ||= date
     self.title ||= "Retro Bits #{date}"
     self.description ||= "Retro Bits Theme - #{date.cweek.ordinalize} week of #{date.year}"

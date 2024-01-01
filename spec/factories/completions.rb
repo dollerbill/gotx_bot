@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :completion do
-    completed_at { Date.today }
+    completed_at { Date.current }
     nomination { build(:nomination) }
     user { build(:user) }
 
