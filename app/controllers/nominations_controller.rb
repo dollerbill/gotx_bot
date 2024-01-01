@@ -41,10 +41,10 @@ class NominationsController < ApplicationController
 
   def winners
     if params[:month].present? && params[:year].present?
-      date = Date.new(params[:year].to_i, params[:month].to_i, 1)
+      d = Date.new(params[:year].to_i, params[:month].to_i, 1)
       @winners = Nomination.gotm.joins(:theme)
                            .where(winner: true)
-                           .where('EXTRACT(MONTH FROM themes.creation_date) = ? AND EXTRACT(YEAR FROM themes.creation_date) = ?', date.month, date.year)
+                           .where('EXTRACT(MONTH FROM themes.creation_date) = ? AND EXTRACT(YEAR FROM themes.creation_date) = ?', d.month, d.year)
     else
       @winners = Nomination.none
     end

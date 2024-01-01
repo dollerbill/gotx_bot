@@ -3,6 +3,9 @@ AllCops:
     - 'db/**/*.rb'
     - 'bin/*'
 
+Layout/LineLength:
+  Max: 150
+
 Lint/AmbiguousBlockAssociation:
   Enabled: false
 
