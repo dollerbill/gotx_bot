@@ -14,8 +14,16 @@ RSpec.describe Subscriptions::FindOrCreate do
       end
     end
 
-    context 'with an existing subscription' do
+    context 'with an existing active subscription' do
       let!(:existing_subscription) { create(:subscription, :active, user:) }
+
+      it 'returns the users existing subscription' do
+        expect(subject).to eq(existing_subscription)
+      end
+    end
+
+    context 'with a newly subscribed subscription' do
+      let!(:existing_subscription) { create(:subscription, :newly_subscribed, user:) }
 
       it 'returns the users existing subscription' do
         expect(subject).to eq(existing_subscription)

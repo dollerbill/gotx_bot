@@ -5,7 +5,7 @@ class Subscription < ApplicationRecord
 
   belongs_to :user
 
-  scope :active, -> { where(end_date: nil).where.not(subscribed_months: 1) }
+  scope :active, -> { where(end_date: nil) }
   scope :cancelled, -> { where.not(end_date: nil) }
   scope :newly_subscribed, -> { where(subscribed_months: 1, end_date: nil) }
 
