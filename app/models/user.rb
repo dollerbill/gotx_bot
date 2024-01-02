@@ -4,6 +4,7 @@ class User < ApplicationRecord
   has_many :completions
   has_many :nominations
   has_many :streaks
+  has_many :subscriptions
 
   scope :scores, -> { where.not(name: nil).order(earned_points: :desc) }
   scope :top10, -> { scores.limit(10) }
@@ -26,7 +27,7 @@ class User < ApplicationRecord
   def completion_streak
     return 0 unless completions.any?
 
-    themes = Theme.gotm.where('creation_date <= ?', Date.today).order(creation_date: :desc)
+    themes = Theme.gotm.where('creation_date <= ?', Date.current).order(creation_date: :desc)
     streak = 0
     starting_theme = if completed?(themes.first)
                        themes.first

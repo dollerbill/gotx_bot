@@ -11,6 +11,7 @@ FactoryBot.define do
     time_to_beat { 42 }
     screenscraper_id { 19_289 }
 
+    # rubocop:disable Layout/LineLength
     trait :screenscraper_attributes do
       screenscraper_id { '19626' }
       title_usa { 'Lunar : Silver Star Story Complete' }
@@ -30,5 +31,6 @@ FactoryBot.define do
         ]
       end
     end
+    # rubocop:enable Layout/LineLength
   end
 end

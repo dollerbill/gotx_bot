@@ -19,6 +19,11 @@ RSpec.describe Users::AddMonthlyPremiumPoints do
         .and change { supporter.reload.premium_points }.from(0).to(1)
     end
 
+    it 'updates subscriptions' do
+      expect_any_instance_of(Subscriptions::UpdateMonthly).to receive(:call)
+      subject
+    end
+
     it 'notifies' do
       expect(subject).to eq('Notified!')
     end

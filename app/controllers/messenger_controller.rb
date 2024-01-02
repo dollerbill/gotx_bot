@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class MessengerController < ApplicationController
-
   def create
     params.delete(:member_id) if params[:member_id].blank?
 

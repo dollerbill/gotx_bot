@@ -20,7 +20,7 @@
   <div class="card-body">
     <h4>Add a completion for this nomination</h4>
     <%= form_with(url: completions_path, local: true) do |f| %>
-      <%= f.hidden_field :completed_at, value: Date.today %>
+      <%= f.hidden_field :completed_at, value: Date.current %>
       <%= f.hidden_field :nomination_id, value: @nomination.id %>
       <%= f.select :user_id, user_options_for_select, prompt: 'Select User' %>
       <%= f.submit "Record Completion" %>

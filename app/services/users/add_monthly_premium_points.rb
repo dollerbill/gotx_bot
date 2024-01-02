@@ -9,6 +9,7 @@ module Users
     def call
       User.transaction do
         update_points
+        update_subscriptions
         notify
       end
     end
@@ -17,6 +18,10 @@ module Users
       User.supporter.update_all('current_points = current_points + 1, premium_points = premium_points + 1')
       User.champion.update_all('current_points = current_points + 2, premium_points = premium_points + 2')
       User.legend.update_all('current_points = current_points + 3, premium_points = premium_points + 3')
+    end
+
+    def update_subscriptions
+      Subscriptions::UpdateMonthly.call
     end
 
     def notify
