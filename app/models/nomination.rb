@@ -8,7 +8,7 @@ class Nomination < ApplicationRecord
     'goty' => 'GotY'
   }.freeze
 
-  belongs_to :game, dependent: :destroy
+  belongs_to :game
   belongs_to :user
   belongs_to :theme
   has_many :completions
