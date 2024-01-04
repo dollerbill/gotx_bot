@@ -42,6 +42,8 @@ en:
     retro: '%{game} was a Retrobit game starting the week of %{date}.'
     closed: 'Nominations are closed, check back at %{time}'
     existing_game_nomination: '%{game} has already been nominated this month!'
+    previous_rpg_winner: '%{game} was an RPGotQ game in the past year.'
+    previous_weekly_winner: '%{game} was a RetroBit game in the past year.'
     existing_user_nomination: 'You may only nominate one game at a time, try again next month.'
     previous_nomination: "%{game} (screenscraper id %{id}) has already won GotM and can't be nominated again."
     completed:

@@ -19,6 +19,13 @@ RSpec.describe Games::ValidateNomination do
   describe 'call' do
     context 'successful nomination' do
       it { is_expected.to be_nil }
+
+      context 'previous rpg winner from over a year ago' do
+        let(:theme) { create(:theme, :previous, :rpg, creation_date: 2.years.ago) }
+        let!(:nomination) { create(:nomination, :winner, :rpg, theme:, game:, user:) }
+
+        it { is_expected.to be_nil }
+      end
     end
 
     context 'invalid nomination' do
@@ -46,6 +53,13 @@ RSpec.describe Games::ValidateNomination do
         let!(:nomination) { create(:nomination, :winner, theme:, game:) }
 
         it_behaves_like 'invalid nomination', 'has already won'
+      end
+
+      context 'previous weekly winners from within the past year' do
+        let(:theme) { create(:theme, :previous, :retro) }
+        let!(:nomination) { create(:nomination, :winner, :retro, game:, theme:, user:) }
+
+        it_behaves_like 'invalid nomination', 'was a RetroBit game in the past year.'
       end
     end
   end
