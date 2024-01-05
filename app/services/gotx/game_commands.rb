@@ -71,13 +71,19 @@ module Gotx
     application_command(:nominate) do |event|
       ActiveRecord::Base.connection_pool.with_connection do
         user = ::Users::FindOrCreate.(event.user)
-        validation = ::Games::ValidateNomination.(event.options.merge!('user_id' => user.id))
+        game = Game.find_by(screenscraper_id: event.options['screenscraper_id'])
+        validation = ::Games::ValidateNomination.(event.options.merge!('user' => user, 'game' => game))
         next event.respond(content: validation) if validation
 
         event.respond(content: 'Nomination is being created, please watch for the result.', ephemeral: true)
 
-        game_atts = ::Scrapers::Screenscraper.(event.options)
-        game = Game.create!(**game_atts)
+        if game
+          Nomination.create!(user:, game:, theme: Theme.gotm.find_by('creation_date >=?', Date.current))
+          game_atts = { img_url: game.img_url, nominations_attributes: [{ description: event.options['description'] }] }
+        else
+          game_atts = ::Scrapers::Screenscraper.(event.options)
+          game = Game.create!(**game_atts)
+        end
         event.channel.send_message("#{event.user.mention} nominated #{game.preferred_name}!")
         event.channel.send_embed do |embed|
           embed.description = build_description(game, game_atts)
@@ -85,6 +91,8 @@ module Gotx
         end
       end
     rescue StandardError => e
+      next if e.instance_of?(ActiveRecord::ConnectionNotEstablished)
+
       event.bot.channel(CHANNELS[:dev]).send_message(<<~ERROR)
         Error creating GotM nomination from #{event.user.name}\n#{e}\n#{event.options}
       ERROR
@@ -123,9 +131,9 @@ module Gotx
         event.update_message(content: 'Select the game to complete') do |_, view|
           view.row do |r|
             r.select_menu(custom_id: 'game_complete', placeholder: 'Games', max_values: 1) do |s|
-              available.each do |nomination|
-                value = { nomination_id: nomination.id, member_id: user.discord_id }.to_json
-                s.option(label: nomination.game.preferred_name, value:)
+              available.each do |nom|
+                value = { nomination_id: nom.id, member_id: user.discord_id }.to_json
+                s.option(label: nom.game.preferred_name, value:)
               end
             end
           end

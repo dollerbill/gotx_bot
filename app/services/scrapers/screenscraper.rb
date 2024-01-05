@@ -49,7 +49,7 @@ module Scrapers
         time_to_beat: atts['time_to_beat'],
         nominations_attributes: [
           {
-            user_id: atts['user_id'],
+            user: atts['user'],
             theme: Theme.gotm.find_by('creation_date >=?', Date.current),
             description: atts['description'] || game['synopsis']&.find { |s| s['langue'] == 'en' }&.dig('text')
           }
