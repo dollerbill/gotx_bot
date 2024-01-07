@@ -17,14 +17,14 @@ class GamesController < ApplicationController
   def edit; end
 
   def create_weekly_retrobit
-    game_atts = ::Scrapers::Screenscraper.(screenscraper_params.merge('user_id' => 12))
+    game_atts = ::Scrapers::Screenscraper.(screenscraper_params.merge('user' => User.find(12)))
     @game = ::Games::WeeklyRetrobit.(game_atts)
 
     redirect_to game_url(@game), notice: 'RetroBit was successfully created.'
   end
 
   def create_monthly_rpg
-    game_atts = ::Scrapers::Screenscraper.(screenscraper_params.merge('user_id' => 12))
+    game_atts = ::Scrapers::Screenscraper.(screenscraper_params.merge('user' => User.find(12)))
     @game = ::Games::QuarterlyRpg.(game_atts.merge(theme_id: params[:theme_id]))
 
     redirect_to game_url(@game), notice: 'RPGotQ was successfully created.'
