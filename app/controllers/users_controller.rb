@@ -1,9 +1,13 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
+  include Helpers::FuzzySearchHelper
+
   before_action :set_user, only: %i[show edit update redeem_points]
 
   def index
+    set_search_limit
+
     @users = if params[:search]&.presence
                ids = User.fuzzy_search(params[:search]).map(&:id)
                User.where(id: ids).order(:name).page(params[:page]).per(25)

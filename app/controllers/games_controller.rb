@@ -1,9 +1,13 @@
 # frozen_string_literal: true
 
 class GamesController < ApplicationController
+  include Helpers::FuzzySearchHelper
+
   before_action :set_game, only: %i[show edit update]
 
   def index
+    set_search_limit
+
     @games = if params[:search]&.presence
                ids = Game.fuzzy_search(params[:search]).map(&:id)
                Game.where(id: ids).page(params[:page]).per(25)
