@@ -57,7 +57,7 @@ RSpec.describe 'Games', type: :request do
 
   describe 'POST /create_weekly_retrobit' do
     let(:atts) { { screenscraper_id: 123, time_to_beat: 11 } }
-    let!(:user) { create(:user) }
+    let!(:user) { create(:user, id: 12) }
 
     before do
       allow_any_instance_of(Scrapers::Screenscraper)
@@ -84,7 +84,7 @@ RSpec.describe 'Games', type: :request do
   describe 'POST /create_monthly_rpg' do
     let(:atts) { { screenscraper_id: 999, time_to_beat: 55, theme_id: theme.id } }
     let(:theme) { create(:theme, :rpg) }
-    let!(:user) { create(:user) }
+    let!(:user) { create(:user, id: 12) }
 
     before do
       allow_any_instance_of(Scrapers::Screenscraper)
