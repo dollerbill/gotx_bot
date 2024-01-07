@@ -12,8 +12,6 @@ bot.message do |event|
   puts "Received message: #{event.user.name} - #{event.message.content}"
 end
 
-ActiveRecord::Base.connection.execute('SELECT set_limit(0.6);')
-
 MODULES.each { |mod| bot.include! mod }
 
 bot.run :async

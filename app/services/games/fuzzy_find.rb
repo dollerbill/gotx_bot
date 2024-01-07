@@ -2,6 +2,8 @@
 
 module Games
   class FuzzyFind
+    include Helpers::FuzzySearchHelper
+
     attr_reader :search_term
 
     def self.call(search_term)
@@ -13,6 +15,8 @@ module Games
     end
 
     def call
+      set_search_limit
+
       results = {}
 
       %i[usa world eu jp other].each { |region| results[region] = Game.fuzzy_search("title_#{region}": search_term) }
