@@ -7,6 +7,8 @@ module Gotx
       base.extend Discordrb::EventContainer
     end
 
+    EMOJI = 1042504406064701500
+
     CHANNELS = {
       dev: ENV['DEV_CHANNEL_ID'],
       rank: ENV['RANK_CHANNEL_ID'],

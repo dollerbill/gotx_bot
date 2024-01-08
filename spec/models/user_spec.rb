@@ -34,9 +34,9 @@ RSpec.describe User, type: :model do
     context 'top10' do
       it 'returns the 10 highest points' do
         users = Array.new(12) { |i| create(:user, name: "User#{i + 4}", earned_points: (i + 1) * 10) }
-        top_10 = users.sort_by(&:earned_points).reverse.first(10)
+        top10 = users.sort_by(&:earned_points).reverse.first(10)
 
-        expect(User.top10.to_a).to match_array([top_user, mid_user, low_user] + top_10)
+        expect(User.top10.to_a).to match_array([top_user, mid_user, low_user] + top10)
 
         # (1..15).each do |num|
         #   User.create(name: num, earned_points: num)

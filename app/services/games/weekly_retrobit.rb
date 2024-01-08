@@ -49,10 +49,7 @@ module Games
       description += ":joystick: #{game.system}\n" if game.system
       description += ":crossed_swords: #{game.genre}\n" if game.genre
       description += ":timer: #{game.time_to_beat}\n" if game.time_to_beat
-      if atts.dig(:nominations_attributes, 0, :description)
-        description += atts[:nominations_attributes][0][:description].truncate(200, separator: ' ')
-      end
-      description
+      description + (atts.dig(:nominations_attributes, 0, :description)&.truncate(200, separator: ' ') || '')
     end
 
     def post_game

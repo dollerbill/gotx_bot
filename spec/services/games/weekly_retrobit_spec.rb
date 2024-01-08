@@ -32,6 +32,22 @@ RSpec.describe Games::WeeklyRetrobit do
         expect(channel).to have_received(:send_message).with(match('Saturday nights are for Retro Bits!'))
         expect(channel).to have_received(:send_embed).exactly(2).times
       end
+
+      it 'adds the description' do
+        expect(atts[:nominations_attributes][0][:description]).to be_present
+        weekly_retrobit.call
+        expect(Game.first.nominations.first.description).to eq(atts[:nominations_attributes][0][:description])
+      end
+
+      context 'with no description' do
+        before { atts[:nominations_attributes][0][:description] = nil }
+
+        it 'adds a default description' do
+          expect(atts[:nominations_attributes][0][:description]).to be_nil
+          weekly_retrobit.call
+          expect(Game.first.nominations.first.description).to be_nil
+        end
+      end
     end
   end
 end

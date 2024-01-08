@@ -117,9 +117,7 @@ module Gotx
       type = event.interaction.button.custom_id.split('game_complete_')[1]
       available = Nominations::FindCompletable.(user, type)
 
-      if available.empty?
-        next event.update_message(content: "There are no remaining #{type} games to complete for #{user.name}.")
-      end
+      next event.update_message(content: "There are no remaining #{type} games to complete for #{user.name}.") if available.empty?
 
       if %w[retro rpg].include?(type)
         member = event.bot.user(user.discord_id)
@@ -150,13 +148,13 @@ module Gotx
       data = JSON.parse(event.values[0])
       member = event.bot.user(data['member_id'])
       user = ::Users::FindOrCreate.(member)
-      nomination = Nomination.find(data['nomination_id'])
-      if user.completions.find_by(nomination_id: nomination.id)
-        next event.respond(content: "#{user.name} has already completed #{nomination.game.preferred_name}")
+      nom = Nomination.find(data['nomination_id'])
+      if user.completions.find_by(nomination_id: nom.id)
+        next event.respond(content: I18n.t('users.already_completed', user: user.name, game: nom.game.preferred_name))
       end
 
-      ::Nominations::Complete.(user, nomination)
-      event.respond(content: "#{member.mention} #{completion_message(nomination, user)}")
+      ::Nominations::Complete.(user, nom)
+      event.respond(content: "#{member.mention} #{completion_message(nom, user)}")
       event.delete_message(event.message)
     end
   end
