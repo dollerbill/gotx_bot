@@ -25,9 +25,9 @@ module Gotx
       user = ::Users::FindOrCreate.(member)
       event.respond(content: 'Update premium membership status:') do |_, view|
         view.row do |r|
-          r.button(label: 'Membership status', style: :secondary, custom_id: "#{user.id}_premium_member_status")
-          r.button(label: 'Remove membership', style: :danger, custom_id: "#{user.id}_update_premium_member_remove")
-          r.button(label: 'Add membership', style: :success, custom_id: "#{user.id}_update_premium_member_add")
+          r.button(label: 'Membership status', style: :secondary, custom_id: "#{user.id}_premium_member_status", emoji: 1042504406064701500)
+          r.button(label: 'Remove membership', style: :danger, custom_id: "#{user.id}_update_premium_member_remove", emoji: 1042504406064701500)
+          r.button(label: 'Add membership', style: :success, custom_id: "#{user.id}_update_premium_member_add", emoji: 1042504406064701500)
         end
       end
     end
@@ -69,9 +69,9 @@ module Gotx
 
       event.update_message(content: 'Update membership level:') do |_, view|
         view.row do |row|
-          row.button(label: 'Supporter', style: :danger, custom_id: "#{user.id}_add_premium_membership_supporter")
-          row.button(label: 'Champion', style: :success, custom_id: "#{user.id}_add_premium_membership_champion")
-          row.button(label: 'Legend', style: :primary, custom_id: "#{user.id}_add_premium_membership_legend")
+          row.button(label: 'Supporter', style: :danger, custom_id: "#{user.id}_add_premium_membership_supporter", emoji: 1042504406064701500)
+          row.button(label: 'Champion', style: :success, custom_id: "#{user.id}_add_premium_membership_champion", emoji: 1042504406064701500)
+          row.button(label: 'Legend', style: :primary, custom_id: "#{user.id}_add_premium_membership_legend", emoji: 1042504406064701500)
         end
       end
     end
