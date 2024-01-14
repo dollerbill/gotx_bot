@@ -16,40 +16,33 @@ RSpec.describe User, type: :model do
       .backed_by_column_of_type(:string)
   end
 
-  context 'associations' do
+  describe 'associations' do
     it { is_expected.to have_many :completions }
     it { is_expected.to have_many :nominations }
     it { is_expected.to have_many :streaks }
   end
 
-  xdescribe 'scopes' do
-    let!(:new_user) { create(:user) }
-    let!(:top_user) { create(:user, :current_points, :legend, current_points: 999) }
-    let!(:mid_user) { create(:user, :current_points, current_points: 90) }
-    let!(:low_user) { create(:user, :current_points, current_points: 9) }
-    let!(:champion) { create(:user, :champion) }
-    let!(:supporter) { create(:user, :supporter) }
+  describe 'scopes' do
+    let!(:new_user)      { create(:user) }
+    let!(:top_user)      { create(:user, :legend, earned_points: 999) }
+    let!(:mid_user)      { create(:user, earned_points: 90) }
+    let!(:low_user)      { create(:user, earned_points: 9) }
+    let!(:champion)      { create(:user, :champion) }
+    let!(:supporter)     { create(:user, :supporter) }
     let!(:redeemed_user) { create(:user, :redeemed_points) }
 
     context 'top10' do
       it 'returns the 10 highest points' do
-        users = Array.new(12) { |i| create(:user, name: "User#{i + 4}", earned_points: (i + 1) * 10) }
-        top10 = users.sort_by(&:earned_points).reverse.first(10)
-
-        expect(User.top10.to_a).to match_array([top_user, mid_user, low_user] + top10)
-
-        # (1..15).each do |num|
-        #   User.create(name: num, earned_points: num)
-        # end
-        # 5.times { User.create(name: rand(5), earned_points: 25) }
-        # expect(User.top10.count).to eq(10)
+        (1..5).map { |i| create(:user, earned_points: i * 10, name: "User #{i}") }
+        expect(User.top10.length).to eq(10)
+        expect(User.top10[0..2]).to eq([top_user, redeemed_user, mid_user])
       end
     end
 
     context 'scores' do
       let(:score_users) { [top_user, redeemed_user, mid_user, low_user] }
       it 'returns users with a name ordered by earned_points in descending order' do
-        expect(User.scores.to_a).to match_array(score_users)
+        expect(User.scores[0..3]).to match_array(score_users)
       end
     end
 
@@ -61,7 +54,30 @@ RSpec.describe User, type: :model do
     end
 
     context 'previous_finishers' do
-      it '' do
+      let(:goty_theme)  { build(:theme, :goty, creation_date: Date.current.last_year.beginning_of_year) }
+      let(:rpg_theme)   { build(:theme, :rpg, creation_date: Date.current.last_quarter.beginning_of_quarter) }
+      let(:retro_theme) { build(:theme, :retro, creation_date: Date.current.last_week.beginning_of_week) }
+
+      let(:gotm_nom) { build(:nomination, theme: create(:theme, creation_date: Date.current.last_month.beginning_of_month)) }
+      let(:goty_nom) { build(:nomination, :goty, theme: goty_theme) }
+      let(:rpg_nom) { build(:nomination, :rpg, theme: rpg_theme) }
+      let(:retro_nom) { build(:nomination, :retro, theme: retro_theme) }
+
+      let(:gotm_completion)  { create(:completion, nomination: gotm_nom) }
+      let(:goty_completion)  { create(:completion, nomination: goty_nom) }
+      let(:rpg_completion)   { create(:completion, nomination: rpg_nom) }
+      let(:retro_completion) { create(:completion, nomination: retro_nom) }
+
+      let!(:gotm_users)  { [gotm_completion.user] }
+      let!(:goty_users)  { [goty_completion.user] }
+      let!(:rpg_users)   { [rpg_completion.user] }
+      let!(:retro_users) { [retro_completion.user] }
+
+      it 'returns users who have completed the previous theme' do
+        expect(User.previous_finishers('gotm').to_a).to match_array(gotm_users)
+        expect(User.previous_finishers('goty').to_a).to match_array(goty_users)
+        expect(User.previous_finishers('rpg').to_a).to match_array(rpg_users)
+        expect(User.previous_finishers('retro').to_a).to match_array(retro_users)
       end
     end
   end

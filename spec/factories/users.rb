@@ -20,8 +20,8 @@ FactoryBot.define do
     trait :redeemed_points do
       current_points { 0.0 }
       redeemed_points { 99.0 }
-      earned_points { 90.0 }
-      premium_points { 9.0 }
+      earned_points { 95.0 }
+      premium_points { 4.0 }
     end
 
     trait :legend do
