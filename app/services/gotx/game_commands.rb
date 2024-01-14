@@ -60,10 +60,10 @@ module Gotx
 
       event.respond(content: 'Select Game type to complete:', ephemeral: true) do |_, view|
         view.row do |r|
-          r.button(label: 'GotM', style: :primary, custom_id: "#{user.id}_game_complete_gotm")
-          r.button(label: 'Retrobit', style: :secondary, custom_id: "#{user.id}_game_complete_retro")
-          r.button(label: 'RPGotQ', style: :success, custom_id: "#{user.id}_game_complete_rpg")
-          r.button(label: 'GotY', style: :danger, custom_id: "#{user.id}_game_complete_goty")
+          r.button(label: 'GotM', style: :primary, custom_id: "#{user.id}_game_complete_gotm", emoji: 1042504406064701500)
+          r.button(label: 'Retrobit', style: :secondary, custom_id: "#{user.id}_game_complete_retro", emoji: 1042504406064701500)
+          r.button(label: 'RPGotQ', style: :success, custom_id: "#{user.id}_game_complete_rpg", emoji: 1042504406064701500)
+          r.button(label: 'GotY', style: :danger, custom_id: "#{user.id}_game_complete_goty", emoji: 1042504406064701500)
         end
       end
     end
@@ -133,7 +133,7 @@ module Gotx
             r.select_menu(custom_id: 'game_complete', placeholder: 'Games', max_values: 1) do |s|
               available.each do |nom|
                 value = { nomination_id: nom.id, member_id: user.discord_id }.to_json
-                s.option(label: nom.game.preferred_name, value:)
+                s.option(label: nom.game.preferred_name, value:, emoji: 1042504406064701500)
               end
             end
           end
