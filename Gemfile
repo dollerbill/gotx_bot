@@ -10,22 +10,26 @@ gem 'discordrb', git: 'https://github.com/shardlab/discordrb.git', ref: 'main'
 gem 'dotenv-rails'
 gem 'kaminari'
 gem 'pg', '~> 1.1'
-gem 'puma', '~> 5.0'
-gem 'rails', '~> 6.1.7', '>= 6.1.7.4'
+gem 'puma', '~> 6.0'
+gem 'rails', '~> 6.1.7.5'
 gem 'textacular', '~> 5.0'
 
-# Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-# gem 'rack-cors'
+group :ci do
+  gem 'brakeman', require: false
+  gem 'bundler-audit', require: false
+end
 
 group :development, :test do
   gem 'factory_bot_rails'
   gem 'pry-byebug'
-  gem 'rspec-rails', '~> 6.0.0'
+  gem 'rspec-rails', '~> 6.1.0'
 end
 
 group :development do
   gem 'listen', '~> 3.3'
   gem 'rubocop'
+  gem 'rubocop-rails'
+  gem 'rubocop-rspec'
   gem 'spring'
   gem 'whenever', require: false
 end

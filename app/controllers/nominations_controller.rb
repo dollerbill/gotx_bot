@@ -4,7 +4,7 @@ class NominationsController < ApplicationController
   before_action :set_nomination, only: %i[show edit update select_winner destroy]
 
   def index
-    @type = params[:type] || 'gotm'
+    @type = %w[gotm rpg retro].include?(params[:type]) ? params[:type] : 'gotm'
     @nominations = Nomination.public_send(@type).page(params[:page]).per(25)
   end
 
