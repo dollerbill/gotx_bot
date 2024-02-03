@@ -10,9 +10,15 @@ FactoryBot.define do
     trait :goty do
       nomination_type { 'goty' }
     end
+
+    trait :gotwoty do
+      nomination_type { 'gotwoty' }
+    end
+
     trait :retro do
       nomination_type { 'retro' }
     end
+
     trait :rpg do
       nomination_type { 'rpg' }
     end

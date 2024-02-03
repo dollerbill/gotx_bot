@@ -4,7 +4,7 @@ class NominationsController < ApplicationController
   before_action :set_nomination, only: %i[show edit update select_winner destroy]
 
   def index
-    @type = params[:type] || 'gotm'
+    @type = %w[gotm rpg retro].include?(params[:type]) ? params[:type] : 'gotm'
     @nominations = Nomination.public_send(@type).page(params[:page]).per(25)
   end
 
@@ -39,6 +39,7 @@ class NominationsController < ApplicationController
     redirect_to nominations_url, notice: 'Nomination was successfully destroyed.'
   end
 
+  # rubocop:disable Layout/LineLength
   def winners
     if params[:month].present? && params[:year].present?
       date = Date.new(params[:year].to_i, params[:month].to_i, 1)
@@ -53,6 +54,7 @@ class NominationsController < ApplicationController
               .select('DISTINCT EXTRACT(MONTH FROM themes.creation_date) AS month, EXTRACT(YEAR FROM themes.creation_date) AS year')
               .order('year DESC, month DESC')
   end
+  # rubocop:enable Layout/LineLength
 
   private
 

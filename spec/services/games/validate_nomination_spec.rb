@@ -39,6 +39,8 @@ RSpec.describe Games::ValidateNomination do
         let(:atts) { super().merge('game' => game) }
         let!(:existing_nomination) { create(:nomination, game:) }
 
+        before { allow(Theme).to receive(:current_gotm_theme).and_return([existing_nomination.theme]) }
+
         it_behaves_like 'invalid nomination', 'has already been nominated'
       end
 
@@ -51,11 +53,15 @@ RSpec.describe Games::ValidateNomination do
       context 'user already nominated' do
         let!(:nomination) { create(:nomination, user:) }
 
+        before { allow(Theme).to receive(:current_gotm_theme).and_return([nomination.theme]) }
+
         it_behaves_like 'invalid nomination', 'You may only nominate one game'
       end
 
       context 'game already nominated' do
         let!(:nomination) { create(:nomination, game:) }
+
+        before { allow(Theme).to receive(:current_gotm_theme).and_return([nomination.theme]) }
 
         it_behaves_like 'invalid nomination', 'has already been nominated'
       end

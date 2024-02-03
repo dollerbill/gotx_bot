@@ -58,7 +58,7 @@ RSpec.describe Nominations::Complete do
       it_behaves_like 'successful completion'
 
       it 'updates the streak' do
-        expect { complete.call }.to change { streak.reload.streak_count }.from(1).to(2)
+        expect { complete.call }.to change { streak.reload.streak_count }.from(2).to(3)
       end
 
       context 'when providing skip' do

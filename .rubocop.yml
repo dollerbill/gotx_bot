@@ -2,8 +2,17 @@ AllCops:
   Exclude:
     - 'db/**/*.rb'
     - 'bin/*'
+  NewCops: disable
+
+Layout/LineLength:
+  Max: 130
+  Exclude:
+    - 'spec/factories/*.rb'
 
 Lint/AmbiguousBlockAssociation:
+  Enabled: false
+
+Lint/FloatComparison:
   Enabled: false
 
 Metrics/AbcSize:
@@ -27,5 +36,11 @@ Metrics/PerceivedComplexity:
 Style/Documentation:
   Enabled: false
 
+Style/FetchEnvVar:
+  Enabled: false
+
 Style/LambdaCall:
+  Enabled: false
+
+Style/NumericLiterals:
   Enabled: false

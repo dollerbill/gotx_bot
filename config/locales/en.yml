@@ -52,6 +52,7 @@ en:
   points:
     redeem: 'Your request to redeem your points has been sent, you will be contacted shortly.'
   users:
+    already_completed: '%{name} has already completed %{game}'
     streak:
       format:
         zero: '%{name} does not currently have a GotM completion streak.'
