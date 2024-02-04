@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Streaks::Update do
+RSpec.describe Streaks::Increase do
   let(:user) { User.new(name: 'name') }
   let(:streak) { Streak.new(user:, start_date: 1.months.ago.beginning_of_month, streak_count: 1) }
 

@@ -2,14 +2,6 @@
 
 module Nominations
   class Complete
-    COMPLETION_POINTS = {
-      'gotm' => 1,
-      'goty' => 1,
-      'retro' => 0.5,
-      'gotwoty' => 0.5,
-      'rpg' => 1
-    }.freeze
-
     attr_reader :user, :nomination, :points, :skip
 
     def self.call(user, nomination, skip = nil)
@@ -20,7 +12,7 @@ module Nominations
       @user = user
       @nomination = nomination
       @skip = skip
-      @points = COMPLETION_POINTS[nomination.nomination_type]
+      @points = Completion::COMPLETION_POINTS[nomination.nomination_type]
     end
 
     def call
@@ -39,7 +31,7 @@ module Nominations
       streak = ::Streaks::FindOrCreate.(user.id)
       return if streak.last_incremented&.month == Date.current.month
 
-      ::Streaks::Update.(streak)
+      ::Streaks::Increase.(streak)
     end
 
     def theme_has_completion?

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Streaks
-  class Update
+  class Increase
     attr_reader :streak
 
     def self.call(streak)
