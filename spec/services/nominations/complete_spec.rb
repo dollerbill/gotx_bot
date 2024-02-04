@@ -64,11 +64,11 @@ RSpec.describe Nominations::Complete do
       context 'when providing skip' do
         let(:skip) { true }
 
-        before { allow(Streaks::Update).to receive(:call) }
+        before { allow(Streaks::Increase).to receive(:call) }
 
         it 'does not update the streak' do
           expect { complete.call }.not_to change { streak.reload.streak_count }
-          expect(Streaks::Update).to_not have_received(:call)
+          expect(Streaks::Increase).to_not have_received(:call)
         end
       end
     end

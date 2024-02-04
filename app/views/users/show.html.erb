@@ -27,8 +27,8 @@
         <% end %>
       </li>
 
-      <li class="list-group-item">
-        <% if @completions.any? %>
+      <% if @completions.any? %>
+        <li class="list-group-item">
           <h3>Completed Games</h3>
           <table class="table table-striped table-hover">
             <thead>
@@ -37,6 +37,7 @@
               <th scope="col">System</th>
               <th scope="col">Completed At</th>
               <th scope="col">Theme</th>
+              <th></th>
             </tr>
             </thead>
             <tbody>
@@ -46,17 +47,22 @@
                 <td><%= completion.nomination.game.system %></td>
                 <td><%= in_est_zone(completion.nomination.created_at) %></td>
                 <td><%= completion.nomination.theme.title %></td>
+                <td>
+                  <%= button_to completion_path(completion), method: :delete do %>
+                    <%= content_tag(:i, '', class: 'fas fa-trash') %>
+                  <% end %>
+                </td>
               </tr>
             <% end %>
 
             </tbody>
           </table>
-      <%= paginate @completions %>
+          <%= paginate @completions %>
+        </li>
       <% end %>
-      </li>
 
-      <li class="list-group-item">
-        <% if @nominations.any? %>
+      <% if @nominations.any? %>
+        <li class="list-group-item">
           <h3>Nominated Games</h3>
           <table class="table table-striped table-hover">
             <thead>
@@ -81,8 +87,8 @@
             </tbody>
           </table>
           <%= paginate @nominations %>
-        <% end %>
-      </li>
+        </li>
+      <% end %>
     </ul>
   </div>
   <div class="card-footer text-muted">
