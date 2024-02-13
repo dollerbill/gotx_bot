@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class HomeController < ApplicationController
-  before_action :basic_authenticate
+  before_action :basic_authenticate, unless: -> { Rails.env.development? }
   skip_before_action :ensure_admin_authenticated
 
   def index; end

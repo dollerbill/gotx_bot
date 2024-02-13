@@ -37,7 +37,7 @@
 			<h5 class="card-header">Create GotM Theme</h5>
 			<div class="card-body">
 				<p class="card-text">Create a new monthly Theme for GotM.</p>
-				<%= link_to 'Create Theme', new_theme_path, class: "btn btn-outline-primary my-2 my-sm-0" %>
+				<%= link_to 'Create Theme', new_theme_path(creation_date: Date.current.next_month.beginning_of_month), class: "btn btn-outline-primary my-2 my-sm-0" %>
 			</div>
 		</div>
 	</div>
