@@ -1,15 +1,18 @@
 # frozen_string_literal: true
 
 class ThemesController < ApplicationController
+  include Pagy::Backend
+
   before_action :set_theme, only: %i[show edit update destroy]
 
   def index
-    @themes = if params[:search]&.presence
-                ids = Theme.basic_search(title: params[:search]).map(&:id)
-                Theme.where(id: ids).order(:creation_date).page(params[:page]).per(25)
-              else
-                Theme.order(:creation_date).page(params[:page]).per(25)
-              end
+    themes = if params[:search]&.presence
+               ids = Theme.basic_search(title: params[:search]).map(&:id)
+               Theme.where(id: ids).order(:creation_date)
+             else
+               Theme.order(:creation_date)
+             end
+    @pagy, @themes = pagy(themes)
   end
 
   def show; end

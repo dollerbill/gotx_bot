@@ -37,5 +37,5 @@
     <% end %>
     </tbody>
   </table>
-  <%= paginate @nominations %>
+  <%== pagy_nav(@pagy) %>
 <%= link_to 'Back', nominations_path %>

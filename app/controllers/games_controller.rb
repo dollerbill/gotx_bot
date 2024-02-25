@@ -2,18 +2,20 @@
 
 class GamesController < ApplicationController
   include Helpers::FuzzySearchHelper
+  include Pagy::Backend
 
   before_action :set_game, only: %i[show edit update]
 
   def index
     set_search_limit
 
-    @games = if params[:search]&.presence
-               ids = Game.fuzzy_search(params[:search]).map(&:id)
-               Game.where(id: ids).page(params[:page]).per(25)
-             else
-               Game.all.order(:title_usa).page(params[:page]).per(25)
-             end
+    games = if params[:search]&.presence
+              ids = Game.fuzzy_search(params[:search]).map(&:id)
+              Game.where(id: ids)
+            else
+              Game.all.order(:title_usa)
+            end
+    @pagy, @games = pagy(games)
   end
 
   def show; end
