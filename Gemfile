@@ -14,7 +14,7 @@ gem 'puma', '~> 6.0'
 gem 'rails', '~> 6.1.7.5'
 gem 'textacular', '~> 5.0'
 
-group :ci do
+group :development, :ci do
   gem 'brakeman', require: false
   gem 'bundler-audit', require: false
 end
@@ -26,10 +26,9 @@ group :development, :test do
 end
 
 group :development do
+  gem 'annotate'
   gem 'listen', '~> 3.3'
-  gem 'rubocop'
-  gem 'rubocop-rails'
-  gem 'rubocop-rspec'
+  gem 'rubocop', require: false
   gem 'spring'
   gem 'whenever', require: false
 end
