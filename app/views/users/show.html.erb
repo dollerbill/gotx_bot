@@ -57,7 +57,7 @@
 
             </tbody>
           </table>
-          <%== pagy_nav(@pagy_completions, params: { page_nominations: params[:page_nominations] }, page_param: :page_completions) %>
+          <%== pagy_nav(@pagy_completions, params: { page_nominations: h(params[:page_nominations]) }, page_param: :page_completions) %>
         </li>
       <% end %>
 
@@ -86,7 +86,7 @@
             <% end %>
             </tbody>
           </table>
-          <%== pagy_nav(@pagy_nominations, params: { page_completions: params[:page_completions] }, page_param: :page_nominations) %>
+          <%== pagy_nav(@pagy_nominations, params: { page_completions: h(params[:page_completions]) }, page_param: :page_nominations) %>
         </li>
       <% end %>
     </ul>
