@@ -25,7 +25,7 @@
     <% end %>
     </tbody>
   </table>
-  <%= paginate @users %>
+  <%== pagy_nav(@pagy) %>
 
   <div class="card-footer text-muted">
     <%= link_to 'Back', games_path %>

@@ -1,15 +1,17 @@
 # frozen_string_literal: true
 
 class NominationsController < ApplicationController
+  include Pagy::Backend
+
   before_action :set_nomination, only: %i[show edit update select_winner destroy]
 
   def index
     @type = %w[gotm rpg retro].include?(params[:type]) ? params[:type] : 'gotm'
-    @nominations = Nomination.public_send(@type).page(params[:page]).per(25)
+    @pagy, @nominations = pagy(Nomination.public_send(@type))
   end
 
   def current_nominations
-    @nominations = Nomination.current_nominations.page(params[:page]).per(25)
+    @pagy, @nominations = pagy(Nomination.current_nominations)
   end
 
   def show; end

@@ -12,7 +12,7 @@ module Gotx
       game = ::Games::FuzzyFind.(game_name)
       return I18n.t('nominations.missing', search: game_name) unless game
 
-      nomination = game.nominations.select(&:winner).first || game.nominations.first
+      nomination = game.nominations.find(&:winner) || game.nominations.first
       theme_date = nomination.theme.creation_date
       case nomination.type
       when 'RetroBits'

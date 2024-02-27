@@ -2,23 +2,26 @@
 
 class UsersController < ApplicationController
   include Helpers::FuzzySearchHelper
+  include Pagy::Backend
 
   before_action :set_user, only: %i[show edit update redeem_points]
 
   def index
     set_search_limit
 
-    @users = if params[:search]&.presence
-               ids = User.fuzzy_search(params[:search]).map(&:id)
-               User.where(id: ids).order(:name).page(params[:page]).per(25)
-             else
-               User.order(:name).page(params[:page]).per(25)
-             end
+    users = if params[:search]&.presence
+              ids = User.fuzzy_search(params[:search]).map(&:id)
+              User.where(id: ids).order(:name)
+            else
+              User.order(:name)
+            end
+    @pagy, @users = pagy(users)
   end
 
   def show
-    @nominations = @user.nominations.gotm.page(params[:page]).per(10)
-    @completions = @user.completions.joins(nomination: :theme).order(:creation_date).page(params[:page]).per(10)
+    @pagy_nominations, @nominations = pagy(@user.nominations, page_param: :page_nominations)
+    completions = @user.completions.joins(nomination: :theme).order(:creation_date)
+    @pagy_completions, @completions = pagy(completions, page_param: :page_completions)
   end
 
   def edit; end
@@ -40,7 +43,7 @@ class UsersController < ApplicationController
 
   def previous_finishers
     @type = params[:type] || 'gotm'
-    @users = User.previous_finishers(@type).page(params[:page]).per(50)
+    @pagy, @users = pagy(User.previous_finishers(@type))
   end
 
   private
