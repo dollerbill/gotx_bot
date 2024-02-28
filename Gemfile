@@ -11,7 +11,7 @@ gem 'dotenv-rails'
 gem 'pagy'
 gem 'pg', '~> 1.1'
 gem 'puma', '~> 6.0'
-gem 'rails', '~> 6.1.7.5'
+gem 'rails', '~> 6.1.7.7'
 gem 'textacular', '~> 5.0'
 
 group :development, :ci do
