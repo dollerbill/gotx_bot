@@ -6,6 +6,7 @@
     <thead>
     <tr>
       <th scope="col">GotM Nominations: <%= @nominations.gotm.count %></th>
+      <th scope="col">Release Year</th>
       <th scope="col">Select Winner</th>
     </tr>
     </thead>
@@ -14,9 +15,8 @@
     <% @nominations.gotm.each do |nomination| %>
       <tr>
         <td><%= link_to nomination.game.preferred_name, nomination %></td>
-        <td>
-          <%= select_winner(nomination) %>
-        </td>
+        <td><%= nomination.game.year %></td>
+        <td><%= select_winner(nomination) %></td>
 
       </tr>
     <% end %>
