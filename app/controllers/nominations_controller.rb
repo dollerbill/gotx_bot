@@ -11,7 +11,7 @@ class NominationsController < ApplicationController
   end
 
   def current_nominations
-    @pagy, @nominations = pagy(Nomination.current_nominations)
+    @pagy, @nominations = pagy(Nomination.current_nominations.joins(:game).order(:year))
   end
 
   def show; end
