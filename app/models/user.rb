@@ -1,5 +1,21 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: users
+#
+#  id                 :bigint           not null, primary key
+#  name               :string           not null
+#  discord_id         :bigint
+#  old_discord_name   :string
+#  current_points     :float            default(0.0)
+#  redeemed_points    :float            default(0.0)
+#  earned_points      :float            default(0.0)
+#  premium_points     :float            default(0.0)
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  premium_subscriber :string
+#
 class User < ApplicationRecord
   has_many :completions
   has_many :nominations

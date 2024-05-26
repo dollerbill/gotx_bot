@@ -1,5 +1,16 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: completions
+#
+#  id            :bigint           not null, primary key
+#  completed_at  :datetime         not null
+#  nomination_id :bigint
+#  user_id       :bigint
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
 FactoryBot.define do
   factory :completion do
     completed_at { Date.today }

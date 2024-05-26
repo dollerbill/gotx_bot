@@ -1,5 +1,25 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: games
+#
+#  id               :bigint           not null, primary key
+#  title_usa        :string
+#  title_eu         :string
+#  title_jp         :string
+#  title_world      :string
+#  title_other      :string
+#  year             :string
+#  system           :string
+#  developer        :string
+#  genre            :string
+#  img_url          :string
+#  time_to_beat     :integer
+#  screenscraper_id :bigint
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#
 require 'rails_helper'
 
 RSpec.describe Game, type: :model do

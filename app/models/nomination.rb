@@ -1,5 +1,19 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: nominations
+#
+#  id              :bigint           not null, primary key
+#  nomination_type :string           default("gotm"), not null
+#  description     :string
+#  winner          :boolean          default(FALSE)
+#  game_id         :bigint
+#  user_id         :bigint
+#  theme_id        :bigint
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
 class Nomination < ApplicationRecord
   NOMINATION_TYPE_NAMES = {
     'gotm' => 'GotM',

@@ -1,5 +1,17 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: themes
+#
+#  id              :bigint           not null, primary key
+#  creation_date   :date             not null
+#  title           :string           not null
+#  description     :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  nomination_type :string           default("gotm")
+#
 require 'rails_helper'
 
 RSpec.describe Theme, type: :model do

@@ -1,5 +1,18 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: streaks
+#
+#  id               :bigint           not null, primary key
+#  user_id          :bigint           not null
+#  start_date       :date             not null
+#  end_date         :date
+#  last_incremented :date
+#  streak_count     :integer
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#
 require 'rails_helper'
 
 RSpec.describe Streak, type: :model do
