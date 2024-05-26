@@ -11,7 +11,7 @@ gem 'dotenv-rails'
 gem 'pagy'
 gem 'pg', '~> 1.1'
 gem 'puma', '~> 6.0'
-gem 'rails', '~> 6.1.7.5'
+gem 'rails', '~> 7.1.3'
 gem 'textacular', '~> 5.0'
 
 group :development, :ci do
@@ -21,6 +21,7 @@ end
 
 group :development, :test do
   gem 'factory_bot_rails'
+  gem 'irb'
   gem 'pry-byebug'
   gem 'rspec-rails', '~> 6.1.0'
 end

@@ -1,4 +1,7 @@
 # frozen_string_literal: true
+Dir[Rails.root.join('app/services/gotx/*.rb')].each do |file|
+  require_dependency file
+end
 
 MODULES = [Gotx::GameCommands, Gotx::UserCommands].freeze
 
