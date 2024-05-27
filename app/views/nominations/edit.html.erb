@@ -1,6 +1,13 @@
-<h1>Editing Nomination for <%= @nomination.game.preferred_name %></h1>
-
-<%= render 'form', nomination: @nomination %>
-
-<%= link_to 'Show', @nomination %> |
-<%= link_to 'Back', nominations_path %>
+<p id="notice"><%= notice %></p>
+<div class="card text-center">
+  <div class="card-header">
+    <h2>Editing Nomination for <%= @nomination.game.preferred_name %></h2>
+  </div>
+  <div class="card-body">
+    <%= render 'form', nomination: @nomination %>
+  </div>
+  <div class="card-footer text-muted">
+    <%= link_to 'View', @nomination %> |
+    <%= link_to 'Back', nominations_path %>
+  </div>
+</div>

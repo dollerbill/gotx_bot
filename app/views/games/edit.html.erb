@@ -1,6 +1,14 @@
-<h1>Editing Game</h1>
-
-<%= render 'form', game: @game %>
-
-<%= link_to 'Show', @game %> |
-<%= link_to 'Back', games_path %>
+<p id="notice"><%= notice %></p>
+<div class="card text-center">
+  <div class="card-header">
+    <h2>Editing <%= @game.preferred_name %></h2>
+  </div>
+  <div class="card-body">
+    <%= render 'form', game: @game %>
+  </div>
+  <div class="card-footer text-muted">
+    <%= link_to 'View', @game %> |
+    <%= link_to 'Back', games_path %>
+  </div>
+</div>
+e

@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Games</h1>
-<%= form_with url: games_path, method: :get, local: true, class: 'form-inline' do |f| %>
+<%= form_with url: games_path, method: :get, local: true, class: 'form-inline home' do |f| %>
   <%= text_field_tag :search, params[:search], class: 'form-control mr-sm-2', placeholder: 'Search by name' %>
   <%= f.submit 'Search', class: 'btn btn-outline-primary my-2 my-sm-0' %>
 <% end %>

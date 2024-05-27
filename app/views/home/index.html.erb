@@ -1,15 +1,15 @@
-<h1>GotX Management</h1>
+<h1 style="margin: 10px 0px;">GotX Management</h1>
 <h3 id="notice" style="color:red"><%= notice %></h3>
 <div class="row">
 	<div class="col">
 		<div class="card">
 			<h5 class="card-header">Create Weekly RetroBit</h5>
-			<div class="card-body">
+			<div class="card-body home">
 				<p class="card-text">Create a new RetroBit game entry.</p>
 				<%= form_with url: create_weekly_retrobit_games_path, method: :post do |form| %>
-				<%= form.label :screenscraper_id, 'Screenscraper ID' %>
-				<%= form.text_field :screenscraper_id %>
-				<%= form.submit 'Create RetroBit', class: 'btn btn-outline-primary my-2 my-sm-0' %>
+					<%= form.label :screenscraper_id, 'Screenscraper ID', class: 'home' %>
+					<%= form.text_field :screenscraper_id %>
+					<%= form.submit 'Create RetroBit', class: 'btn btn-outline-primary my-2 my-sm-0' %>
 				<% end %>
 			</div>
 		</div>
@@ -17,15 +17,16 @@
 	<div class="col">
 		<div class="card">
 			<h5 class="card-header">Create RPGotQ</h5>
-			<div class="card-body">
+			<div class="card-body home">
 				<p class="card-text">Create a new RPGotQ nomination.</p>
 				<%= form_with url: create_monthly_rpg_games_path, method: :post do |form| %>
-				<%= form.label :screenscraper_id, 'Screenscraper ID' %>
-				<%= form.text_field :screenscraper_id %>
-				<%= form.label :time_to_beat, 'Hours to Beat' %>
-				<%= form.text_field :time_to_beat %>
-				<%= form.select :theme_id, Theme.rpg.order(created_at: :desc).limit(3).collect { |t| [t.title, t.id] } %>
-				<%= form.submit 'Create RPGotQ', class: 'btn btn-outline-primary my-2 my-sm-0' %>
+					<%= form.label :screenscraper_id, 'Screenscraper ID' %>
+					<%= form.text_field :screenscraper_id %>
+					<%= form.label :time_to_beat, 'Hours to Beat' %>
+					<%= form.text_field :time_to_beat %>
+					<%= form.label :theme_id, 'RPGotQ Theme' %>
+					<%= form.select :theme_id, Theme.rpg.order(created_at: :desc).limit(3).collect { |t| [t.title, t.id] } %>
+					<%= form.submit 'Create RPGotQ', class: 'btn btn-outline-primary my-2 my-sm-0' %>
 				<% end %>
 			</div>
 		</div>
@@ -35,7 +36,7 @@
 	<div class="col">
 		<div class="card">
 			<h5 class="card-header">Create GotM Theme</h5>
-			<div class="card-body">
+			<div class="card-body home">
 				<p class="card-text">Create a new monthly Theme for GotM.</p>
 				<%= link_to 'Create Theme', new_theme_path(creation_date: Date.current.next_month.beginning_of_month), class: "btn btn-outline-primary my-2 my-sm-0" %>
 			</div>
@@ -44,9 +45,9 @@
 	<div class="col">
 		<div class="card">
 			<h5 class="card-header">Pick Winning GotM Nominations</h5>
-			<div class="card-body">
+			<div class="card-body home">
 				<p class="card-text">Pick the winning game nominations for the current GotM or RPGotQ.</p>
-				<a href="<%= current_nominations_path %>" class="btn btn-outline-primary my-2 my-sm-0">Pick Winners</a>
+				<%= link_to 'Pick Winners', current_nominations_path, class: 'btn btn-outline-primary my-2 my-sm-0' %>
 			</div>
 		</div>
 	</div>
@@ -55,7 +56,7 @@
 	<div class="col">
 		<div class="card">
 			<h5 class="card-header">Previous Finishers</h5>
-			<div class="card-body">
+			<div class="card-body home">
 				<p class="card-text">View users that have previously finished GotX games.</p>
 				<a href="<%= previous_finishers_path %>" class="btn btn-outline-primary my-2 my-sm-0">Finishers</a>
 			</div>
@@ -64,13 +65,14 @@
 	<div class="col">
 		<div class="card">
 			<h5 class="card-header">Messenger</h5>
-			<div class="card-body">
+			<div class="card-body home">
 				<p class="card-text">Send a message to the channel.</p>
 				<%= form_with url: create_message_path, method: :post do |form| %>
 					<%= form.label :message, 'Message' %>
 					<%= form.text_field :message %>
 					<%= form.label :member_id, '(Discord) User ID - optional' %>
 					<%= form.text_field :member_id %>
+					<%= form.label :channel, 'Server Channel' %>
 					<%= form.select :channel, available_channels %>
 					<%= form.submit 'Send message', class: 'btn btn-outline-primary my-2 my-sm-0' %>
 				<% end %>

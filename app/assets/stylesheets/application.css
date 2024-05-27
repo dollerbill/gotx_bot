@@ -15,9 +15,6 @@
  */
 
 body {
-    margin-right: auto;
-    margin-left: auto;
-    max-width: 1280px;
 }
 
 h1 {
@@ -38,4 +35,12 @@ h3 {
 
 .navheader {
     background-color: #1B1D4A;
+}
+
+.nav-link {
+    color: #000;
+
+    &:hover {
+        color: #fff;
+    }
 }

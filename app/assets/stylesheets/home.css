@@ -2,3 +2,16 @@
   Place all the styles related to the matching controller here.
   They will automatically be included in application.css.
 */
+
+.home input[type="submit"] {
+    display: block;
+    margin-top: 1em !important;
+}
+
+.home select {
+    display: block;
+}
+
+.home label {
+    margin: 5px 0;
+}

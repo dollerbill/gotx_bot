@@ -12,6 +12,7 @@ gem 'pagy'
 gem 'pg', '~> 1.1'
 gem 'puma', '~> 6.0'
 gem 'rails', '~> 7.1.3'
+gem 'sprockets-rails'
 gem 'textacular', '~> 5.0'
 
 group :development, :ci do

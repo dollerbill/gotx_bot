@@ -21,7 +21,7 @@
           </tbody>
         </table>
 
-        <%= form_with url: redeem_points_user_path(@user), method: :post, local: true, class: 'form-inline' do |f| %>
+        <%= form_with url: redeem_points_user_path(@user), method: :post, local: true, class: 'form-inline home' do |f| %>
           <%= text_field_tag :points, params[:points], class: 'form-control mr-sm-2', placeholder: 'Redeem GotX Points' %>
           <%= f.submit 'Redeem', class: 'btn btn-outline-primary my-2 my-sm-0' %>
         <% end %>
