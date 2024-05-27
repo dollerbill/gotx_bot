@@ -27,5 +27,9 @@
 /config/master.key
 .env
 
+# Ignore precompiled assets
+/public/assets
+/public/packs
+/public/packs-test
 
 .idea
