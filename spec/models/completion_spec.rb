@@ -4,12 +4,13 @@
 #
 # Table name: completions
 #
-#  id            :bigint           not null, primary key
-#  completed_at  :datetime         not null
-#  nomination_id :bigint
-#  user_id       :bigint
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  id               :bigint           not null, primary key
+#  completed_at     :datetime         not null
+#  nomination_id    :bigint
+#  user_id          :bigint
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  rpg_achievements :boolean          default(FALSE)
 #
 require 'rails_helper'
 
@@ -30,6 +31,24 @@ RSpec.describe Completion, type: :model do
       is_expected.to validate_uniqueness_of(:user_id)
         .scoped_to(:nomination_id)
         .with_message('has already completed this nomination')
+    end
+
+    context 'rpg_achievements_for_rpgotq' do
+      context 'for non-rpg nominations' do
+        it 'adds an error to the completion' do
+          expect(subject.update(rpg_achievements: true)).to eq(false)
+          expect(subject.errors.full_messages).to eq(['Rpg achievements can only be set for RPG nominations'])
+        end
+      end
+
+      context 'for rpg nominations' do
+        subject { build(:completion, :rpg) }
+
+        it 'allows rpg_achievements' do
+          expect(subject.update(rpg_achievements: true)).to eq(true)
+          expect(subject).to be_valid
+        end
+      end
     end
   end
 

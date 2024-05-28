@@ -16,6 +16,11 @@
     </div>
     <div class="col"></div>
   </div>
+  <% if @nomination.winner? %>
+    <div class="card-body">
+      <%= link_to "#{@nomination.completions.count} completions", nomination_completions_path(@nomination) %>
+    </div>
+  <% end %>
 <br >
   <div class="card-body">
     <h4>Add a completion for this nomination</h4>

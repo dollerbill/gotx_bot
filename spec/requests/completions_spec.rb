@@ -5,6 +5,35 @@ require 'rails_helper'
 RSpec.describe 'Completions', type: :request do
   include_context 'Auth Helper'
 
+  let(:completion) { create(:completion) }
+  let(:nomination) { completion.nomination }
+
+  describe 'GET /index' do
+    subject { get nomination_completions_path(nomination) }
+
+    it_behaves_like 'unauthorized'
+
+    context 'a nomination with completions' do
+      it 'renders nominations completions' do
+        subject
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include(completion.game.preferred_name)
+        expect(response.body).to include('1 completion for Grandia')
+      end
+    end
+
+    context 'a nomination with no completions' do
+      let(:nomination) { create(:nomination) }
+
+      it 'renders a warning' do
+        subject
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include(completion.game.preferred_name)
+        expect(response.body).to include('No completions')
+      end
+    end
+  end
+
   describe 'POST /create' do
     let(:user) { create(:user) }
     let(:nomination) { create(:nomination) }
@@ -32,8 +61,6 @@ RSpec.describe 'Completions', type: :request do
   end
 
   describe 'DELETE /destroy' do
-    let(:completion) { create(:completion) }
-
     subject { delete completion_path(completion) }
 
     context 'when unauthorized' do
@@ -61,6 +88,55 @@ RSpec.describe 'Completions', type: :request do
         expect(Streaks::Decrease).to_not receive(:call)
         subject
         expect { completion.reload }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+  end
+
+  describe 'PATCH /update' do
+    let(:atts) { { completion: { rpg_achievements: true } } }
+
+    subject { patch completion_path(completion), params: { completion: { rpg_achievements: true } } }
+
+    before { allow_any_instance_of(ActionDispatch::Request).to receive(:referer).and_return("/nominations/#{completion.nomination.id}/completions") }
+
+    it_behaves_like 'unauthorized'
+
+    context 'with rpg nominations' do
+      let(:completion) { create(:completion, :rpg) }
+
+      context 'with valid attributes' do
+        it 'updates the record' do
+          subject
+          expect(completion.reload.rpg_achievements).to eq(true)
+          expect(response).to have_http_status(:found)
+          expect(response).to redirect_to "/nominations/#{completion.nomination.id}/completions"
+          follow_redirect!
+          expect(response.body).to include('Achievements successfully recorded.')
+        end
+      end
+
+      context 'with invalid attributes' do
+        before { allow_any_instance_of(Completion).to receive(:update).and_return(false) }
+
+        it 'fails to update' do
+          subject
+          expect(completion.reload.rpg_achievements).to eq(false)
+          expect(response).to have_http_status(:found)
+          expect(response).to redirect_to "/nominations/#{completion.nomination.id}/completions"
+          follow_redirect!
+          expect(response.body).to include('Error updating achievements.')
+        end
+      end
+    end
+
+    context 'with non-rpg nominations' do
+      it 'fails to update' do
+        subject
+        expect(completion.reload.rpg_achievements).to eq(false)
+        expect(response).to have_http_status(:found)
+        expect(response).to redirect_to "/nominations/#{completion.nomination.id}/completions"
+        follow_redirect!
+        expect(response.body).to include('Error updating achievements.')
       end
     end
   end

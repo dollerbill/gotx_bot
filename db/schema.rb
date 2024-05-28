@@ -10,18 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_09_22_181736) do
-
+ActiveRecord::Schema[7.1].define(version: 2024_05_27_210328) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
 
   create_table "completions", force: :cascade do |t|
-    t.datetime "completed_at", null: false
+    t.datetime "completed_at", precision: nil, null: false
     t.bigint "nomination_id"
     t.bigint "user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "rpg_achievements", default: false
     t.index ["nomination_id"], name: "index_completions_on_nomination_id"
     t.index ["user_id"], name: "index_completions_on_user_id"
   end
@@ -39,8 +39,8 @@ ActiveRecord::Schema.define(version: 2023_09_22_181736) do
     t.string "img_url"
     t.integer "time_to_beat"
     t.bigint "screenscraper_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "nominations", force: :cascade do |t|
@@ -50,8 +50,8 @@ ActiveRecord::Schema.define(version: 2023_09_22_181736) do
     t.bigint "game_id"
     t.bigint "user_id"
     t.bigint "theme_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["game_id"], name: "index_nominations_on_game_id"
     t.index ["theme_id"], name: "index_nominations_on_theme_id"
     t.index ["user_id"], name: "index_nominations_on_user_id"
@@ -63,8 +63,8 @@ ActiveRecord::Schema.define(version: 2023_09_22_181736) do
     t.date "end_date"
     t.date "last_incremented"
     t.integer "streak_count"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_streaks_on_user_id"
   end
 
@@ -72,8 +72,8 @@ ActiveRecord::Schema.define(version: 2023_09_22_181736) do
     t.date "creation_date", null: false
     t.string "title", null: false
     t.string "description"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "nomination_type", default: "gotm"
   end
 
@@ -85,8 +85,8 @@ ActiveRecord::Schema.define(version: 2023_09_22_181736) do
     t.float "redeemed_points", default: 0.0
     t.float "earned_points", default: 0.0
     t.float "premium_points", default: 0.0
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "premium_subscriber"
   end
 
