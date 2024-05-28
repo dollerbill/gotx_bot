@@ -16,7 +16,7 @@ class CompletionsController < ApplicationController
     Nominations::Complete.call(user, nomination, true)
     redirect_to nomination_path(nomination), notice: "Completion recorded successfully for #{user.name}."
   rescue ActiveRecord::RecordInvalid => e
-    redirect_to nomination_path(nomination), notice: e
+    redirect_to nomination_path(nomination), alert: e
   end
 
   def update
