@@ -41,7 +41,13 @@ div.actions {
 }
 
 #notice {
+  margin: 1em;
   color: green;
+}
+
+#alert {
+  margin: 1em;
+  color: red;
 }
 
 .field_with_errors {

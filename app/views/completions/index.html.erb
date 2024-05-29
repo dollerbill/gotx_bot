@@ -1,0 +1,25 @@
+<% return "<h1>No completions for #{Nomination.find(params[:nomination_id]).game.preferred_name}</h1>".html_safe if @completions.none? %>
+
+<h1><%= @completions.count %> <%= 'completion'.pluralize(@completions.count) %> for <%= @completions.first&.nomination&.game&.preferred_name %></h1>
+<table class="table table-striped table-hover">
+  <thead>
+  <tr>
+    <th scope="col">User</th>
+    <% if @completions.first.nomination.rpg? %>
+      <th scope="col">100% retro achievemnts</th>
+    <% end %>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @completions.each do |completion| %>
+    <tr>
+      <td><%= completion.user.name %></td>
+      <% if @completions.first.nomination.rpg? %>
+        <td><%= rpg_achievements_column(completion) %></td>
+      <% end %>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<%== pagy_nav(@pagy) %>

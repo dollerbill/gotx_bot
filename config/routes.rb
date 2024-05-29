@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'current_nominations', to: 'nominations#current_nominations'
   get 'previous_finishers', to: 'users#previous_finishers'
   resources :nominations do
+    resources :completions, only: [:index]
     collection do
       get :winners
     end
@@ -24,7 +25,7 @@ Rails.application.routes.draw do
     end
   end
   resources :streaks, only: %i[index show]
-  resources :completions, only: %i[create destroy]
+  resources :completions, only: %i[create destroy update]
   post 'create_message', to: 'messenger#create'
   root 'home#index'
 end

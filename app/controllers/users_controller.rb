@@ -31,7 +31,7 @@ class UsersController < ApplicationController
     if result
       redirect_to @user, notice: 'User was successfully updated.'
     else
-      redirect_to edit_user_path(@user), notice: 'User not updated, provided attributes match their current values.'
+      redirect_to edit_user_path(@user), alert: 'User not updated, provided attributes match their current values.'
     end
   end
 
