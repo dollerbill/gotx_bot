@@ -5,8 +5,9 @@ require 'rails_helper'
 RSpec.describe 'Games', type: :request do
   include_context 'Auth Helper'
 
-  let(:game) { create(:game) }
+  let(:game)   { create(:game) }
   let!(:games) { [game] }
+  let!(:rapid)  { create(:user, id: 12) }
 
   describe 'GET /index' do
     subject { get games_path }
@@ -56,14 +57,9 @@ RSpec.describe 'Games', type: :request do
   end
 
   describe 'POST /create_weekly_retrobit' do
-    let(:atts) { { screenscraper_id: 123, time_to_beat: 11 } }
-    let!(:user) { create(:user, id: 12) }
+    let(:atts) { { screenscraper_id: 123 } }
 
-    before do
-      allow_any_instance_of(Scrapers::Screenscraper)
-        .to receive(:call)
-        .and_return(attributes_for(:game, :screenscraper_attributes))
-    end
+    before { allow_any_instance_of(Scrapers::Screenscraper).to receive(:call).and_return(attributes_for(:game, :screenscraper_attributes)) }
 
     subject { post create_weekly_retrobit_games_path(atts) }
 
@@ -79,18 +75,24 @@ RSpec.describe 'Games', type: :request do
         expect(response).to redirect_to(game_path(Game.last))
       end
     end
+
+    context 'when the game already exists' do
+      before { Game.create!(atts.merge(title_usa: 'Sonic')) }
+
+      it 'finds the already nominated game instead of creating a duplicate' do
+        expect_any_instance_of(Games::WeeklyRetrobit).to receive(:post_announcement).and_return('Notified')
+        expect_any_instance_of(Games::WeeklyRetrobit).to receive(:post_game).and_return('Notified')
+        expect { subject }.to change { Nomination.count }.by(1).and change { Theme.count }.by(1).and change { Game.count }.by(0)
+        expect(response).to redirect_to(game_path(Game.last))
+      end
+    end
   end
 
   describe 'POST /create_monthly_rpg' do
     let(:atts) { { screenscraper_id: 999, time_to_beat: 55, theme_id: theme.id } }
-    let(:theme) { create(:theme, :rpg) }
-    let!(:user) { create(:user, id: 12) }
+    let!(:theme) { create(:theme, :rpg) }
 
-    before do
-      allow_any_instance_of(Scrapers::Screenscraper)
-        .to receive(:call)
-        .and_return(attributes_for(:game, :screenscraper_attributes))
-    end
+    before { allow_any_instance_of(Scrapers::Screenscraper).to receive(:call).and_return(attributes_for(:game, :screenscraper_attributes)) }
 
     subject { post create_monthly_rpg_games_path(atts) }
 
@@ -99,6 +101,15 @@ RSpec.describe 'Games', type: :request do
     context 'with valid atts' do
       it 'creates an RPGotQ game and sends an announcement to discord' do
         expect { subject }.to change { Game.count }.by(1).and change { Nomination.count }.by(1)
+        expect(response).to redirect_to(game_path(Game.last))
+      end
+    end
+
+    context 'when the game already exists' do
+      before { create(:game, screenscraper_id: 999, title_usa: 'Wild Arms') }
+
+      it 'finds the already nominated game instead of creating a duplicate' do
+        expect { subject }.to change { Nomination.count }.by(1).and change { Game.count }.by(0).and change { Theme.count }.by(0)
         expect(response).to redirect_to(game_path(Game.last))
       end
     end

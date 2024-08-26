@@ -41,7 +41,6 @@ class NominationsController < ApplicationController
     redirect_to nominations_url, notice: 'Nomination was successfully destroyed.'
   end
 
-  # rubocop:disable Layout/LineLength
   def winners
     if params[:month].present? && params[:year].present?
       date = Date.new(params[:year].to_i, params[:month].to_i, 1)
@@ -56,7 +55,6 @@ class NominationsController < ApplicationController
               .select('DISTINCT EXTRACT(MONTH FROM themes.creation_date) AS month, EXTRACT(YEAR FROM themes.creation_date) AS year')
               .order('year DESC, month DESC')
   end
-  # rubocop:enable Layout/LineLength
 
   private
 

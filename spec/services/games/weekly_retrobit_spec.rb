@@ -3,11 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe Games::WeeklyRetrobit do
-  let(:atts) { attributes_for(:game, :screenscraper_attributes) }
-  let(:bot) { instance_double('Gotx::Bot.initialize_bot') }
-  let(:channel) do
-    instance_double('Discordrb::Channel', send_message: 'Message sent', send_embed: 'Embed Sent')
-  end
+  let(:atts)   { { screenscraper_id: 19626 } }
+  let(:bot)    { instance_double('Gotx::Bot.initialize_bot') }
+  let!(:rapid) { create(:user, id: 12) }
+  let(:channel) { instance_double('Discordrb::Channel', send_message: 'Message sent', send_embed: 'Embed Sent') }
 
   subject(:weekly_retrobit) { described_class.new(atts) }
 
@@ -17,6 +16,7 @@ RSpec.describe Games::WeeklyRetrobit do
     stub_const('Games::CreateRecurring::GOTX_ROLE_ID', 'gotx_role')
     allow(subject).to receive(:bot).and_return(bot)
     allow(bot).to receive(:channel).and_return(channel)
+    allow_any_instance_of(Scrapers::Screenscraper).to receive(:call).and_return(attributes_for(:game, :screenscraper_attributes))
   end
 
   describe 'call' do
@@ -33,20 +33,9 @@ RSpec.describe Games::WeeklyRetrobit do
         expect(channel).to have_received(:send_embed).exactly(2).times
       end
 
-      it 'adds the description' do
-        expect(atts[:nominations_attributes][0][:description]).to be_present
+      it 'adds a default description' do
         weekly_retrobit.call
-        expect(Game.first.nominations.first.description).to eq(atts[:nominations_attributes][0][:description])
-      end
-
-      context 'with no description' do
-        before { atts[:nominations_attributes][0][:description] = nil }
-
-        it 'adds a default description' do
-          expect(atts[:nominations_attributes][0][:description]).to be_nil
-          weekly_retrobit.call
-          expect(Game.first.nominations.first.description).to be_nil
-        end
+        expect(Game.first.nominations.first.description).to_not be_nil
       end
     end
   end

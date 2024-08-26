@@ -5,7 +5,7 @@ module Games
     GOTW_GAMES_CHANNEL = ENV['GOTW_GAMES_CHANNEL'].freeze
 
     def call
-      create_game
+      find_or_create_game
       post_announcement
       post_game
       game
