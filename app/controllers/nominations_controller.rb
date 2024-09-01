@@ -7,7 +7,7 @@ class NominationsController < ApplicationController
 
   def index
     @type = %w[gotm rpg retro].include?(params[:type]) ? params[:type] : 'gotm'
-    @pagy, @nominations = pagy(Nomination.public_send(@type))
+    @pagy, @nominations = pagy(Nomination.public_send(@type).joins(:theme).order('themes.creation_date'))
   end
 
   def current_nominations
