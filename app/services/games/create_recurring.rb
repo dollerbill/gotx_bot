@@ -12,7 +12,7 @@ module Games
     end
 
     def initialize(atts)
-      @atts = atts
+      @atts = atts.merge(user_id: 12)
     end
 
     def call
@@ -21,11 +21,16 @@ module Games
 
     private
 
-    def create_game
-      atts[:nominations_attributes][0][:theme] = theme
-      atts[:nominations_attributes][0][:nomination_type] = nomination_type
-      atts[:nominations_attributes][0][:winner] = winner
-      @game = Game.create!(atts)
+    def find_or_create_game
+      nominations_attributes = { user_id: atts[:user_id], theme:, nomination_type:, winner: }
+      @game = if (found_game = Game.find_by(screenscraper_id: atts[:screenscraper_id]))
+                found_game.tap { |game| game.nominations.create!(nominations_attributes) }
+              else
+                scraped_atts = ::Scrapers::Screenscraper.(atts).tap do |scraped|
+                  scraped[:nominations_attributes] = [nominations_attributes.merge({ description: scraped[:nominations_attributes][0][:description] })]
+                end
+                Game.create!(scraped_atts)
+              end
     end
 
     def theme

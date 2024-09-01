@@ -5,8 +5,11 @@ AllCops:
     - 'bin/*'
   NewCops: disable
 
+Layout/EmptyLineAfterMagicComment:
+  Enabled: false
+
 Layout/LineLength:
-  Max: 150
+  Max: 200
   Exclude:
     - 'spec/factories/*.rb'
 

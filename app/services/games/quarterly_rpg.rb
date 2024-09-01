@@ -3,7 +3,7 @@
 module Games
   class QuarterlyRpg < CreateRecurring
     def call
-      create_game
+      find_or_create_game
     end
 
     private
