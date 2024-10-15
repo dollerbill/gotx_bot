@@ -10,7 +10,7 @@ module Gotx
 
     def self.previous_game(game_name)
       game = ::Games::FuzzyFind.(game_name)
-      return I18n.t('nominations.missing', search: game_name) unless game
+      return I18n.t('nominations.missing', search: game_name) unless game.nominations.any?
 
       nomination = game.nominations.find(&:winner) || game.nominations.first
       theme_date = nomination.theme.creation_date

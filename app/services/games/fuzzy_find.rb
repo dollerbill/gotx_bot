@@ -20,8 +20,8 @@ module Games
       results = {}
 
       %i[usa world eu jp other].each { |region| results[region] = Game.fuzzy_search("title_#{region}": search_term) }
-      games = results.values.flatten
-      games.find { |game| game.preferred_name.casecmp?(search_term) } || games.first
+      games = results.values.flatten.uniq
+      games.find { |game| game.preferred_name.casecmp?(search_term) } || games.find { |game| I18n.transliterate(game.preferred_name.downcase).include?(search_term) } || games.first
     end
   end
 end

@@ -13,7 +13,7 @@ RSpec.describe Helpers::FuzzySearchHelper do
     subject { test_class.new.set_search_limit }
 
     it 'sets the search limit' do
-      expect(ActiveRecord::Base.connection).to receive(:execute).with('SELECT set_limit(0.25);')
+      expect(ActiveRecord::Base.connection).to receive(:execute).with('SELECT set_limit(0.40);')
 
       subject
     end
