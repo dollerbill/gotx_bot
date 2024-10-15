@@ -3,7 +3,7 @@
 module Helpers
   module FuzzySearchHelper
     def set_search_limit
-      ActiveRecord::Base.connection.execute('SELECT set_limit(0.25);')
+      ActiveRecord::Base.connection.execute('SELECT set_limit(0.40);')
     end
   end
 end

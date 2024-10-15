@@ -5,23 +5,19 @@ require 'rails_helper'
 RSpec.describe Games::FuzzyFind do
   describe 'call' do
     let(:search_term) { 'grandia' }
-    let(:game) { build(:game) }
+    let!(:game) { create(:game) }
 
     subject { described_class.(search_term) }
 
-    before { allow(Game).to receive(:fuzzy_search).and_return([game]) }
-
     it 'searches across all regions' do
       %i[usa world eu jp other].each do |region|
-        expect(Game).to receive(:fuzzy_search).with({ "title_#{region}": search_term }).and_return([game])
+        expect(Game).to receive(:fuzzy_search).with({ "title_#{region}": search_term }).and_call_original
       end
       subject
     end
 
     context 'when a game exactly matches the search term (case insensitive)' do
-      let(:other_game) { build(:game, title_world: 'Grandia Parallel Trippers') }
-
-      before { allow(Game).to receive(:fuzzy_search).and_return([other_game, game]) }
+      let!(:other_game) { create(:game, title_world: 'Grandia Parallel Trippers') }
 
       it 'returns the exact match' do
         expect(subject).to eq(game)
@@ -29,12 +25,18 @@ RSpec.describe Games::FuzzyFind do
     end
 
     context 'when no game exactly matches the search term' do
-      let(:close_game) { build(:game, title_usa: 'Grandia II') }
+      let!(:game) { nil }
 
-      before { allow(Game).to receive(:fuzzy_search).and_return([close_game]) }
+      context 'when a game includes the search term' do
+        let!(:close_game) { create(:game, title_usa: 'Grandia II') }
 
-      it 'returns the first match' do
-        expect(subject).to eq(close_game)
+        it { is_expected.to eq(close_game) }
+      end
+
+      context 'when a game is fuzzily similar to the search term' do
+        let!(:close_game) { create(:game, title_usa: 'Grand Chase') }
+
+        it { is_expected.to eq(close_game) }
       end
     end
   end
