@@ -19,6 +19,7 @@
 #  screenscraper_id :bigint
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
+#  igdb_id          :bigint
 #
 require 'rails_helper'
 
