@@ -16,6 +16,8 @@ gem 'sprockets-rails'
 gem 'tailwindcss-rails'
 gem 'textacular', '~> 5.0'
 
+# gem 'groupdate'
+
 group :development, :ci do
   gem 'brakeman', require: false
   gem 'bundler-audit', require: false

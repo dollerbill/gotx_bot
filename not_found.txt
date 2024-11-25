@@ -1,0 +1,25 @@
+{"id"=>81, "name"=>"Pokémon Super Gold 97’ "}
+{"id"=>84, "name"=>"Pokémon Light Platinum"}
+{"id"=>108, "name"=>"UBER MARIO 64 DEMO"}
+{"id"=>112, "name"=>"Pokémon Unbound"}
+{"id"=>184, "name"=>"DoomRPG"}
+{"id"=>228, "name"=>"Mother 2.5: The Giftman Chronicles (Earthbound Hack)"}
+{"id"=>257, "name"=>"Bonanza Brothers"}
+{"id"=>307, "name"=>"Medabots (Medabee and Rokusho)"}
+{"id"=>311, "name"=>"Chibi-Robo! Plug into Adventure!"}
+{"id"=>364, "name"=>"Disney-Pixar A Bug's Life"}
+{"id"=>403, "name"=>"Fantasy Star Soldier"}
+{"id"=>464, "name"=>"Off"}
+{"id"=>499, "name"=>"Pokémon Prism"}
+{"id"=>533, "name"=>"SNK Versus Capcom: Card Fighter's Clash"}
+{"id"=>570, "name"=>"Another Metroid 2 Remake"}
+{"id"=>646, "name"=>"DEcapAttack"}
+{"id"=>687, "name"=>"Pokémon Red/Blue/Green"}
+{"id"=>767, "name"=>"Pahalanx The Enforce Fighter A-144"}
+{"id"=>815, "name"=>"Gaiaopolis"}
+{"id"=>973, "name"=>"Eureka Seven Vol. 1 : The New Wave"}
+{"id"=>1192, "name"=>"Nickelodeon Rugrats : Search for Reptar"}
+{"id"=>1196, "name"=>"Gran Turismo 2 (Simulation Mode)"}
+{"id"=>1446, "name"=>"Phantasy Star Online Episode III : C.A.R.D. Revolu"}
+{"id"=>1192, "name"=>"Nickelodeon Rugrats : Search for Reptar"}
+{"id"=>1196, "name"=>"Gran Turismo 2 (Simulation Mode)"}
