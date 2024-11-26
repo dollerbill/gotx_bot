@@ -170,7 +170,7 @@ GEM
     net-smtp (0.5.0)
       net-protocol
     netrc (0.11.0)
-    nio4r (2.7.3)
+    nio4r (2.7.4)
     nokogiri (1.16.5-aarch64-linux)
       racc (~> 1.4)
     nokogiri (1.16.5-arm-linux)
@@ -199,7 +199,7 @@ GEM
       pry (>= 0.13, < 0.15)
     psych (5.1.2)
       stringio
-    puma (6.4.2)
+    puma (6.4.3)
       nio4r (~> 2.0)
     racc (1.8.0)
     rack (3.0.11)
@@ -341,7 +341,7 @@ DEPENDENCIES
   pagy
   pg (~> 1.1)
   pry-byebug
-  puma (~> 6.0)
+  puma (~> 6.4)
   rails (~> 8.0.0)
   rspec-rails (~> 6.1.0)
   rubocop
