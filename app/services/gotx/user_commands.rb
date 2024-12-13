@@ -47,6 +47,18 @@ module Gotx
       event.respond(content: I18n.t('users.streak.format', name: member.mention, count: streak))
     end
 
+    application_command(:log_completion) do |event|
+      ActiveRecord::Base.connection_pool.with_connection do
+        user = ::Users::FindOrCreate.(event.user)
+        game = Game.find_by(screenscraper_id: event.options['screenscraper_id'])
+        validation = ::Users::ValidateCompletion.(event.options.merge!('user' => user, 'game' => game))
+        next event.respond(content: validation) if validation
+
+        ::Nominations::Complete.(user, game.nominations&.last)
+        event.respond(content: "#{event.user.mention} completed #{game.preferred_name}!")
+      end
+    end
+
     button(custom_id: /\d_premium_member_status/) do |event|
       user = User.find(event.interaction.button.custom_id.split('_')[0])
       membership_status = user.premium_subscriber
