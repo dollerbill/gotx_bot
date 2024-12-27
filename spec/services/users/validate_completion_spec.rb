@@ -7,8 +7,8 @@ RSpec.shared_examples 'invalid nomination' do |error|
 end
 
 RSpec.describe Users::ValidateCompletion do
-  let(:nomination) { create(:nomination, game:) }
-  let(:game) { create(:game) }
+  let(:nomination) { create(:nomination, :winner) }
+  let(:game) { create(:game, nominations: [nomination]) }
   let(:user) { build(:user) }
   let(:atts) { { 'user' => user, 'screenscraper_id' => game&.screenscraper_id, 'game' => game } }
 
@@ -20,19 +20,25 @@ RSpec.describe Users::ValidateCompletion do
     end
 
     context 'invalid completion' do
-      context 'user already recorded 3 completions' do
+      context 'when not a previous winner' do
+        let(:game) { create(:game) }
+
+        it { is_expected.to eq('Not a valid game.') }
+      end
+
+      context 'when game does not exist' do
         let(:game) { nil }
 
         it { is_expected.to eq('Not a valid game.') }
       end
 
-      context 'user already recorded 3 completions' do
+      context 'when a user already recorded 3 completions' do
         before { 3.times { create(:completion, completed_at: '2025-01-10', user:) } }
 
         it { is_expected.to eq('You have already recorded 3 completions for this month.') }
       end
 
-      context 'user completing a duplicate game' do
+      context 'when a user completes a duplicate game' do
         let!(:completion) { create(:completion, user:, nomination:) }
 
         it { is_expected.to eq('You have already recorded a completion for this game.') }
