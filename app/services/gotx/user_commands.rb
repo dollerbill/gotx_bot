@@ -79,7 +79,7 @@ module Gotx
         member = event.bot.user(user.discord_id)
         event.bot.channel(CHANNELS[:rank]).send_message("#{member.mention} is no longer a premium subscriber.")
 
-        next event.update_message(content: "#{user.display_name} is no longer a premium member.")
+        next event.update_message(content: "#{user.name} is no longer a premium member.")
       end
 
       event.update_message(content: 'Update membership level:') do |_, view|
