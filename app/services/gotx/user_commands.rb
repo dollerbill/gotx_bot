@@ -47,6 +47,21 @@ module Gotx
       event.respond(content: I18n.t('users.streak.format', name: member.mention, count: streak))
     end
 
+    application_command(:no_nom_completion) do |event|
+      member = event.bot.user(event.options['member'])
+      user = ::Users::FindOrCreate.(member)
+
+      game = Game.find_by(screenscraper_id: event.options['screenscraper_id'])
+      next event.respond(content: 'Not a valid game.', ephemeral: true) unless game&.nominations&.any?(&:winner?)
+
+      validation = ::Users::ValidateCompletion.(event.options.merge!('user' => user, 'game' => game))
+      next event.respond(content: user.name + validation, ephemeral: true) if validation
+
+      nomination = Nominations::FindOrCreateNoNom.(game)
+      ::Nominations::Complete.(user, nomination)
+      event.respond(content: "#{event.user.mention} completed #{game.preferred_name} and has been awarded 1 point!")
+    end
+
     button(custom_id: /\d_premium_member_status/) do |event|
       user = User.find(event.interaction.button.custom_id.split('_')[0])
       membership_status = user.premium_subscriber
@@ -64,7 +79,7 @@ module Gotx
         member = event.bot.user(user.discord_id)
         event.bot.channel(CHANNELS[:rank]).send_message("#{member.mention} is no longer a premium subscriber.")
 
-        next event.update_message(content: "#{user.display_name} is no longer a premium member.")
+        next event.update_message(content: "#{user.name} is no longer a premium member.")
       end
 
       event.update_message(content: 'Update membership level:') do |_, view|
