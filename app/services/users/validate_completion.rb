@@ -14,18 +14,13 @@ module Users
     end
 
     def call
-      return 'Not a valid game.' unless previous_winner?
-      return 'You have already recorded a completion for this game.' if previously_completed?
-      return 'You have already recorded 3 completions for this month.' if completed_three_games?
+      return ' has already recorded a completion for this game.' if previously_completed?
+      return ' has already recorded 3 completions for this month.' if completed_three_games?
 
       nil
     end
 
     private
-
-    def previous_winner?
-      game&.nominations&.any?(&:winner?)
-    end
 
     def previously_completed?
       (user.completions.map(&:nomination_id) & game.nominations.map(&:id)).any?

@@ -20,28 +20,16 @@ RSpec.describe Users::ValidateCompletion do
     end
 
     context 'invalid completion' do
-      context 'when not a previous winner' do
-        let(:game) { create(:game) }
-
-        it { is_expected.to eq('Not a valid game.') }
-      end
-
-      context 'when game does not exist' do
-        let(:game) { nil }
-
-        it { is_expected.to eq('Not a valid game.') }
-      end
-
       context 'when a user already recorded 3 completions' do
         before { 3.times { create(:completion, completed_at: '2025-01-10', user:) } }
 
-        it { is_expected.to eq('You have already recorded 3 completions for this month.') }
+        it { is_expected.to eq(' has already recorded 3 completions for this month.') }
       end
 
       context 'when a user completes a duplicate game' do
         let!(:completion) { create(:completion, user:, nomination:) }
 
-        it { is_expected.to eq('You have already recorded a completion for this game.') }
+        it { is_expected.to eq(' has already recorded a completion for this game.') }
       end
     end
   end

@@ -52,12 +52,14 @@ module Gotx
       user = ::Users::FindOrCreate.(member)
 
       game = Game.find_by(screenscraper_id: event.options['screenscraper_id'])
+      next event.respond(content: 'Not a valid game.', ephemeral: true) unless game&.nominations&.any?(&:winner?)
+
       validation = ::Users::ValidateCompletion.(event.options.merge!('user' => user, 'game' => game))
-      next event.respond(content: validation) if validation
+      next event.respond(content: user.name + validation, ephemeral: true) if validation
 
       nomination = Nominations::FindOrCreateNoNom.(game)
       ::Nominations::Complete.(user, nomination)
-      event.respond(content: "#{event.user.mention} completed #{game.preferred_name}!")
+      event.respond(content: "#{event.user.mention} completed #{game.preferred_name} and has been awarded 1 point!")
     end
 
     button(custom_id: /\d_premium_member_status/) do |event|
