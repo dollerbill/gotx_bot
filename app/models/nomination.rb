@@ -15,6 +15,8 @@
 #  updated_at      :datetime         not null
 #
 class Nomination < ApplicationRecord
+  include NominationTypes
+
   NOMINATION_TYPE_NAMES = {
     'gotm' => 'GotM',
     'rpg' => 'RPGotQ',
@@ -34,14 +36,6 @@ class Nomination < ApplicationRecord
   scope :current_rpg_winners, -> { winners.rpg.joins(:theme).merge(Theme.current_rpg) }
   scope :current_nominations, -> { where(theme_id: Theme.current_gotm_theme.pluck(:id) + Theme.current_rpg.pluck(:id)) }
   scope :previous_winners, ->(type) { winners.joins(:theme).merge(Theme.most_recent(type)) }
-
-  enum nomination_type: {
-    gotm: 'gotm',
-    rpg: 'rpg',
-    retro: 'retro',
-    goty: 'goty',
-    gotwoty: 'gotwoty'
-  }
 
   def self.current_time
     Time.now.in_time_zone('Eastern Time (US & Canada)')
