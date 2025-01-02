@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.2.2'
+ruby '3.3.6'
 
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'discordrb', git: 'https://github.com/shardlab/discordrb.git', ref: 'main'
@@ -11,7 +11,7 @@ gem 'dotenv-rails'
 gem 'pagy'
 gem 'pg', '~> 1.1'
 gem 'puma', '~> 6.4'
-gem 'rails', '~> 7.1.3'
+gem 'rails', '~> 8.0.0'
 gem 'sprockets-rails'
 gem 'textacular', '~> 5.0'
 
@@ -36,7 +36,7 @@ group :development do
 end
 
 group :test do
-  gem 'database_cleaner-active_record'
+  gem 'database_cleaner-active_record', '~> 2.2'
   gem 'shoulda-matchers', '~> 5.3'
 end
 

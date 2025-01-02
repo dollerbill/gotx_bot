@@ -17,6 +17,12 @@
 #  premium_subscriber :string
 #
 class User < ApplicationRecord
+  SUBSCRIBERS = {
+    supporter: 'supporter',
+    champion: 'champion',
+    legend: 'legend'
+  }.freeze
+
   has_many :completions
   has_many :nominations
   has_many :streaks
@@ -26,11 +32,7 @@ class User < ApplicationRecord
   scope :premium, -> { where.not(premium_subscriber: nil) }
   scope :previous_finishers, ->(type) { joins(:completions).merge(Completion.previous_completions(type)).distinct }
 
-  enum premium_subscriber: {
-    supporter: 'supporter',
-    champion: 'champion',
-    legend: 'legend'
-  }
+  enum(:premium_subscriber, SUBSCRIBERS)
 
   validates_uniqueness_of :discord_id, message: 'already exists with this Discord ID', allow_nil: true
 
