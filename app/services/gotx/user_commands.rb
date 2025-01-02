@@ -59,7 +59,7 @@ module Gotx
 
       nomination = Nominations::FindOrCreateNoNom.(game)
       ::Nominations::Complete.(user, nomination)
-      event.respond(content: "#{event.user.mention} completed #{game.preferred_name} and has been awarded 1 point!")
+      event.respond(content: "#{event.bot.user(user.discord_id).mention} completed #{game.preferred_name} and has been awarded 1 point!")
     end
 
     button(custom_id: /\d_premium_member_status/) do |event|
