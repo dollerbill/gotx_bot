@@ -2,16 +2,15 @@
 
 module Nominations
   class Complete
-    attr_reader :user, :nomination, :points, :skip
+    attr_reader :user, :nomination, :points
 
-    def self.call(user, nomination, skip = nil)
-      new(user, nomination, skip).call
+    def self.call(user, nomination)
+      new(user, nomination).call
     end
 
-    def initialize(user, nomination, skip)
+    def initialize(user, nomination)
       @user = user
       @nomination = nomination
-      @skip = skip
       @points = Completion::COMPLETION_POINTS[nomination.nomination_type]
     end
 
@@ -26,7 +25,8 @@ module Nominations
     private
 
     def update_streak
-      return if skip || !nomination.gotm?
+      # past-month completions (admin backfills) don't count toward the current streak
+      return unless Nomination.current_gotm_winners.exists?(nomination.id)
 
       streak = ::Streaks::FindOrCreate.(user.id)
       return if streak.last_incremented&.month == Date.current.month

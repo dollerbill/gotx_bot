@@ -51,6 +51,14 @@ RSpec.describe 'Completions', type: :request do
       end
     end
 
+    context 'for the current gotm winner' do
+      let(:nomination) { create(:nomination, :winner) }
+
+      it 'starts a streak' do
+        expect { subject }.to change { user.streaks.count }.by(1)
+      end
+    end
+
     context 'with invalid atts' do
       before { allow_any_instance_of(Completion).to receive(:save!).and_return(false) }
 
