@@ -13,8 +13,6 @@
 #  nomination_type :string           default("gotm")
 #
 class Theme < ApplicationRecord
-  include NominationTypes
-
   NOMINATION_TIME = {
     'gotm' => 'month',
     'retro' => 'week',
@@ -35,6 +33,14 @@ class Theme < ApplicationRecord
     where(nomination_type: %w[goty gotwoty]).where('title LIKE ?', "%#{Date.current.last_year.year}%")
   }
   scope :most_recent, ->(type) { where(id: most_recent_id_for(type)) }
+
+  enum nomination_type: {
+    gotm: 'gotm',
+    rpg: 'rpg',
+    retro: 'retro',
+    goty: 'goty',
+    gotwoty: 'gotwoty'
+  }
 
   def set_retrobit_template
     date = Date.today
