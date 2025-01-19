@@ -1,82 +1,111 @@
-<h1 style="margin: 10px 0px;">GotX Management</h1>
-<h3 id="notice" style="color:red"><%= notice %></h3>
-<div class="row">
-	<div class="col">
-		<div class="card">
-			<h5 class="card-header">Create Weekly RetroBit</h5>
-			<div class="card-body home">
-				<p class="card-text">Create a new RetroBit game entry.</p>
-				<%= form_with url: create_weekly_retrobit_games_path, method: :post do |form| %>
-					<%= form.label :screenscraper_id, 'Screenscraper ID', class: 'home' %>
-					<%= form.text_field :screenscraper_id %>
-					<%= form.submit 'Create RetroBit', class: 'btn btn-outline-primary my-2 my-sm-0' %>
-				<% end %>
-			</div>
-		</div>
-	</div>
-	<div class="col">
-		<div class="card">
-			<h5 class="card-header">Create RPGotQ</h5>
-			<div class="card-body home">
-				<p class="card-text">Create a new RPGotQ nomination.</p>
-				<%= form_with url: create_monthly_rpg_games_path, method: :post do |form| %>
-					<%= form.label :screenscraper_id, 'Screenscraper ID' %>
-					<%= form.text_field :screenscraper_id %>
-					<%= form.label :time_to_beat, 'Hours to Beat' %>
-					<%= form.text_field :time_to_beat %>
-					<%= form.label :theme_id, 'RPGotQ Theme' %>
-					<%= form.select :theme_id, Theme.rpg.order(created_at: :desc).limit(3).collect { |t| [t.title, t.id] } %>
-					<%= form.submit 'Create RPGotQ', class: 'btn btn-outline-primary my-2 my-sm-0' %>
-				<% end %>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="col">
-		<div class="card">
-			<h5 class="card-header">Create GotM Theme</h5>
-			<div class="card-body home">
-				<p class="card-text">Create a new monthly Theme for GotM.</p>
-				<%= link_to 'Create Theme', new_theme_path(creation_date: Date.current.next_month.beginning_of_month), class: "btn btn-outline-primary my-2 my-sm-0" %>
-			</div>
-		</div>
-	</div>
-	<div class="col">
-		<div class="card">
-			<h5 class="card-header">Pick Winning GotM Nominations</h5>
-			<div class="card-body home">
-				<p class="card-text">Pick the winning game nominations for the current GotM or RPGotQ.</p>
-				<%= link_to 'Pick Winners', current_nominations_path, class: 'btn btn-outline-primary my-2 my-sm-0' %>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="col">
-		<div class="card">
-			<h5 class="card-header">Previous Finishers</h5>
-			<div class="card-body home">
-				<p class="card-text">View users that have previously finished GotX games.</p>
-				<a href="<%= previous_finishers_path %>" class="btn btn-outline-primary my-2 my-sm-0">Finishers</a>
-			</div>
-		</div>
-	</div>
-	<div class="col">
-		<div class="card">
-			<h5 class="card-header">Messenger</h5>
-			<div class="card-body home">
-				<p class="card-text">Send a message to the channel.</p>
-				<%= form_with url: create_message_path, method: :post do |form| %>
-					<%= form.label :message, 'Message' %>
-					<%= form.text_field :message %>
-					<%= form.label :member_id, '(Discord) User ID - optional' %>
-					<%= form.text_field :member_id %>
-					<%= form.label :channel, 'Server Channel' %>
-					<%= form.select :channel, available_channels %>
-					<%= form.submit 'Send message', class: 'btn btn-outline-primary my-2 my-sm-0' %>
-				<% end %>
-			</div>
-		</div>
-	</div>
+<h1 class="my-4 text-3xl font-bold">GotX Management</h1>
+<h3 id="notice" class="text-red-500"><%= notice %></h3>
+
+<div class="grid md:grid-cols-2 gap-6">
+  <div>
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+      <h5 class="bg-gray-50 px-4 py-3 text-lg font-medium border-b">Create Weekly RetroBit</h5>
+      <div class="p-4">
+        <p class="text-gray-600 mb-4">Create a new RetroBit game entry.</p>
+        <%= form_with url: create_weekly_retrobit_games_path, method: :post, class: "space-y-4" do |form| %>
+          <div class="space-y-2">
+            <%= form.label :screenscraper_id, 'Screenscraper ID', class: 'block text-sm font-medium text-gray-700' %>
+            <%= form.text_field :screenscraper_id, class: 'mt-1 block w-full rounded-md border-gray-300 shadow-sm' %>
+          </div>
+          <%= form.submit 'Create RetroBit', class: 'inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+      <h5 class="bg-gray-50 px-4 py-3 text-lg font-medium border-b">Create RPGotQ</h5>
+      <div class="p-4">
+        <p class="text-gray-600 mb-4">Create a new RPGotQ nomination.</p>
+        <%= form_with url: create_monthly_rpg_games_path, method: :post, class: "space-y-4" do |form| %>
+          <div class="space-y-2">
+            <%= form.label :screenscraper_id, 'Screenscraper ID', class: 'block text-sm font-medium text-gray-700' %>
+            <%= form.text_field :screenscraper_id, class: 'mt-1 block w-full rounded-md border-gray-300 shadow-sm' %>
+          </div>
+          <div class="space-y-2">
+            <%= form.label :time_to_beat, 'Hours to Beat', class: 'block text-sm font-medium text-gray-700' %>
+            <%= form.text_field :time_to_beat, class: 'mt-1 block w-full rounded-md border-gray-300 shadow-sm' %>
+          </div>
+          <div class="space-y-2">
+            <%= form.label :theme_id, 'RPGotQ Theme', class: 'block text-sm font-medium text-gray-700' %>
+            <%= form.select :theme_id, 
+                Theme.rpg.order(created_at: :desc).limit(3).collect { |t| [t.title, t.id] },
+                {},
+                class: 'mt-1 block w-full rounded-md border-gray-300 shadow-sm' %>
+          </div>
+          <%= form.submit 'Create RPGotQ', class: 'inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+      <h5 class="bg-gray-50 px-4 py-3 text-lg font-medium border-b">Create GotM Theme</h5>
+      <div class="p-4">
+        <p class="text-gray-600 mb-4">Create a new monthly Theme for GotM.</p>
+        <%= link_to 'Create Theme', 
+            new_theme_path(creation_date: Date.current.next_month.beginning_of_month), 
+            class: "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700" %>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+      <h5 class="bg-gray-50 px-4 py-3 text-lg font-medium border-b">Pick Winning GotM Nominations</h5>
+      <div class="p-4">
+        <p class="text-gray-600 mb-4">Pick the winning game nominations for the current GotM or RPGotQ.</p>
+        <%= link_to 'Pick Winners', 
+            current_nominations_path, 
+            class: 'inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700' %>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+      <h5 class="bg-gray-50 px-4 py-3 text-lg font-medium border-b">Previous Finishers</h5>
+      <div class="p-4">
+        <p class="text-gray-600 mb-4">View users that have previously finished GotX games.</p>
+        <a href="<%= previous_finishers_path %>" 
+           class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+          Finishers
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+      <h5 class="bg-gray-50 px-4 py-3 text-lg font-medium border-b">Messenger</h5>
+      <div class="p-4">
+        <p class="text-gray-600 mb-4">Send a message to the channel.</p>
+        <%= form_with url: create_message_path, method: :post, class: "space-y-4" do |form| %>
+          <div class="space-y-2">
+            <%= form.label :message, 'Message', class: 'block text-sm font-medium text-gray-700' %>
+            <%= form.text_field :message, class: 'mt-1 block w-full rounded-md border-gray-300 shadow-sm' %>
+          </div>
+          <div class="space-y-2">
+            <%= form.label :member_id, '(Discord) User ID - optional', class: 'block text-sm font-medium text-gray-700' %>
+            <%= form.text_field :member_id, class: 'mt-1 block w-full rounded-md border-gray-300 shadow-sm' %>
+          </div>
+          <div class="space-y-2">
+            <%= form.label :channel, 'Server Channel', class: 'block text-sm font-medium text-gray-700' %>
+            <%= form.select :channel, 
+                available_channels,
+                {},
+                class: 'mt-1 block w-full rounded-md border-gray-300 shadow-sm' %>
+          </div>
+          <%= form.submit 'Send message', class: 'inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>

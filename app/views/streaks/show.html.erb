@@ -1,20 +1,73 @@
-<div class="card text-center">
-  <div class="card-header">
-    <h2><%= link_to @streak.user.name.humanize, @streak.user %></h2>
-  </div>
-  <div class="row">
-    <div class="col"></div>
-    <div class="col" style="text-align: left">
-      <div class="card-body">
-        <p><strong>Streak status: </strong><%= streak_status %></p>
-        <p><strong>Streak started: </strong><%= "#{@streak.start_date.strftime("%B")}, #{@streak.start_date.year}" %></p>
-        <p><strong>Last completion: </strong> <%= "#{@streak.last_incremented.strftime("%B")}, #{@streak.last_incremented.year}" %></p>
-        <p><strong>Streak length: </strong> <%= "#{@streak.streak_count} #{"month".pluralize(@streak.streak_count)}" %></p>
+<div class="max-w-2xl mx-auto">
+  <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+    <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
+      <h2 class="text-2xl font-bold text-gray-800">
+        <%= link_to @streak.user.name.humanize, @streak.user, class: "hover:text-blue-600 transition duration-150" %>
+      </h2>
+    </div>
+
+    <div class="px-6 pt-4">
+      <div class="flex justify-center">
+        <% if @streak.new? %>
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">New Streak</span>
+        <% elsif @streak.active? %>
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">Active Streak</span>
+        <% else %>
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
+            Broken Streak
+          </span>
+        <% end %>
       </div>
     </div>
-    <div class="col"></div>
-  </div>
-  <div class="card-footer text-muted">
-    <%= link_to 'Back', streaks_path %>
+
+    <div class="px-6 py-4">
+      <dl class="grid grid-cols-1 gap-4">
+        <div class="flex justify-between py-3 border-b border-gray-100">
+          <dt class="text-sm font-medium text-gray-500">Streak Status</dt>
+          <dd class="text-sm text-gray-900"><%= streak_status %></dd>
+        </div>
+        
+        <div class="flex justify-between py-3 border-b border-gray-100">
+          <dt class="text-sm font-medium text-gray-500">Streak Started</dt>
+          <dd class="text-sm text-gray-900">
+            <%= @streak.start_date.strftime("%B, %Y") %>
+          </dd>
+        </div>
+
+        <div class="flex justify-between py-3 border-b border-gray-100">
+          <dt class="text-sm font-medium text-gray-500">Last Completion</dt>
+          <dd class="text-sm text-gray-900">
+            <%= @streak.last_incremented.strftime("%B, %Y") %>
+          </dd>
+        </div>
+
+        <div class="flex justify-between py-3">
+          <dt class="text-sm font-medium text-gray-500">Streak Length</dt>
+          <dd class="text-sm font-semibold text-gray-900">
+            <%= pluralize(@streak.streak_count, "month") %>
+          </dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="px-6 py-4 bg-gray-50">
+      <div class="flex items-center space-x-2">
+        <% months_count = (@streak.last_incremented.year * 12 + @streak.last_incremented.month) - 
+                         (@streak.start_date.year * 12 + @streak.start_date.month) + 1 %>
+        <% months_count.times do |i| %>
+          <div class="flex-1 h-2 rounded-full <%= i < @streak.streak_count ? 'bg-green-500' : 'bg-gray-300' %>"></div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="px-6 py-4 bg-gray-50 border-t border-gray-200">
+      <%= link_to streaks_path, 
+          class: "inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 transition duration-150" do %>
+        <svg class="mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        Back to Streaks
+      <% end %>
+    </div>
   </div>
 </div>
