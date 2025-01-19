@@ -1,96 +1,166 @@
-<div class="card">
-  <div class="card-header">
-    <h2><%= @user.name %></h2>
-    <%= lazy_render(@user.premium_subscriber&.capitalize, 'Subscription level') %>
+<div class="bg-white shadow-lg rounded-lg overflow-hidden">
+  <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center">
+        <div class="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center">
+          <span class="text-xl font-medium text-blue-600"><%= @user.name[0].upcase %></span>
+        </div>
+        <h2 class="ml-4 text-2xl font-bold text-gray-900"><%= @user.name %></h2>
+      </div>
+      <% if @user.premium_subscriber %>
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+          <%= @user.premium_subscriber&.capitalize %>
+        </span>
+      <% end %>
+    </div>
   </div>
-  <div class="card-body">
 
-    <h3 class="card-title">GotX Points</h3>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">
-        <table class="table table-striped table-hover">
-          <tbody>
-          <% %w[current_points redeemed_points earned_points premium_points].each do |points| %>
-          <tr>
-            <td><%= points.humanize %></td>
-            <td><%= @user.public_send(points) %></td>
-          </tr>
-          <% end %>
-          </tbody>
-        </table>
+  <div class="px-6 py-4 border-b border-gray-200">
+    <h3 class="text-lg font-medium text-gray-900 mb-4">GotX Points</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+      <% %w[current_points redeemed_points earned_points premium_points].each do |points| %>
+        <div class="bg-gray-50 rounded-lg p-4">
+          <dt class="text-sm font-medium text-gray-500"><%= points.humanize %></dt>
+          <dd class="mt-1 text-2xl font-semibold text-gray-900"><%= @user.public_send(points) %></dd>
+        </div>
+      <% end %>
+    </div>
 
-        <%= form_with url: redeem_points_user_path(@user), method: :post, local: true, class: 'form-inline home' do |f| %>
-          <%= text_field_tag :points, params[:points], class: 'form-control mr-sm-2', placeholder: 'Redeem GotX Points' %>
-          <%= f.submit 'Redeem', class: 'btn btn-outline-primary my-2 my-sm-0' %>
-        <% end %>
-      </li>
+    <%= form_with url: redeem_points_user_path(@user), 
+                  method: :post, 
+                  local: true,
+                  class: 'flex gap-4' do |f| %>
+      <div class="flex-grow">
+        <%= text_field_tag :points, 
+            params[:points], 
+            class: 'shadow-sm block w-full sm:text-sm border-gray-300 rounded-md',
+            placeholder: 'Redeem GotX Points' %>
+      </div>
+      <%= f.submit 'Redeem', 
+          class: 'inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700' %>
+    <% end %>
+  </div>
 
-      <% if @completions.any? %>
-        <li class="list-group-item">
-          <h3>Completed Games</h3>
-          <table class="table table-striped table-hover">
-            <thead>
+  <% if @completions.any? %>
+    <div class="px-6 py-4 border-b border-gray-200">
+      <h3 class="text-lg font-medium text-gray-900 mb-4">Completed Games</h3>
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
             <tr>
-              <th scope="col">Title</th>
-              <th scope="col">System</th>
-              <th scope="col">Completed At</th>
-              <th scope="col">Theme</th>
-              <th></th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">System</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Completed At</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Theme</th>
+              <th scope="col" class="relative px-6 py-3">
+                <span class="sr-only">Actions</span>
+              </th>
             </tr>
-            </thead>
-            <tbody>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
             <% @completions.each do |completion| %>
-              <tr>
-                <td><%= link_to completion.nomination.game.preferred_name, completion.nomination.game %></td>
-                <td><%= completion.nomination.game.system %></td>
-                <td><%= in_est_zone(completion.nomination.created_at) %></td>
-                <td><%= completion.nomination.theme.title %></td>
-                <td>
-                  <%= button_to completion_path(completion), method: :delete do %>
-                    <%= content_tag(:i, '', class: 'fas fa-trash') %>
+              <tr class="hover:bg-gray-50">
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <%= link_to completion.nomination.game.preferred_name, 
+                      completion.nomination.game,
+                      class: "text-blue-600 hover:text-blue-900" %>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <%= completion.nomination.game.system %>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <%= in_est_zone(completion.nomination.created_at) %>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <%= completion.nomination.theme.title %>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <%= button_to completion_path(completion), 
+                      method: :delete,
+                      class: "text-red-600 hover:text-red-900" do %>
+                    <i class="fas fa-trash"></i>
                   <% end %>
                 </td>
               </tr>
             <% end %>
+          </tbody>
+        </table>
+      </div>
+      <div class="mt-4">
+        <%= render_pagination(@pagy_completions) %>
+      </div>
+    </div>
+  <% end %>
 
-            </tbody>
-          </table>
-          <%== pagy_nav(@pagy_completions, params: { page_nominations: h(params[:page_nominations]) }, page_param: :page_completions) %>
-        </li>
-      <% end %>
-
-      <% if @nominations.any? %>
-        <li class="list-group-item">
-          <h3>Nominated Games</h3>
-          <table class="table table-striped table-hover">
-            <thead>
+  <% if @nominations.any? %>
+    <div class="px-6 py-4 border-b border-gray-200">
+      <h3 class="text-lg font-medium text-gray-900 mb-4">Nominated Games</h3>
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
             <tr>
-              <th scope="col">Title</th>
-              <th scope="col">System</th>
-              <th scope="col">Nominated</th>
-              <th scope="col">Theme</th>
-              <th scope="col">Status</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">System</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nominated</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Theme</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
             </tr>
-            </thead>
-            <tbody>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
             <% @nominations.each do |nomination| %>
-              <tr>
-                <td><%= link_to nomination.game.preferred_name, nomination.game %></td>
-                <td><%= nomination.game.system %></td>
-                <td><%= nomination.theme.creation_date %></td>
-                <td><%= nomination.theme.title %></td>
-                <td><%= nomination.winner? ? 'Won' : 'Did not win' %></td>
+              <tr class="hover:bg-gray-50">
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <%= link_to nomination.game.preferred_name,
+                      nomination.game,
+                      class: "text-blue-600 hover:text-blue-900" %>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <%= nomination.game.system %>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <%= nomination.theme.creation_date %>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <%= nomination.theme.title %>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <% if nomination.winner? %>
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                      Won
+                    </span>
+                  <% else %>
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                      Did not win
+                    </span>
+                  <% end %>
+                </td>
               </tr>
             <% end %>
-            </tbody>
-          </table>
-          <%== pagy_nav(@pagy_nominations, params: { page_completions: h(params[:page_completions]) }, page_param: :page_nominations) %>
-        </li>
+          </tbody>
+        </table>
+      </div>
+      <div class="mt-4">
+        <%= render_pagination(@pagy_nominations) %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="px-6 py-4 bg-gray-50 flex items-center justify-between">
+    <div class="flex space-x-4">
+      <%= link_to edit_user_path(@user), 
+          class: "inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50" do %>
+        <svg class="-ml-1 mr-2 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+        </svg>
+        Edit
       <% end %>
-    </ul>
-  </div>
-  <div class="card-footer text-muted">
-    <%= link_to 'Edit', edit_user_path(@user) %> |
-    <%= link_to 'Back', users_path %>
+      <%= link_to users_path, 
+          class: "inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50" do %>
+        <svg class="-ml-1 mr-2 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        Back
+      <% end %>
+    </div>
   </div>
 </div>

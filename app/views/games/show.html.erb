@@ -1,47 +1,140 @@
-<div class="card text-center">
-  <div class="card-header">
-    <h2><%= @game.preferred_name %></h2>
+<div class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+  <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
+    <h1 class="text-2xl font-bold text-center text-gray-900"><%= @game.preferred_name %></h1>
   </div>
-<div class="row">
-  <div class="col"></div>
-  <div class="col" style="text-align: left">
-  <img class="card-img-top mx-auto d-block" src="<%= @game.img_url %>" alt="Screenshot" style="width: 480px;">
-  <div class="card-body">
-    <%= lazy_render(@game.title_usa, "USA Title") %>
-    <%= lazy_render(@game.title_eu, "European Title") %>
-    <%= lazy_render(@game.title_jp, "Japanese Title") %>
-    <%= lazy_render(@game.title_world, "World Title") %>
-    <%= lazy_render(@game.title_other, "Alternate Title") %>
-    <%= lazy_render(@game.year, 'Year') %>
-    <%= lazy_render(@game.system, 'System') %>
-    <%= lazy_render(@game.developer, 'Developer') %>
-    <%= lazy_render(@game.genre, 'Genre') %>
-    <%= lazy_hltb(@game.time_to_beat, 'Time to Beat') %>
-    <%= lazy_render(@game.screenscraper_id, 'ScreenScraper.fr Game ID') %>
-  </div>
-    <div class="card-body">
-      <table class="table table-striped table-hover">
-        <thead>
-        <tr>
-          <th scope="col">Nominated for:</th>
-        </tr>
-        </thead>
 
-        <tbody>
-        <% @game.nominations.each do |nomination| %>
-          <tr>
-            <td><%= link_to nomination.theme.title, nomination %></td>
-            <td><%= winner_status(nomination) %></td>
-          </tr>
-        <% end %>
-        </tbody>
-      </table>
-    </div>
+  <div class="px-6 py-4 border-b border-gray-200">
+    <% if @game.img_url.present? %>
+      <img class="w-full max-w-2xl mx-auto rounded-lg shadow-md" 
+           src="<%= @game.img_url %>" 
+           alt="Screenshot of <%= @game.preferred_name %>"
+           loading="lazy">
+    <% end %>
   </div>
-  <div class="col"></div>
-</div>
-  <div class="card-footer text-muted">
-    <%= link_to 'Edit', edit_game_path(@game) %> |
-    <%= link_to 'Back', games_path %>
+
+  <div class="px-6 py-4 border-b border-gray-200">
+    <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-4">
+      <% if @game.title_usa.present? %>
+        <div>
+          <dt class="text-sm font-medium text-gray-500">USA Title</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @game.title_usa %></dd>
+        </div>
+      <% end %>
+
+      <% if @game.title_eu.present? %>
+        <div>
+          <dt class="text-sm font-medium text-gray-500">European Title</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @game.title_eu %></dd>
+        </div>
+      <% end %>
+
+      <% if @game.title_jp.present? %>
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Japanese Title</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @game.title_jp %></dd>
+        </div>
+      <% end %>
+
+      <% if @game.title_world.present? %>
+        <div>
+          <dt class="text-sm font-medium text-gray-500">World Title</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @game.title_world %></dd>
+        </div>
+      <% end %>
+
+      <% if @game.title_other.present? %>
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Alternate Title</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @game.title_other %></dd>
+        </div>
+      <% end %>
+
+      <% if @game.year.present? %>
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Year</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @game.year %></dd>
+        </div>
+      <% end %>
+
+      <% if @game.system.present? %>
+        <div>
+          <dt class="text-sm font-medium text-gray-500">System</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @game.system %></dd>
+        </div>
+      <% end %>
+
+      <% if @game.developer.present? %>
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Developer</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @game.developer %></dd>
+        </div>
+      <% end %>
+
+      <% if @game.genre.present? %>
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Genre</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @game.genre %></dd>
+        </div>
+      <% end %>
+
+      <% if @game.time_to_beat.present? %>
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Time to Beat</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @game.time_to_beat %> hours</dd>
+        </div>
+      <% end %>
+
+      <% if @game.screenscraper_id.present? %>
+        <div>
+          <dt class="text-sm font-medium text-gray-500">ScreenScraper.fr Game ID</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @game.screenscraper_id %></dd>
+        </div>
+      <% end %>
+    </dl>
+  </div>
+
+  <% if @game.nominations.any? %>
+    <div class="px-6 py-4 border-b border-gray-200">
+      <h2 class="text-lg font-medium text-gray-900 mb-4">Nominations</h2>
+      <div class="overflow-hidden">
+        <div class="flex flex-col space-y-3">
+          <% @game.nominations.each do |nomination| %>
+            <div class="flex items-center justify-between bg-gray-50 px-4 py-3 rounded-lg">
+              <%= link_to nomination.theme.title, nomination, class: "text-sm font-medium text-blue-600 hover:text-blue-900" %>
+              
+              <% if nomination.winner? %>
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                  Winner
+                </span>
+              <% else %>
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                  Nominated
+                </span>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="px-6 py-4 bg-gray-50 flex items-center justify-between">
+    <div class="flex space-x-4">
+      <%= link_to edit_game_path(@game), 
+          class: "inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50" do %>
+        <svg class="-ml-1 mr-2 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+        </svg>
+        Edit
+      <% end %>
+
+      <%= link_to games_path, 
+          class: "inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50" do %>
+        <svg class="-ml-1 mr-2 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        Back
+      <% end %>
+    </div>
   </div>
 </div>
