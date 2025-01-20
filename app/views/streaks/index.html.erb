@@ -1,63 +1,62 @@
-<div class="card text-center">
-  <div class="card-header">
-    <h2>Streaks</h2>
+<div class="bg-white shadow-lg rounded-lg overflow-hidden">
+  <div class="border-b border-gray-200 bg-gray-50 px-4 py-4">
+    <h2 class="text-2xl font-bold text-center text-gray-800">Streaks</h2>
   </div>
-  <div class="row">
-    <div class="col">
-      <div class="card-body">
-        <table class="table table-striped table-hover">
-          <thead>
-          <tr>
-            <th scope="col">New Streaks</th>
-          </tr>
-          </thead>
-
-          <tbody>
+  
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
+    <div class="bg-white rounded-lg shadow overflow-hidden">
+      <div class="px-4 py-5 sm:px-6 bg-blue-50">
+        <h3 class="text-lg font-medium leading-6 text-blue-900">New Streaks</h3>
+      </div>
+      <div class="overflow-hidden">
+        <ul class="divide-y divide-gray-200">
           <% @new_streaks.each do |streak| %>
-            <tr>
-              <td><%= link_to new_streaks_label(streak.user), streak%></td>
-            </tr>
+            <li class="hover:bg-gray-50">
+              <%= link_to streak, class: "block px-4 py-4 transition duration-150 ease-in-out" do %>
+                <span class="text-gray-700"><%= new_streaks_label(streak.user) %></span>
+              <% end %>
+            </li>
           <% end %>
-          </tbody>
-        </table>
+        </ul>
       </div>
     </div>
-    <div class="col">
-      <div class="card-body">
-        <table class="table table-striped table-hover">
-          <thead>
-          <tr>
-            <th scope="col">Active Streaks</th>
-          </tr>
-          </thead>
 
-          <tbody>
+    <div class="bg-white rounded-lg shadow overflow-hidden">
+      <div class="px-4 py-5 sm:px-6 bg-green-50">
+        <h3 class="text-lg font-medium leading-6 text-green-900">Active Streaks</h3>
+      </div>
+      <div class="overflow-hidden">
+        <ul class="divide-y divide-gray-200">
           <% @active_streaks.each do |streak| %>
-            <tr>
-              <td><%= link_to streak.user.name, streak%> - <%= streak.streak_count %> months</td>
-            </tr>
+            <li class="hover:bg-gray-50">
+              <%= link_to streak, class: "block px-4 py-4 transition duration-150 ease-in-out" do %>
+                <div class="flex justify-between items-center">
+                  <span class="text-gray-700"><%= streak.user.name %></span>
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    <%= streak.streak_count %> months
+                  </span>
+                </div>
+              <% end %>
+            </li>
           <% end %>
-          </tbody>
-        </table>
+        </ul>
       </div>
     </div>
-    <div class="col">
-      <div class="card-body">
-        <table class="table table-striped table-hover">
-          <thead>
-          <tr>
-            <th scope="col">Broken Streaks</th>
-          </tr>
-          </thead>
 
-          <tbody>
+    <div class="bg-white rounded-lg shadow overflow-hidden">
+      <div class="px-4 py-5 sm:px-6 bg-red-50">
+        <h3 class="text-lg font-medium leading-6 text-red-900">Broken Streaks</h3>
+      </div>
+      <div class="overflow-hidden">
+        <ul class="divide-y divide-gray-200">
           <% @broken_streaks.each do |streak| %>
-            <tr>
-              <td><%= link_to streak.user.name, streak%></td>
-            </tr>
+            <li class="hover:bg-gray-50">
+              <%= link_to streak, class: "block px-4 py-4 transition duration-150 ease-in-out" do %>
+                <span class="text-gray-700"><%= streak.user.name %></span>
+              <% end %>
+            </li>
           <% end %>
-          </tbody>
-        </table>
+        </ul>
       </div>
     </div>
   </div>

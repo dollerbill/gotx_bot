@@ -36,7 +36,7 @@ RSpec.describe 'Nominations', type: :request do
     it 'returns the current nominations' do
       subject
       expect(response).to have_http_status(:ok)
-      expect(response.body).to include('GotM Nominations: 2').and include('RPGotQ Nominations: 2')
+      expect(response.body).to include('GotM Nominations').and include('RPGotQ Nominations').and include('Winner')
     end
   end
 
@@ -138,8 +138,8 @@ RSpec.describe 'Nominations', type: :request do
       it 'assigns winners for the specified month and year' do
         subject
         expect(response).to have_http_status(:ok)
-        expect(response.body).to match("<td><a href=\"/nominations/#{winner1.id}\">")
-          .and match("<td><a href=\"/nominations/#{winner2.id}\">")
+        expect(response.body).to match("<a class=\"block px-6 py-4\" href=\"/nominations/#{winner1.id}\">")
+          .and match("<a class=\"block px-6 py-4\" href=\"/nominations/#{winner2.id}\">")
       end
     end
 
