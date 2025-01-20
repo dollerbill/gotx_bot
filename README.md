@@ -1,5 +1,7 @@
 # GotXBoT
 
+[![Run Tests](https://github.com/dollerbill/gotx_bot/actions/workflows/run_tests.yml/badge.svg)](https://github.com/dollerbill/gotx_bot/actions/workflows/run_tests.yml)
+
 A simple discord bot to handle Game of the X operations.
 
 ## Available bot commands:
