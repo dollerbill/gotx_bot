@@ -2,10 +2,6 @@
 
 require 'rails_helper'
 
-RSpec.shared_examples 'invalid nomination' do |error|
-  it { is_expected.to include error }
-end
-
 RSpec.describe Users::ValidateCompletion do
   let(:nomination) { create(:nomination, :winner) }
   let(:game) { create(:game, nominations: [nomination]) }

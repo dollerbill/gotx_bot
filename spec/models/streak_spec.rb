@@ -43,4 +43,18 @@ RSpec.describe Streak, type: :model do
       end
     end
   end
+
+  describe 'lifecycle' do
+    context '#active?' do
+      subject { build(:streak, :active).active? }
+
+      it { is_expected.to eq(true) }
+    end
+
+    context '#new?' do
+      subject { build(:streak).new? }
+
+      it { is_expected.to eq(true) }
+    end
+  end
 end
