@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Users', type: :request do
+RSpec.describe UsersController, type: :request do
   include_context 'Auth Helper'
 
   let(:user) { create(:user, :legend, current_points: 3, premium_points: 107.0) }
@@ -93,10 +93,24 @@ RSpec.describe 'Users', type: :request do
     it_behaves_like 'unauthorized'
 
     context 'authorized' do
-      it 'updates the user record' do
-        expect { subject }.to change { user.reload.redeemed_points }.from(0).to(3)
-                                                                    .and change { user.current_points }.from(3).to(0)
-        expect(response).to redirect_to(user_path(user))
+      context 'with points available' do
+        it 'updates the user record' do
+          expect { subject }.to change { user.reload.redeemed_points }
+            .from(0).to(3)
+            .and change { user.current_points }.from(3).to(0)
+          expect(response).to redirect_to(user_path(user))
+          expect(flash[:notice]).to eq('Points successfully redeemed.')
+        end
+      end
+
+      context 'with too few points available' do
+        before { user.update(current_points: 1) }
+
+        it 'returns error and does not update points' do
+          expect { subject }.not_to change { user.reload.current_points }
+          expect(response).to redirect_to(user_path(user))
+          expect(flash[:alert]).to eq('User does not have enough points to redeem.')
+        end
       end
     end
   end
