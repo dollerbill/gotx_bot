@@ -14,6 +14,16 @@ module Users
     end
 
     def call
+      redeem_points if points_available?
+    end
+
+    private
+
+    def points_available?
+      true if user.current_points >= points
+    end
+
+    def redeem_points
       user.decrement!(:current_points, points)
       user.increment!(:redeemed_points, points)
     end

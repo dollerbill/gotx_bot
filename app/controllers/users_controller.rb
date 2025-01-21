@@ -36,9 +36,11 @@ class UsersController < ApplicationController
   end
 
   def redeem_points
-    Users::RedeemPoints.(@user, params['points'])
-
-    redirect_to user_url(@user), notice: 'Points successfully redeemed.'
+    if Users::RedeemPoints.(@user, params['points'])
+      redirect_to user_url(@user), notice: 'Points successfully redeemed.'
+    else
+      redirect_to user_url(@user), alert: 'User does not have enough points to redeem.'
+    end
   end
 
   def previous_finishers
