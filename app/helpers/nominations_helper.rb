@@ -7,17 +7,17 @@ module NominationsHelper
     "<p><strong>Won:</strong> #{nomination.winner? ? 'Yes' : 'No'}</p>".html_safe
   end
 
-  # rubocop:disable Style/StringConcatenation
   def select_winner(nomination)
-    return '<p>Already a winner <i class="fas fa-crown"></i></p>'.html_safe if nomination.winner?
-
-    button_to select_winner_nomination_path(nomination), method: :patch, class: 'btn' do
-      content_tag(:i, '', class: 'fas fa-check') + ' Pick winner'
+    if nomination.winner?
+      content_tag(:p, class: 'inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800') do
+        concat('Winner')
+        concat(content_tag(:i, '', class: 'fas fa-crown ml-1'))
+      end
+    else
+      button_to select_winner_nomination_path(nomination), method: :patch, class: 'px-4 py-2 border rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700' do
+        concat(content_tag(:i, '', class: 'fas fa-check mr-1'))
+        concat('Pick Winner')
+      end
     end
-    # rubocop:enable Style/StringConcatenation
-  end
-
-  def winner_status(nomination)
-    nomination.winner ? '<i class="fas fa-crown"></i>'.html_safe : nil
   end
 end

@@ -13,6 +13,7 @@ gem 'pg', '~> 1.1'
 gem 'puma', '~> 6.4'
 gem 'rails', '~> 8.0.0'
 gem 'sprockets-rails'
+gem 'tailwindcss-rails'
 gem 'textacular', '~> 5.0'
 
 group :development, :ci do

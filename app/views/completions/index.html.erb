@@ -1,25 +1,79 @@
-<% return "<h1>No completions for #{Nomination.find(params[:nomination_id]).game.preferred_name}</h1>".html_safe if @completions.none? %>
-
-<h1><%= @completions.count %> <%= 'completion'.pluralize(@completions.count) %> for <%= @completions.first&.nomination&.game&.preferred_name %></h1>
-<table class="table table-striped table-hover">
-  <thead>
-  <tr>
-    <th scope="col">User</th>
-    <% if @completions.first.nomination.rpg? %>
-      <th scope="col">100% retro achievemnts</th>
+<div class="bg-white shadow-lg rounded-lg overflow-hidden">
+  <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
+    <% if @completions.none? %>
+      <div class="flex items-center justify-center">
+        <div class="h-12 w-12 rounded-full bg-gray-100 flex items-center justify-center">
+          <svg class="h-6 w-6 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </div>
+        <h1 class="ml-4 text-2xl font-bold text-gray-900">
+          No completions for <%= @nomination.game.preferred_name %>
+        </h1>
+      </div>
+    <% else %>
+      <div class="flex items-center justify-between">
+        <div class="flex items-center">
+          <div class="h-12 w-12 rounded-full bg-green-100 flex items-center justify-center">
+            <span class="text-xl font-medium text-green-600">
+              <%= @completions.count %>
+            </span>
+          </div>
+          <h1 class="ml-4 text-2xl font-bold text-gray-900">
+            <%= pluralize(@completions.count, 'completion') %> for <%= @completions.first.nomination.game.preferred_name %>
+          </h1>
+        </div>
+      </div>
     <% end %>
-  </tr>
-  </thead>
+  </div>
 
-  <tbody>
-  <% @completions.each do |completion| %>
-    <tr>
-      <td><%= completion.user.name %></td>
-      <% if @completions.first.nomination.rpg? %>
-        <td><%= rpg_achievements_column(completion) %></td>
-      <% end %>
-    </tr>
+  <% if @completions.any? %>
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              User
+            </th>
+            <% if @completions.first.nomination.rpg? %>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap text-center flex justify-center items-center">
+                100% Retro Achievements
+              </th>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <% @completions.each do |completion| %>
+            <tr class="hover:bg-gray-50">
+              <td class="px-6 py-4 whitespace-nowrap">
+                <%= link_to completion.user, class: "block px-6 py-4" do %>
+                  <div class="flex items-center">
+                    <div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center">
+                      <span class="text-sm font-medium text-gray-600">
+                        <%= completion.user.name[0].upcase %>
+                      </span>
+                    </div>
+                    <div class="ml-4">
+                      <div class="text-sm font-medium text-gray-900">
+                        <%= completion.user.name %>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              </td>
+              <% if @completions.first.nomination.rpg? %>
+                <td class="px-6 py-4 whitespace-nowrap text-center justify-center items-center">
+                  <%= rpg_achievements_column(completion) %>
+                </td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="px-6 py-4 border-t border-gray-200 bg-gray-50">
+      <%= render_pagination(@pagy) %>
+    </div>
   <% end %>
-  </tbody>
-</table>
-<%== pagy_nav(@pagy) %>
+</div>
