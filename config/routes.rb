@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      get 'current_winners', to: 'games#current'
+    end
+  end
+
   get 'current_nominations', to: 'nominations#current_nominations'
   get 'previous_finishers', to: 'users#previous_finishers'
   resources :nominations do
