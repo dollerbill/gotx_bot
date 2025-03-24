@@ -17,7 +17,8 @@ RSpec.describe GameSerializer, type: :serializer do
         screenscraper_id: 19289,
         system: 'PS1',
         time_to_beat: 42,
-        year: '1997'
+        year: '1997',
+        description: 'Nomination for a game!'
       }
     )
   end

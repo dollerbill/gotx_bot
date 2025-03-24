@@ -16,7 +16,8 @@ class GameSerializer
       genre: game.genre,
       img_url: game.img_url,
       time_to_beat: game.time_to_beat,
-      screenscraper_id: game.screenscraper_id
+      screenscraper_id: game.screenscraper_id,
+      description: game.nominations.pluck('description').reject(&:blank?).first
     }
   end
 end

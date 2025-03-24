@@ -18,9 +18,9 @@ FactoryBot.define do
   factory :nomination do
     nomination_type { 'gotm' }
     description { 'Nomination for a game!' }
-    game { build(:game) }
-    user { create(:user) }
-    theme { create(:theme) }
+    association :game
+    association :user
+    association :theme
 
     trait :winner do
       winner { true }
