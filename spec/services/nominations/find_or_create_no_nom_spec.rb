@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Nominations::FindOrCreateNoNom do
-  let(:game)   { create(:game) }
+  let(:game)   { build(:game) }
   let!(:user)  { create(:user, id: 12) }
   let!(:theme) { create(:theme, id: 225) }
 
