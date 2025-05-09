@@ -11,9 +11,9 @@
 #  title_world      :string
 #  title_other      :string
 #  year             :string
-#  system           :string
+#  systems          :string
 #  developer        :string
-#  genre            :string
+#  genres           :string
 #  img_url          :string
 #  time_to_beat     :integer
 #  screenscraper_id :bigint

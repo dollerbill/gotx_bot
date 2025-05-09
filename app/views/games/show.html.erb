@@ -56,10 +56,10 @@
         </div>
       <% end %>
 
-      <% if @game.system.present? %>
+      <% if @game.systems.any? %>
         <div>
           <dt class="text-sm font-medium text-gray-500">System</dt>
-          <dd class="mt-1 text-sm text-gray-900"><%= @game.system %></dd>
+          <dd class="mt-1 text-sm text-gray-900"><%= @game.systems.join(', ') %></dd>
         </div>
       <% end %>
 
@@ -70,10 +70,10 @@
         </div>
       <% end %>
 
-      <% if @game.genre.present? %>
+      <% if @game.genres.any? %>
         <div>
           <dt class="text-sm font-medium text-gray-500">Genre</dt>
-          <dd class="mt-1 text-sm text-gray-900"><%= @game.genre %></dd>
+          <dd class="mt-1 text-sm text-gray-900"><%= @game.genres.join(', ') %></dd>
         </div>
       <% end %>
 

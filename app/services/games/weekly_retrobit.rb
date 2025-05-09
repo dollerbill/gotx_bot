@@ -46,8 +46,8 @@ module Games
       description = ":video_game: #{game.preferred_name}\n"
       description += ":calendar_spiral: #{game.year}\n" if game.year
       description += ":office: #{game.developer}\n" if game.developer
-      description += ":joystick: #{game.system}\n" if game.system
-      description += ":crossed_swords: #{game.genre}\n" if game.genre
+      description += ":joystick: #{game.systems.join(', ')}\n" if game.systems.any?
+      description += ":crossed_swords: #{game.genres.join(', ')}\n" if game.genres.any?
       description += ":timer: #{game.time_to_beat}\n" if game.time_to_beat
       description + (atts.dig(:nominations_attributes, 0, :description)&.truncate(200, separator: ' ') || '')
     end
