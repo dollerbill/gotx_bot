@@ -28,6 +28,22 @@ class Game < ApplicationRecord
 
   accepts_nested_attributes_for :nominations
 
+  def systems=(value)
+    if value.is_a?(String)
+      super(value.split(',').map(&:strip).reject(&:blank?))
+    else
+      super(value)
+    end
+  end
+
+  def genres=(value)
+    if value.is_a?(String)
+      super(value.split(',').map(&:strip).reject(&:blank?))
+    else
+      super(value)
+    end
+  end
+
   def self.current_games
     {
       'GotM' => joins(:nominations).merge(Nomination.current_gotm_winners),
