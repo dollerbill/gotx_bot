@@ -72,11 +72,14 @@ module Gotx
       ActiveRecord::Base.connection_pool.with_connection do
         user = ::Users::FindOrCreate.(event.user)
         game = Game.find_by(screenscraper_id: event.options['screenscraper_id'])
+
+        # TODO: move this down so we have the year/ category before validating
         validation = ::Games::ValidateNomination.(event.options.merge!('user' => user, 'game' => game))
         next event.respond(content: validation) if validation
 
         event.respond(content: 'Nomination is being created, please watch for the result.', ephemeral: true)
 
+        # TODO: move this up so the game is scraped before validating
         if game
           Nomination.create!(user:, game:, theme: Theme.gotm.find_by('creation_date >=?', Date.current))
           game_atts = { img_url: game.img_url, nominations_attributes: [{ description: event.options['description'] }] }

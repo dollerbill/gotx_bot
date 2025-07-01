@@ -18,6 +18,7 @@ module Games
       return I18n.t('nominations.closed', time: Nomination.nominations_open_est) unless Nomination.open?
       return I18n.t('nominations.existing_user_nomination') if user_already_nominated?
       return I18n.t('nominations.existing_game_nomination', game: @game.preferred_name) if game_already_nominated?
+      return I18n.t('nominations.category_full', category: ) if category_nominations_full?
       return I18n.t('nominations.previous_rpg_winner') if previous_rpg_winner?
       return I18n.t('nominations.previous_weekly_winner') if previous_weekly_winner?
       return unless previously_won?
@@ -46,5 +47,36 @@ module Games
     def game_already_nominated?
       @game&.nominations&.current_nominations&.gotm&.any?
     end
+
+    def category_nominations_full?
+      current_category_nominations.send(:pluck, :year).count > 24
+    end
+
+    def current_category_nominations
+      @current_category_nominations ||=
+        if pre_96?
+          Nomination.current_pre96
+        elsif from_96_99?
+          Nomination.current_from9699
+        else
+          Nomination.current_after2000
+        end
+      # return Nomination.current_pre96 if pre_96?
+      # return Nomination.current_from9699 if from_96_99?
+
+      # Nomination.current_after2000
+    end
+
+    def pre_96?
+      (0..1995).include?(game.year.to_i)
+    end
+
+    def from_96_99?
+      (1996..1999).include?(game.year.to_i)
+    end
+
+    # def after_2000?
+    #   (2000..3000).include?(game.year.to_i)
+    # end
   end
 end
