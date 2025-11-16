@@ -75,7 +75,7 @@ module Gotx
       user = User.find(atts[0])
       update = atts[1] == 'add'
       unless update
-        ::Users::UpdatePremiumStatus.(user, nil)
+        ::Users::UpdatePremiumStatus.(user)
         member = event.bot.user(user.discord_id)
         event.bot.channel(CHANNELS[:rank]).send_message("#{member.mention} is no longer a premium subscriber.")
 

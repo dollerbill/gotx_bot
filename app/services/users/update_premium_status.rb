@@ -4,7 +4,7 @@ module Users
   class UpdatePremiumStatus
     attr_reader :user, :membership_status
 
-    def self.call(user, membership_status)
+    def self.call(user, membership_status = nil)
       new(user, membership_status).call
     end
 

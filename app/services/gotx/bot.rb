@@ -8,7 +8,7 @@ module Gotx
       Discordrb::Commands::CommandBot.new(
         token: ENV['DISCORD_TOKEN'],
         client_id: ENV['DISCORD_CLIENT_ID'],
-        intents: %i[server_messages direct_messages],
+        intents: %i[server_messages direct_messages server_members],
         prefix: '/'
       )
     end
