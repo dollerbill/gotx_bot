@@ -8,13 +8,16 @@ end
 
 RSpec.describe Games::ValidateNomination do
   let!(:game) { create(:game) }
-  let(:open) { true }
-  let(:user) { build(:user) }
-  let(:atts) { { 'user' => user, 'screenscraper_id' => game&.screenscraper_id, 'game' => nil } }
+  let(:open)  { true }
+  let(:user)  { build(:user) }
+  let(:atts)  { { 'user' => user, 'screenscraper_id' => game&.screenscraper_id, 'game' => nil } }
 
   subject { described_class.call(atts) }
 
-  before { allow(Nomination).to receive(:open?).and_return(open) }
+  before do
+    allow(Nomination).to receive(:open?).and_return(open)
+    game.nominations.destroy_all
+  end
 
   describe 'call' do
     context 'successful nomination' do
