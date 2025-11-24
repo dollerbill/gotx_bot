@@ -11,9 +11,11 @@ class GameSerializer
     {
       name: game.preferred_name,
       year: game.year,
-      system: game.system,
+      system: game.systems.join(', '),
+      systems: game.systems.join(', '),
       developer: game.developer,
-      genre: game.genre,
+      genre: game.genres.join(', '),
+      genres: game.genres.join(', '),
       img_url: game.img_url,
       time_to_beat: game.time_to_beat,
       screenscraper_id: game.screenscraper_id,

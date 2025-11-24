@@ -10,10 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_27_210328) do
+ActiveRecord::Schema[8.0].define(version: 2024_10_22_184759) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
-  enable_extension "plpgsql"
 
   create_table "completions", force: :cascade do |t|
     t.datetime "completed_at", precision: nil, null: false
@@ -33,14 +33,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_27_210328) do
     t.string "title_world"
     t.string "title_other"
     t.string "year"
-    t.string "system"
+    t.text "systems", default: [], array: true
     t.string "developer"
-    t.string "genre"
+    t.text "genres", default: [], array: true
     t.string "img_url"
     t.integer "time_to_beat"
     t.bigint "screenscraper_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "igdb_id"
   end
 
   create_table "nominations", force: :cascade do |t|

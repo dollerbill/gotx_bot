@@ -42,9 +42,9 @@ module Scrapers
         title_jp: region_name('jp'),
         title_other: region_name('ss'),
         year: game['dates']&.map { |date| date['text']&.split('-')&.first }&.min,
-        system: game.dig('systeme', 'text'),
+        systems: game.dig('systeme', 'text'),
         developer: game.dig('developpeur', 'text'),
-        genre: game['genres']&.first&.dig('noms')&.find { |g| g['langue'] == 'en' }&.dig('text'),
+        genres: game['genres']&.first&.dig('noms')&.find { |g| g['langue'] == 'en' }&.dig('text'),
         img_url: image_url,
         time_to_beat: atts['time_to_beat'],
         nominations_attributes: [
