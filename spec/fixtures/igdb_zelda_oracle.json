@@ -1,0 +1,59 @@
+[
+  {
+    "id": 1032,
+    "name": "The Legend of Zelda: Oracle of Seasons",
+    "cover": {
+      "id": 132048,
+      "url": "//images.igdb.com/igdb/image/upload/t_thumb/co2tw0.jpg"
+    },
+    "genres": [
+      {
+        "id": 9,
+        "name": "Puzzle"
+      },
+      {
+        "id": 12,
+        "name": "Role-playing (RPG)"
+      },
+      {
+        "id": 31,
+        "name": "Adventure"
+      }
+    ],
+    "platforms": [
+      {
+        "id": 22,
+        "name": "Game Boy Color"
+      },
+      {
+        "id": 37,
+        "name": "Nintendo 3DS"
+      }
+    ],
+    "first_release_date": 990316800,
+    "screenshots": [
+      {
+        "id": 952111,
+        "url": "//images.igdb.com/igdb/image/upload/t_thumb/sckenj.jpg"
+      }
+    ],
+    "summary": "The Legend of Zelda: Oracle of Seasons is one of two Zelda titles released for the Game Boy Color, the other being Oracle of Ages. The game retain many gameplay elements from Link's Awakening such as the graphics, audio and top-view perspective.",
+    "involved_companies": [
+      {
+        "id": 1234,
+        "company": {
+          "id": 70,
+          "name": "Nintendo"
+        },
+        "developer": true
+      }
+    ],
+    "alternative_names": [
+      {
+        "id": 5678,
+        "name": "Zelda no Densetsu: Fushigi no Ki no Mi - Daichi no Shou",
+        "comment": "JP title"
+      }
+    ]
+  }
+]
