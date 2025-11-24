@@ -4,7 +4,11 @@ RSpec.shared_context 'Auth Helper' do
   let(:username) { 'admin_user' }
   let(:password) { 'super_safe_password' }
 
-  before { get root_path, headers: { 'Authorization' => basic_auth(username, password) } }
+  before do
+    get root_path, headers: { 'Authorization' => basic_auth(username, password) }
+
+    session[:admin_authenticated] = true unless username == 'wrong'
+  end
 
   def basic_auth(username, password)
     ActionController::HttpAuthentication::Basic.encode_credentials(username, password)

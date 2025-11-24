@@ -10,10 +10,14 @@ class HomeController < ApplicationController
 
   def basic_authenticate
     authenticate_or_request_with_http_basic do |username, password|
-      if ENV['ADMIN_USER_NAMES'].split(',').any? { |name| name.casecmp?(username) } &&
-         password == ENV['ADMIN_UI_PASSWORD']
+      valid = ENV['ADMIN_USER_NAMES'].split(',').any? { |name| name.casecmp?(username) } &&
+              password == ENV['ADMIN_UI_PASSWORD']
+
+      if valid
         session[:admin_authenticated] = true
+        return true
       end
+      false
     end
   end
 end

@@ -41,9 +41,9 @@ CSV.foreach('db/seeds/games.csv', headers: true) do |row|
     title_world: game['title_world'],
     title_other: game['title_other'],
     year: game['year'],
-    system: game['system'],
+    systems: [game['system']],
     developer: game['developer'],
-    genre: game['genre'],
+    genres: [game['genre']],
     img_url: game['img'],
     time_to_beat: game['time_to_beat'],
     screenscraper_id: game['screenscraper_id']

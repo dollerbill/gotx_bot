@@ -11,14 +11,15 @@
 #  title_world      :string
 #  title_other      :string
 #  year             :string
-#  system           :string
+#  systems          :string
 #  developer        :string
-#  genre            :string
+#  genres           :string
 #  img_url          :string
 #  time_to_beat     :integer
 #  screenscraper_id :bigint
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
+#  igdb_id          :bigint
 #
 class Game < ApplicationRecord
   has_many :nominations
@@ -26,6 +27,22 @@ class Game < ApplicationRecord
   validate :presence_of_title
 
   accepts_nested_attributes_for :nominations
+
+  def systems=(value)
+    if value.is_a?(String)
+      super(value.split(',').map(&:strip).reject(&:blank?))
+    else
+      super(value)
+    end
+  end
+
+  def genres=(value)
+    if value.is_a?(String)
+      super(value.split(',').map(&:strip).reject(&:blank?))
+    else
+      super(value)
+    end
+  end
 
   def self.current_games
     {

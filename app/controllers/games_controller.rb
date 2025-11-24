@@ -57,10 +57,10 @@ class GamesController < ApplicationController
             :title_other,
             :title_jp,
             :time_to_beat,
-            :genre,
             :developer,
             :year,
-            :system
+            genres: [],
+            systems: []
           )
   end
 
