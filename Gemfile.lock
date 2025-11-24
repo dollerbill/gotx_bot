@@ -249,6 +249,10 @@ GEM
       ffi (~> 1.0)
     rdoc (6.7.0)
       psych (>= 4.0.0)
+    redis (5.4.0)
+      redis-client (>= 0.22.0)
+    redis-client (0.26.1)
+      connection_pool
     regexp_parser (2.9.2)
     reline (0.5.7)
       io-console (~> 0.5)
@@ -355,6 +359,7 @@ DEPENDENCIES
   pry-byebug
   puma (~> 6.4)
   rails (~> 8.0.0)
+  redis (~> 5.4)
   rspec-rails (~> 6.1.0)
   rubocop
   shoulda-matchers (~> 5.3)
