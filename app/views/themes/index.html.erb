@@ -13,11 +13,38 @@
     </div>
 
     <%= form_with url: themes_path, method: :get, local: true, class: "mt-4", data: { turbo: false } do |f| %>
-      <div class="flex gap-4">
+      <div class="flex gap-4 mb-4">
         <div class="flex-grow">
           <%= text_field_tag :search, params[:search], class: "shadow-sm block w-full sm:text-sm border-gray-300 rounded-md", placeholder: "Search by title" %>
         </div>
         <%= f.submit "Search", class: "inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700" %>
+      </div>
+
+      <div class="flex gap-2 flex-wrap">
+        <%= link_to themes_path(search: params[:search]),
+            class: "inline-flex items-center px-3 py-1.5 rounded-md text-sm font-medium #{params[:nomination_type].blank? ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}" do %>
+          All
+        <% end %>
+
+        <%= link_to themes_path(nomination_type: 'gotm', search: params[:search]),
+            class: "inline-flex items-center px-3 py-1.5 rounded-md text-sm font-medium #{params[:nomination_type] == 'gotm' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}" do %>
+          GotM
+        <% end %>
+
+        <%= link_to themes_path(nomination_type: 'rpg', search: params[:search]),
+            class: "inline-flex items-center px-3 py-1.5 rounded-md text-sm font-medium #{params[:nomination_type] == 'rpg' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}" do %>
+          RPG
+        <% end %>
+
+        <%= link_to themes_path(nomination_type: 'retro', search: params[:search]),
+            class: "inline-flex items-center px-3 py-1.5 rounded-md text-sm font-medium #{params[:nomination_type] == 'retro' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}" do %>
+          Retro
+        <% end %>
+
+        <%= link_to themes_path(nomination_type: 'goty', search: params[:search]),
+            class: "inline-flex items-center px-3 py-1.5 rounded-md text-sm font-medium #{params[:nomination_type] == 'goty' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}" do %>
+          GotY
+        <% end %>
       </div>
     <% end %>
   </div>
