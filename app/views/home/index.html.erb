@@ -62,12 +62,53 @@
       <h5 class="bg-gray-50 px-4 py-3 text-lg font-medium border-b">Pick Winning GotM Nominations</h5>
       <div class="p-4">
         <p class="text-gray-600 mb-4">Pick the winning game nominations for the current GotM or RPGotQ.</p>
-        <%= link_to 'Pick Winners', 
-            current_nominations_path, 
+        <%= link_to 'Pick Winners',
+            current_nominations_path,
             class: 'inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700' %>
       </div>
     </div>
   </div>
+
+  <% unless goty_theme_exists?(next_goty_year) %>
+  <div>
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+      <h5 class="bg-gray-50 px-4 py-3 text-lg font-medium border-b">Create GotY <%= next_goty_year %> Theme</h5>
+      <div class="p-4">
+        <p class="text-gray-600 mb-4">Create the Game of the Year theme for <%= next_goty_year %> and select the overall winner from <%= eligible_goty_year %> winners.</p>
+        <%= form_with url: goty_index_path, method: :post, class: "space-y-4" do |form| %>
+          <div class="space-y-2">
+            <%= form.label :game_id, "#{next_goty_year} GotY Winner", class: 'block text-sm font-medium text-gray-700' %>
+            <div x-data="gotyGameSelect()" x-init="fetchGames()" class="relative">
+              <input type="text"
+                     x-model="search"
+                     @focus="open = true"
+                     @click.away="open = false"
+                     placeholder="Search for the winning game..."
+                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" />
+
+              <ul x-show="open"
+                  x-cloak
+                  class="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto">
+                <template x-for="game in filteredGames" :key="game.id">
+                  <li @click="selectGame(game)"
+                      class="px-4 py-2 hover:bg-blue-50 cursor-pointer"
+                      x-text="game.name"></li>
+                </template>
+                <li x-show="filteredGames.length === 0" class="px-4 py-2 text-gray-500 italic">
+                  No matching games
+                </li>
+              </ul>
+
+              <input type="hidden" name="game_id" :value="selectedGameId" />
+            </div>
+          </div>
+          <%= form.submit "Create #{next_goty_year} GotY Theme",
+              class: 'inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <% end %>
 
   <div>
     <div class="bg-white rounded-lg shadow-lg overflow-hidden">
@@ -109,3 +150,30 @@
     </div>
   </div>
 </div>
+
+<script>
+function gotyGameSelect() {
+  return {
+    games: [],
+    search: '',
+    open: false,
+    selectedGameId: null,
+    fetchGames() {
+      fetch('<%= eligible_games_for_year_goty_index_path %>')
+        .then(r => r.json())
+        .then(data => this.games = data)
+    },
+    get filteredGames() {
+      if (!this.search) return this.games
+      return this.games.filter(g =>
+        g.name.toLowerCase().includes(this.search.toLowerCase())
+      )
+    },
+    selectGame(game) {
+      this.selectedGameId = game.id
+      this.search = game.name
+      this.open = false
+    }
+  }
+}
+</script>

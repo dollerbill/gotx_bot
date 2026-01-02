@@ -6,13 +6,16 @@ class ThemesController < ApplicationController
   before_action :set_theme, only: %i[show edit update destroy]
 
   def index
-    themes = if params[:search]&.presence
-               ids = Theme.basic_search(title: params[:search]).map(&:id)
-               Theme.where(id: ids).order(:creation_date)
-             else
-               Theme.order(:creation_date)
-             end
-    @pagy, @themes = pagy(themes)
+    themes = Theme.all
+
+    themes = themes.where(nomination_type: params[:nomination_type]) if params[:nomination_type]&.presence
+
+    if params[:search]&.presence
+      ids = themes.basic_search(title: params[:search]).map(&:id)
+      themes = themes.where(id: ids)
+    end
+
+    @pagy, @themes = pagy(themes.order(:creation_date))
   end
 
   def show; end

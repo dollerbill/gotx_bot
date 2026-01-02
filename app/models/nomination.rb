@@ -24,8 +24,8 @@ class Nomination < ApplicationRecord
     'goty' => 'GotY'
   }.freeze
 
-  belongs_to :game
-  belongs_to :user
+  belongs_to :game, optional: true
+  belongs_to :user, optional: true
   belongs_to :theme
   has_many :completions
 

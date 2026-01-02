@@ -1,0 +1,113 @@
+<h1 class="my-4 text-3xl font-bold"><%= @theme.title %></h1>
+<p class="text-gray-600 mb-6"><%= @theme.description %></p>
+
+<div class="bg-white rounded-lg shadow-lg overflow-hidden mb-6">
+  <h5 class="bg-gray-50 px-4 py-3 text-lg font-medium border-b">Winning Nominations</h5>
+  <div class="p-4">
+    <% if @nominations.any? %>
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead>
+          <tr>
+            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Category</th>
+            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Game</th>
+            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Original Nominator</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          <% @nominations.each do |nomination| %>
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-3"><%= nomination.description %></td>
+              <td class="px-4 py-3">
+                <% if nomination.game %>
+                  <%= link_to nomination.game.preferred_name, game_path(nomination.game), class: 'text-blue-600 hover:underline' %>
+                <% else %>
+                  <span class="text-gray-400 italic">Not assigned</span>
+                <% end %>
+              </td>
+              <td class="px-4 py-3">
+                <% if nomination.user %>
+                  <%= link_to nomination.user.name, user_path(nomination.user), class: 'text-blue-600 hover:underline' %>
+                <% else %>
+                  <span class="text-gray-400 italic">-</span>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p class="text-gray-500">No nominations yet.</p>
+    <% end %>
+  </div>
+</div>
+
+<div class="bg-white rounded-lg shadow-lg overflow-hidden">
+  <h5 class="bg-gray-50 px-4 py-3 text-lg font-medium border-b">Add Category Winner</h5>
+  <div class="p-4">
+    <%= form_with url: add_nomination_goty_path(@theme), method: :post, class: "space-y-4" do |form| %>
+      <div class="space-y-2">
+        <%= form.label :description, 'Category Name', class: 'block text-sm font-medium text-gray-700' %>
+        <%= form.text_field :description,
+            placeholder: "e.g., #{@theme.creation_date.year} GotY Runner up, Best RPG",
+            class: 'mt-1 block w-full rounded-md border-gray-300 shadow-sm' %>
+      </div>
+
+      <div class="space-y-2">
+        <%= form.label :game_id, 'Winning Game', class: 'block text-sm font-medium text-gray-700' %>
+        <div x-data="gameSelect()" x-init="fetchGames()" class="relative">
+          <input type="text"
+                 x-model="search"
+                 @focus="open = true"
+                 @click.away="open = false"
+                 placeholder="Search for a game..."
+                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" />
+
+          <ul x-show="open"
+              x-cloak
+              class="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto">
+            <template x-for="game in filteredGames" :key="game.id">
+              <li @click="selectGame(game)"
+                  class="px-4 py-2 hover:bg-blue-50 cursor-pointer"
+                  x-text="game.name"></li>
+            </template>
+            <li x-show="filteredGames.length === 0" class="px-4 py-2 text-gray-500 italic">
+              No matching games
+            </li>
+          </ul>
+
+          <input type="hidden" name="game_id" :value="selectedGameId" />
+        </div>
+      </div>
+
+      <%= form.submit 'Add Category Winner',
+          class: 'inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700' %>
+    <% end %>
+  </div>
+</div>
+
+<script>
+function gameSelect() {
+  return {
+    games: [],
+    search: '',
+    open: false,
+    selectedGameId: null,
+    fetchGames() {
+      fetch('<%= eligible_games_goty_path(@theme) %>')
+        .then(r => r.json())
+        .then(data => this.games = data)
+    },
+    get filteredGames() {
+      if (!this.search) return this.games
+      return this.games.filter(g =>
+        g.name.toLowerCase().includes(this.search.toLowerCase())
+      )
+    },
+    selectGame(game) {
+      this.selectedGameId = game.id
+      this.search = game.name
+      this.open = false
+    }
+  }
+}
+</script>
