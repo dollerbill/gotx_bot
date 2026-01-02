@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class HomeController < ApplicationController
+  include GotyHelper
+
   before_action :basic_authenticate
   skip_before_action :ensure_admin_authenticated
 
