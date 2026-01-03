@@ -27,13 +27,15 @@ Rails.application.routes.draw do
   resources :themes
 
   # GotY management
-  resources :goty, only: [:show, :create] do
+  resources :goty, only: %i[show create] do
     collection do
       get :eligible_games_for_year
     end
     member do
       get :eligible_games
+      get :eligible_gotw_games
       post :add_nomination
+      post :add_gotwoty_nomination
     end
   end
   resources :users do

@@ -56,7 +56,7 @@
         </div>
       <% end %>
 
-      <% if @game.systems.any? %>
+      <% if @game.systems.present? %>
         <div>
           <dt class="text-sm font-medium text-gray-500">System</dt>
           <dd class="mt-1 text-sm text-gray-900"><%= @game.systems.join(', ') %></dd>
@@ -70,7 +70,7 @@
         </div>
       <% end %>
 
-      <% if @game.genres.any? %>
+      <% if @game.genres.present? %>
         <div>
           <dt class="text-sm font-medium text-gray-500">Genre</dt>
           <dd class="mt-1 text-sm text-gray-900"><%= @game.genres.join(', ') %></dd>
@@ -93,7 +93,7 @@
     </dl>
   </div>
 
-  <% if @game.nominations.any? %>
+  <% if @game.nominations.present? %>
     <div class="px-6 py-4 border-b border-gray-200">
       <h2 class="text-lg font-medium text-gray-900 mb-4">Nominations</h2>
       <div class="overflow-hidden">

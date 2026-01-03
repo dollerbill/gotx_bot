@@ -41,7 +41,7 @@
   </div>
 </div>
 
-<div class="bg-white rounded-lg shadow-lg overflow-hidden">
+<div class="bg-white rounded-lg shadow-lg overflow-hidden mb-6">
   <h5 class="bg-gray-50 px-4 py-3 text-lg font-medium border-b">Add Category Winner</h5>
   <div class="p-4">
     <%= form_with url: add_nomination_goty_path(@theme), method: :post, class: "space-y-4" do |form| %>
@@ -85,6 +85,65 @@
   </div>
 </div>
 
+<div class="bg-white rounded-lg shadow-lg overflow-hidden">
+  <h5 class="bg-gray-50 px-4 py-3 text-lg font-medium border-b">GotWotY Winner</h5>
+  <div class="p-4">
+    <% if @gotwoty_winner %>
+      <div class="mb-4">
+        <h6 class="text-sm font-medium text-gray-700 mb-2">Winner</h6>
+        <div class="bg-green-50 border border-green-200 rounded-md p-3">
+          <div class="flex items-center justify-between">
+            <div>
+              <% if @gotwoty_winner.game %>
+                <%= link_to @gotwoty_winner.game.preferred_name, game_path(@gotwoty_winner.game), class: 'text-lg font-semibold text-green-700 hover:underline' %>
+              <% else %>
+                <span class="text-gray-400 italic">Not assigned</span>
+              <% end %>
+              <% if @gotwoty_winner.user %>
+                <p class="text-sm text-gray-600 mt-1">
+                  Original nominator: <%= link_to @gotwoty_winner.user.name, user_path(@gotwoty_winner.user), class: 'text-blue-600 hover:underline' %>
+                </p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% else %>
+      <%= form_with url: add_gotwoty_nomination_goty_path(@theme), method: :post, class: "space-y-4" do |form| %>
+        <div class="space-y-2">
+          <%= form.label :game_id, 'Winning Game of the Week', class: 'block text-sm font-medium text-gray-700' %>
+          <div x-data="gotwGameSelect()" x-init="fetchGotwGames()" class="relative">
+            <input type="text"
+                   x-model="gotwSearch"
+                   @focus="gotwOpen = true"
+                   @click.away="gotwOpen = false"
+                   placeholder="Search for a Game of the Week..."
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" />
+
+            <ul x-show="gotwOpen"
+                x-cloak
+                class="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto">
+              <template x-for="game in filteredGotwGames" :key="game.id">
+                <li @click="selectGotwGame(game)"
+                    class="px-4 py-2 hover:bg-blue-50 cursor-pointer"
+                    x-text="game.name"></li>
+              </template>
+              <li x-show="filteredGotwGames.length === 0" class="px-4 py-2 text-gray-500 italic">
+                No matching games
+              </li>
+            </ul>
+
+            <input type="hidden" name="game_id" :value="selectedGotwGameId" />
+          </div>
+        </div>
+
+        <%= form.submit 'Add GotWotY Winner',
+            class: 'inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700' %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
 <script>
 function gameSelect() {
   return {
@@ -107,6 +166,31 @@ function gameSelect() {
       this.selectedGameId = game.id
       this.search = game.name
       this.open = false
+    }
+  }
+}
+
+function gotwGameSelect() {
+  return {
+    gotwGames: [],
+    gotwSearch: '',
+    gotwOpen: false,
+    selectedGotwGameId: null,
+    fetchGotwGames() {
+      fetch('<%= eligible_gotw_games_goty_path(@theme) %>')
+        .then(r => r.json())
+        .then(data => this.gotwGames = data)
+    },
+    get filteredGotwGames() {
+      if (!this.gotwSearch) return this.gotwGames
+      return this.gotwGames.filter(g =>
+        g.name.toLowerCase().includes(this.gotwSearch.toLowerCase())
+      )
+    },
+    selectGotwGame(game) {
+      this.selectedGotwGameId = game.id
+      this.gotwSearch = game.name
+      this.gotwOpen = false
     }
   }
 }
