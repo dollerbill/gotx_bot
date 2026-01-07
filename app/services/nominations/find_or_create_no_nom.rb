@@ -10,7 +10,11 @@ module Nominations
 
     def initialize(game)
       @game = game
-      @theme_id = 225
+      @theme_id = Theme.gotm
+                       .where('EXTRACT(YEAR FROM themes.creation_date) = ?', Date.current.year)
+                       .where('title ilike ?', '%learning old lessons%')
+                       .last
+                       .id
     end
 
     def call
