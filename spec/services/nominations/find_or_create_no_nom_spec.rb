@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Nominations::FindOrCreateNoNom do
   let(:game)   { build(:game) }
   let!(:user)  { create(:user, id: 12) }
-  let!(:theme) { create(:theme, id: 225) }
+  let!(:theme) { create(:theme, title: 'Learning Old Lessons') }
 
   subject { described_class.(game) }
 
