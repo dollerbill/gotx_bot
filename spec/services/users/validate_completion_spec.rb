@@ -18,7 +18,7 @@ RSpec.describe Users::ValidateCompletion do
     context 'when a user has 3 completions between different GOTX categories' do
       before do
         %i[gotm retro goty].each do |type|
-          create(:completion, completed_at: '2025-01-10', nomination: create(:nomination, type), user:)
+          create(:completion, completed_at: Date.current, nomination: create(:nomination, type), user:)
         end
       end
 
@@ -27,7 +27,7 @@ RSpec.describe Users::ValidateCompletion do
 
     context 'invalid completion' do
       context 'when a user already recorded 3 gotm completions' do
-        before { 3.times { create(:completion, completed_at: '2025-01-10', user:) } }
+        before { 3.times { create(:completion, completed_at: Date.current, user:) } }
 
         it { is_expected.to eq(' has already recorded 3 completions for this month.') }
       end
