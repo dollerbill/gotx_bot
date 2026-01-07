@@ -27,7 +27,9 @@ module Users
     end
 
     def completed_three_games?
-      user.completions.joins(:nomination).where(completed_at: '2025-01-01'..'2025-01-31', nomination: { nomination_type: 'gotm' }).count > 2
+      current_month_start = Date.current.beginning_of_month
+      current_month_end = Date.current.end_of_month
+      user.completions.joins(:nomination).where(completed_at: current_month_start..current_month_end, nomination: { nomination_type: 'gotm' }).count > 2
     end
   end
 end
