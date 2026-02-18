@@ -70,6 +70,6 @@ class Game < ApplicationRecord
   end
 
   def preferred_name
-    title_usa || title_world || title_eu || title_jp || title_other
+    title_usa.presence || title_world.presence || title_eu.presence || title_jp.presence || title_other.presence
   end
 end
