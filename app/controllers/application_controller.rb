@@ -3,6 +3,11 @@
 class ApplicationController < ActionController::Base
   before_action :ensure_admin_authenticated
 
+  rescue_from StandardError do |exception|
+    Sentry.capture_exception(exception)
+    raise
+  end
+
   private
 
   def ensure_admin_authenticated

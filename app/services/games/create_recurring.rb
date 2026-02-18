@@ -9,6 +9,9 @@ module Games
 
     def self.call(atts)
       new(atts).call
+    rescue StandardError => e
+      Sentry.capture_exception(e)
+      raise
     end
 
     def initialize(atts)

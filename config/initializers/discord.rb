@@ -20,3 +20,8 @@ end
 MODULES.each { |mod| bot.include! mod }
 
 bot.run :async
+
+at_exit do
+  exception = $ERROR_INFO
+  Sentry.capture_exception(exception) if exception && !exception.is_a?(SystemExit)
+end

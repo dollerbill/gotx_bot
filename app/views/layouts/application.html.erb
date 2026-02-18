@@ -12,6 +12,7 @@
     <%= stylesheet_link_tag 'application', media: 'all' %>
     
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
+    <%= Sentry.get_trace_propagation_meta.html_safe %>
   </head>
 
   <body>
