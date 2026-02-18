@@ -4,6 +4,9 @@ module Users
   class AddMonthlyPremiumPoints
     def self.call
       new.call
+    rescue StandardError => e
+      Sentry.capture_exception(e)
+      raise
     end
 
     def call

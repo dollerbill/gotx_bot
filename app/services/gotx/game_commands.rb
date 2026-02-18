@@ -93,6 +93,7 @@ module Gotx
     rescue StandardError => e
       next if e.instance_of?(ActiveRecord::ConnectionNotEstablished)
 
+      Sentry.capture_exception(e)
       event.bot.channel(CHANNELS[:dev]).send_message(<<~ERROR)
         Error creating GotM nomination from #{event.user.name}\n#{e}\n#{event.options}
       ERROR
