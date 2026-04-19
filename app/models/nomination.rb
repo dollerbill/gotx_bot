@@ -36,9 +36,9 @@ class Nomination < ApplicationRecord
   scope :current_rpg_winners, -> { winners.rpg.joins(:theme).merge(Theme.current_rpg) }
   scope :current_nominations, -> { where(theme_id: Theme.current_gotm_theme.pluck(:id) + Theme.current_rpg.pluck(:id)) }
   scope :previous_winners, ->(type) { winners.joins(:theme).merge(Theme.most_recent(type)) }
-  scope :current_pre96, -> { current_nominations.joins(:game).where(game: { year: '1900-01-01'..'1995-12-31' }) }
-  scope :current_from9699, -> { current_nominations.joins(:game).where(game: { year: '1996-01-01'..'1999-12-31' }) }
-  scope :current_after2000, -> { current_nominations.joins(:game).where(game: { year: '2000-01-01'..'3000-12-31' }) }
+  scope :current_in_era, ->(era) { current_nominations.gotm.joins(:game).merge(Game.in_era(era)) }
+
+  CATEGORY_LIMIT = 24
 
   def self.current_time
     Time.now.in_time_zone('Eastern Time (US & Canada)')

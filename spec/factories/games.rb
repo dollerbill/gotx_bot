@@ -32,11 +32,10 @@ FactoryBot.define do
     time_to_beat { 42 }
     screenscraper_id { 19_289 }
 
-    # TODO: why?
-    # after(:create) do |game|
-    #   create(:nomination, game:) if game.nominations.blank?
-    #   game.reload
-    # end
+    after(:create) do |game|
+      create(:nomination, game:) if game.nominations.blank?
+      game.reload
+    end
 
     trait :screenscraper_attributes do
       screenscraper_id { '19626' }
