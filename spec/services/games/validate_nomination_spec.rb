@@ -81,6 +81,55 @@ RSpec.describe Games::ValidateNomination do
 
         it_behaves_like 'invalid nomination', 'was a RetroBit game in the past year.'
       end
+
+      context 'category is full' do
+        let(:theme) { create(:theme) }
+        let(:game)  { create(:game, year: '1998') }
+
+        before do
+          allow(Theme).to receive(:current_gotm_theme).and_return([theme])
+          allow(Theme).to receive(:current_rpg).and_return([])
+          Nomination::CATEGORY_LIMIT.times do
+            create(:nomination, theme:, game: create(:game, year: '1997'))
+          end
+        end
+
+        it_behaves_like 'invalid nomination', 'reached the maximum number of nominations'
+      end
+
+      context 'category is one short of full (boundary)' do
+        let(:theme) { create(:theme) }
+        let(:game)  { create(:game, year: '1998') }
+
+        before do
+          allow(Theme).to receive(:current_gotm_theme).and_return([theme])
+          allow(Theme).to receive(:current_rpg).and_return([])
+          (Nomination::CATEGORY_LIMIT - 1).times do
+            create(:nomination, theme:, game: create(:game, year: '1997'))
+          end
+        end
+
+        it 'still allows the nomination' do
+          expect(subject).to be_nil
+        end
+      end
+
+      context 'a different era is full' do
+        let(:theme) { create(:theme) }
+        let(:game)  { create(:game, year: '2010') }
+
+        before do
+          allow(Theme).to receive(:current_gotm_theme).and_return([theme])
+          allow(Theme).to receive(:current_rpg).and_return([])
+          Nomination::CATEGORY_LIMIT.times do
+            create(:nomination, theme:, game: create(:game, year: '1990'))
+          end
+        end
+
+        it 'does not block a nomination in another era' do
+          expect(subject).to be_nil
+        end
+      end
     end
   end
 end

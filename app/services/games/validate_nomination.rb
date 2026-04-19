@@ -18,6 +18,7 @@ module Games
       return I18n.t('nominations.closed', time: Nomination.nominations_open_est) unless Nomination.open?
       return I18n.t('nominations.existing_user_nomination') if user_already_nominated?
       return I18n.t('nominations.existing_game_nomination', game: @game.preferred_name) if game_already_nominated?
+      return I18n.t('nominations.category_full', category: game.era) if category_full?
       return I18n.t('nominations.previous_rpg_winner') if previous_rpg_winner?
       return I18n.t('nominations.previous_weekly_winner') if previous_weekly_winner?
       return unless previously_won?
@@ -45,6 +46,12 @@ module Games
 
     def game_already_nominated?
       @game&.nominations&.current_nominations&.gotm&.any?
+    end
+
+    def category_full?
+      return false unless game&.era
+
+      Nomination.current_in_era(game.era).count >= Nomination::CATEGORY_LIMIT
     end
   end
 end

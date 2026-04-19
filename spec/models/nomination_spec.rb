@@ -78,6 +78,24 @@ RSpec.describe Nomination, type: :model do
       end
     end
 
+    context 'current_in_era' do
+      it 'partitions current gotm nominations by era and excludes other themes' do
+        Nomination.destroy_all
+        theme = create(:theme)
+        pre96_nom   = create(:nomination, game: create(:game, year: '1990'), theme:)
+        late90s_nom = create(:nomination, game: create(:game, year: '1998'), theme:)
+        modern_nom  = create(:nomination, game: create(:game, year: '2010'), theme:)
+        create(:nomination, :rpg, theme: create(:theme, :rpg))
+
+        allow(Theme).to receive(:current_gotm_theme).and_return([theme])
+        allow(Theme).to receive(:current_rpg).and_return([])
+
+        expect(Nomination.current_in_era(:pre96)).to contain_exactly(pre96_nom)
+        expect(Nomination.current_in_era(:late90s)).to contain_exactly(late90s_nom)
+        expect(Nomination.current_in_era(:modern)).to contain_exactly(modern_nom)
+      end
+    end
+
     context 'previous_winners' do
       before do
         allow(Theme).to receive(:most_recent).with('gotm').and_return([gotm])

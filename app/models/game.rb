@@ -22,11 +22,23 @@
 #  igdb_id          :bigint
 #
 class Game < ApplicationRecord
+  ERAS = {
+    pre96: '0000'..'1995',
+    late90s: '1996'..'1999',
+    modern: '2000'..'9999'
+  }.freeze
+
   has_many :nominations
 
   validate :presence_of_title
 
   accepts_nested_attributes_for :nominations
+
+  scope :in_era, ->(era) { where(year: ERAS.fetch(era)) }
+
+  def era
+    ERAS.find { |_, range| range.cover?(year.to_s) }&.first
+  end
 
   def systems=(value)
     if value.is_a?(String)
