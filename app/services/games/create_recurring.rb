@@ -9,6 +9,8 @@ module Games
 
     def self.call(atts)
       new(atts).call
+    rescue ::Scrapers::Screenscraper::ApiUnavailable, ::Scrapers::Screenscraper::GameNotFound
+      raise
     rescue StandardError => e
       Sentry.capture_exception(e)
       raise

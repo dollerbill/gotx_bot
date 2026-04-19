@@ -3,6 +3,7 @@
 module Scrapers
   class Screenscraper
     class GameNotFound < StandardError; end
+    class ApiUnavailable < StandardError; end
 
     DEV_ID = ENV['SCREENSCRAPER_ID']
     DEV_PASS = ENV['SCREENSCRAPER_PASS']
@@ -27,11 +28,13 @@ module Scrapers
     private
 
     def url
+      raise GameNotFound, "Invalid screenscraper_id: #{atts['screenscraper_id'].inspect}" unless atts['screenscraper_id'].to_s.match?(/\A\d+\z/)
+
       URI("#{SCREENSCRAPER_BASE_URL}&gameid=#{atts['screenscraper_id']}&media=wheel(wor)")
     end
 
     def parse_response(response)
-      raise GameNotFound if ['API closed', 'Erreur'].any? { |error| response.match?(error) } || response.blank?
+      raise ApiUnavailable if response.blank? || ['API closed', 'Erreur'].any? { |error| response.match?(error) }
 
       @game = JSON.parse(response)['response']['jeu']
       {

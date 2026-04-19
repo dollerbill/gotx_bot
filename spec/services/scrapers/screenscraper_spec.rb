@@ -23,7 +23,16 @@ RSpec.describe Scrapers::Screenscraper do
 
       before { allow(Net::HTTP).to receive(:get).and_return(error) }
 
-      it 'raises GameNotFound error' do
+      it 'raises ApiUnavailable error' do
+        expect { subject }.to raise_error(described_class::ApiUnavailable)
+      end
+    end
+
+    context 'when screenscraper_id is non-numeric' do
+      let(:atts) { { 'screenscraper_id' => 'Pokémon Trading Card Game' } }
+
+      it 'raises GameNotFound before building the URI' do
+        expect(Net::HTTP).not_to receive(:get)
         expect { subject }.to raise_error(described_class::GameNotFound)
       end
     end

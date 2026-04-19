@@ -93,21 +93,28 @@ module Gotx
     rescue StandardError => e
       next if e.instance_of?(ActiveRecord::ConnectionNotEstablished)
 
-      Sentry.capture_exception(e)
+      expected = e.is_a?(::Scrapers::Screenscraper::GameNotFound) || e.is_a?(::Scrapers::Screenscraper::ApiUnavailable)
+      Sentry.capture_exception(e) unless expected
       event.bot.channel(CHANNELS[:dev]).send_message(<<~ERROR)
         Error creating GotM nomination from #{event.user.name}\n#{e}\n#{event.options}
       ERROR
-      event.user.dm(<<~DM)
-        An error occurred submitting your nomination (ScreenScraper ID #{event.options['screenscraper_id']}), please try again.
-      DM
+      user_message = case e
+                     when ::Scrapers::Screenscraper::ApiUnavailable
+                       "ScreenScraper is currently unavailable. Please try your nomination (ID #{event.options['screenscraper_id']}) again later."
+                     when ::Scrapers::Screenscraper::GameNotFound
+                       "ScreenScraper couldn't find a game for ID #{event.options['screenscraper_id']}. Please double-check the ID and try again."
+                     else
+                       "An error occurred submitting your nomination (ScreenScraper ID #{event.options['screenscraper_id']}), please try again."
+                     end
+      event.user.dm(user_message)
     end
 
     def self.build_description(game, game_atts)
       description = ":video_game: #{game.preferred_name}\n"
       description += ":calendar_spiral: #{game.year}\n" if game.year
       description += ":office: #{game.developer}\n" if game.developer
-      description += ":joystick: #{game.systems.join(', ')}\n" if game.systems.any?
-      description += ":crossed_swords: #{game.genres.join(', ')}\n" if game.genres.any?
+      description += ":joystick: #{game.systems.join(', ')}\n" if game.systems&.any?
+      description += ":crossed_swords: #{game.genres.join(', ')}\n" if game.genres&.any?
       description += ":timer: #{game.time_to_beat}\n" if game.time_to_beat
       description += "https://screenscraper.fr/gameinfos.php?gameid=#{game.screenscraper_id}\n"
       description + (game_atts.dig(:nominations_attributes, 0, :description)&.truncate(200, separator: ' ') || '')
@@ -150,9 +157,7 @@ module Gotx
       member = event.bot.user(data['member_id'])
       user = ::Users::FindOrCreate.(member)
       nom = Nomination.find(data['nomination_id'])
-      if user.completions.find_by(nomination_id: nom.id)
-        next event.respond(content: I18n.t('users.already_completed', user: user.name, game: nom.game.preferred_name))
-      end
+      next event.respond(content: I18n.t('users.already_completed', user: user.name, game: nom.game.preferred_name)) if user.completions.find_by(nomination_id: nom.id)
 
       ::Nominations::Complete.(user, nom)
       event.respond(content: "#{member.mention} #{completion_message(nom, user)}")
