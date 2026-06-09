@@ -111,7 +111,7 @@ GEM
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
-    date (3.4.1)
+    date (3.5.1)
     diff-lcs (1.5.1)
     domain_name (0.6.20240107)
     dotenv (3.1.2)
@@ -161,7 +161,7 @@ GEM
     mini_portile2 (2.8.9)
     minitest (5.27.0)
     msgpack (1.7.2)
-    net-imap (0.5.7)
+    net-imap (0.5.15)
       date
       net-protocol
     net-pop (0.1.2)
@@ -324,7 +324,7 @@ GEM
     textacular (5.7.0)
       activerecord (>= 5.0)
     thor (1.4.0)
-    timeout (0.4.4)
+    timeout (0.6.1)
     tsort (0.2.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
