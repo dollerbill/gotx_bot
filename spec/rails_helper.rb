@@ -3,6 +3,11 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
+# Test env defaults (kept here instead of a git-tracked .env.test)
+ENV['ADMIN_USER_NAMES'] ||= 'admin_user'
+ENV['ADMIN_UI_PASSWORD'] ||= 'super_safe_password'
+ENV['API_TOKEN'] ||= 'TEST'
+ENV['SKIP_BOT_INITIALIZATION'] ||= 'true'
 require_relative '../config/environment'
 # Prevent database truncation if the environment is production
 abort('The Rails environment is running in production mode!') if Rails.env.production?

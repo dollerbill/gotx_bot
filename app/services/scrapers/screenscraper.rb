@@ -5,11 +5,7 @@ module Scrapers
     class GameNotFound < StandardError; end
     class ApiUnavailable < StandardError; end
 
-    DEV_ID = ENV['SCREENSCRAPER_ID']
-    DEV_PASS = ENV['SCREENSCRAPER_PASS']
-    SS_ID = ENV['SCREENSCRAPER_DEV_ID']
-    SS_PASS = ENV['SCREENSCRAPER_DEV_PASS']
-    SCREENSCRAPER_BASE_URL = "https://www.screenscraper.fr/api2/jeuInfos.php?devid=#{DEV_ID}&devpassword=#{DEV_PASS}&softname=zzz&output=json&ssid=#{SS_ID}&sspassword=#{SS_PASS}&crc=".freeze
+    BASE_URL = 'https://www.screenscraper.fr/api2/jeuInfos.php'
 
     attr_reader :atts, :game
 
@@ -22,15 +18,43 @@ module Scrapers
     end
 
     def call
-      parse_response(Net::HTTP.get(url))
+      parse_response(fetch)
     end
 
     private
 
-    def url
-      raise GameNotFound, "Invalid screenscraper_id: #{atts['screenscraper_id'].inspect}" unless atts['screenscraper_id'].to_s.match?(/\A\d+\z/)
+    def fetch
+      http = Net::HTTP.new(url.host, url.port)
+      http.use_ssl = true
+      http.open_timeout = 5
+      http.read_timeout = 10
 
-      URI("#{SCREENSCRAPER_BASE_URL}&gameid=#{atts['screenscraper_id']}&media=wheel(wor)")
+      response = http.get(url.request_uri)
+      raise ApiUnavailable, "Screenscraper returned HTTP #{response.code}" unless response.is_a?(Net::HTTPSuccess)
+
+      response.body
+    rescue Net::OpenTimeout, Net::ReadTimeout, SocketError, SystemCallError => e
+      raise ApiUnavailable, e.message
+    end
+
+    def url
+      @url ||= begin
+        raise GameNotFound, "Invalid screenscraper_id: #{atts['screenscraper_id'].inspect}" unless atts['screenscraper_id'].to_s.match?(/\A\d+\z/)
+
+        URI("#{BASE_URL}?#{credential_params}&gameid=#{atts['screenscraper_id']}&media=wheel(wor)")
+      end
+    end
+
+    def credential_params
+      URI.encode_www_form(
+        devid: ENV['SCREENSCRAPER_ID'],
+        devpassword: ENV['SCREENSCRAPER_PASS'],
+        softname: 'zzz',
+        output: 'json',
+        ssid: ENV['SCREENSCRAPER_DEV_ID'],
+        sspassword: ENV['SCREENSCRAPER_DEV_PASS'],
+        crc: ''
+      )
     end
 
     def parse_response(response)

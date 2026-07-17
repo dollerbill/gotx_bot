@@ -8,7 +8,10 @@ module CompletionsHelper
         concat(content_tag(:i, '', class: 'fas fa-trophy ml-1'))
       end
     else
-      button_to '100% Completed', completion_path(completion, completion: { rpg_achievements: true }), method: :patch, class: 'px-4 py-2 border rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700'
+      button_to '100% Completed',
+                completion_path(completion, completion: { rpg_achievements: true }),
+                method: :patch,
+                class: 'px-4 py-2 border rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700'
     end
   end
 end

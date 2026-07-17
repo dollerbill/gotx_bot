@@ -117,6 +117,10 @@ RSpec.describe 'Goty', type: :request do
 
     subject { get eligible_games_goty_path(theme) }
 
+    def json_names
+      JSON.parse(response.body).map { |g| g['name'] }
+    end
+
     it_behaves_like 'unauthorized'
 
     context 'with eligible games from the same year' do
@@ -159,6 +163,70 @@ RSpec.describe 'Goty', type: :request do
         json = JSON.parse(response.body)
         chrono = json.find { |g| g['name'] == 'Chrono Trigger' }
         expect(chrono['nominator_id']).to eq(nominator.id)
+      end
+
+      context 'with a retro winner in the same year' do
+        let!(:retro_game) { create(:game, title_world: 'Jumping Flash!') }
+        let!(:retro_nomination) do
+          create(:nomination, :winner,
+                 game: retro_game,
+                 user: nominator,
+                 theme: eligible_theme,
+                 nomination_type: 'retro')
+        end
+
+        it 'includes retro winners alongside gotm winners' do
+          subject
+          expect(json_names).to include('Jumping Flash!', 'Chrono Trigger')
+        end
+      end
+
+      context 'with a winner of an ineligible nomination type' do
+        let!(:rpg_game) { create(:game, title_world: 'Final Fantasy VII') }
+        let!(:rpg_nomination) do
+          create(:nomination, :winner,
+                 game: rpg_game,
+                 user: nominator,
+                 theme: eligible_theme,
+                 nomination_type: 'rpg')
+        end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TYPES' do
+          subject
+          expect(json_names).not_to include('Final Fantasy VII')
+        end
+      end
+
+      context 'with a non-winning nomination in the eligible year' do
+        let!(:losing_game) { create(:game, title_world: 'Shaq Fu') }
+        let!(:losing_nomination) do
+          create(:nomination,
+                 game: losing_game,
+                 user: nominator,
+                 theme: eligible_theme,
+                 nomination_type: 'gotm')
+        end
+
+        it 'excludes games that did not win' do
+          subject
+          expect(json_names).not_to include('Shaq Fu')
+        end
+      end
+
+      context 'when a game won more than once in the eligible year' do
+        let!(:second_theme) { create(:theme, creation_date: Date.new(2025, 9, 1), title: 'September 2025') }
+        let!(:repeat_nomination) do
+          create(:nomination, :winner,
+                 game: winning_game,
+                 user: nominator,
+                 theme: second_theme,
+                 nomination_type: 'retro')
+        end
+
+        it 'returns the game only once' do
+          subject
+          expect(json_names.count('Chrono Trigger')).to eq(1)
+        end
       end
     end
   end
