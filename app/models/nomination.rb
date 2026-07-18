@@ -37,6 +37,11 @@ class Nomination < ApplicationRecord
   scope :current_nominations, -> { where(theme_id: Theme.current_gotm_theme.pluck(:id) + Theme.current_rpg.pluck(:id)) }
   scope :previous_winners, ->(type) { winners.joins(:theme).merge(Theme.most_recent(type)) }
   scope :current_in_era, ->(era) { current_nominations.gotm.joins(:game).merge(Game.in_era(era)) }
+  scope :in_theme_year, ->(year) { joins(:theme).where('EXTRACT(YEAR FROM themes.creation_date) = ?', year) }
+  scope :goty_eligible, ->(year, types) { winners.where(nomination_type: types).in_theme_year(year) }
+
+  GOTY_ELIGIBLE_TYPES = %w[gotm retro].freeze
+  GOTWOTY_ELIGIBLE_TYPES = %w[retro].freeze
 
   CATEGORY_LIMIT = 24
 

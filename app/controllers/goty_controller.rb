@@ -3,15 +3,12 @@
 class GotyController < ApplicationController
   include GotyHelper
 
+  before_action :set_theme, only: %i[show eligible_games add_nomination eligible_gotw_games add_gotwoty_nomination]
+
   def show
-    @theme = Theme.find(params[:id])
     @nominations = @theme.nominations.includes(:game, :user)
 
-    eligible_year = @theme.creation_date.year
-    @gotwoty_theme = Theme.find_by(
-      nomination_type: 'gotwoty',
-      creation_date: Date.new(eligible_year, 1, 1)
-    )
+    @gotwoty_theme = find_gotwoty_theme
     @gotwoty_winner = @gotwoty_theme&.nominations&.first
   end
 
@@ -44,29 +41,21 @@ class GotyController < ApplicationController
   end
 
   def eligible_games
-    theme = Theme.find(params[:id])
-    eligible_year = theme.creation_date.year
-
-    render json: fetch_eligible_games(eligible_year)
+    render json: eligible_games_json(eligible_year, Nomination::GOTY_ELIGIBLE_TYPES)
   end
 
   def eligible_games_for_year
-    eligible_year = next_goty_year
-
-    render json: fetch_eligible_games(eligible_year)
+    render json: eligible_games_json(next_goty_year, Nomination::GOTY_ELIGIBLE_TYPES)
   end
 
   def add_nomination
-    @theme = Theme.find(params[:id])
-
     if params[:description].blank?
       redirect_to goty_path(@theme), alert: 'Category name is required'
       return
     end
 
     game = Game.find_by(id: params[:game_id])
-    eligible_year = @theme.creation_date.year
-    original_nomination = find_original_nomination(game, eligible_year)
+    original_nomination = find_original_nomination(game, eligible_year, Nomination::GOTY_ELIGIBLE_TYPES)
 
     if original_nomination.nil?
       redirect_to goty_path(@theme), alert: 'Could not find a winning nomination for this game in the eligible year'
@@ -85,14 +74,11 @@ class GotyController < ApplicationController
   end
 
   def eligible_gotw_games
-    theme = Theme.find(params[:id])
-    eligible_year = theme.creation_date.year
-
-    render json: fetch_eligible_gotw_games(eligible_year)
+    render json: eligible_games_json(eligible_year, Nomination::GOTWOTY_ELIGIBLE_TYPES)
   end
 
   def add_gotwoty_nomination
-    goty_theme = Theme.find(params[:id])
+    goty_theme = @theme
 
     game = Game.find_by(id: params[:game_id])
 
@@ -101,32 +87,26 @@ class GotyController < ApplicationController
       return
     end
 
-    eligible_year = goty_theme.creation_date.year
-    original_nomination = find_original_gotw_nomination(game, eligible_year)
+    original_nomination = find_original_nomination(game, eligible_year, Nomination::GOTWOTY_ELIGIBLE_TYPES)
 
     if original_nomination.nil?
       redirect_to goty_path(goty_theme), alert: 'Could not find a winning GotW nomination for this game in the eligible year'
       return
     end
 
-    gotwoty_theme = Theme.find_by(
-      nomination_type: 'gotwoty',
-      creation_date: Date.new(eligible_year, 1, 1)
-    )
+    gotwoty_theme = find_gotwoty_theme
 
     if gotwoty_theme&.nominations&.any?
       redirect_to goty_path(goty_theme), alert: 'GotWotY winner has already been selected for this year'
       return
     end
 
-    if gotwoty_theme.nil?
-      gotwoty_theme = Theme.create!(
-        title: "GotWotY #{eligible_year}",
-        description: "GotWotY for #{eligible_year}",
-        creation_date: Date.new(eligible_year, 1, 1),
-        nomination_type: 'gotwoty'
-      )
-    end
+    gotwoty_theme ||= Theme.create!(
+      title: "GotWotY #{eligible_year}",
+      description: "GotWotY for #{eligible_year}",
+      creation_date: Date.new(eligible_year, 1, 1),
+      nomination_type: 'gotwoty'
+    )
 
     gotwoty_theme.nominations.create!(
       description: "#{eligible_year} GotWotY Winner",
@@ -141,39 +121,26 @@ class GotyController < ApplicationController
 
   private
 
-  def fetch_eligible_games(eligible_year)
-    Nomination.joins(:theme)
-              .where(winner: true)
-              .where(nomination_type: %w[gotm retro])
-              .where('EXTRACT(YEAR FROM themes.creation_date) = ?', eligible_year)
+  def set_theme
+    @theme = Theme.find(params[:id])
+  end
+
+  def eligible_year
+    @theme.creation_date.year
+  end
+
+  def find_gotwoty_theme
+    Theme.find_by(nomination_type: 'gotwoty', creation_date: Date.new(eligible_year, 1, 1))
+  end
+
+  def eligible_games_json(year, types)
+    Nomination.goty_eligible(year, types)
               .includes(:game, :user)
               .map { |n| { id: n.game_id, name: n.game.preferred_name, nominator_id: n.user_id } }
               .uniq { |g| g[:id] }
   end
 
-  def find_original_nomination(game, eligible_year)
-    Nomination.joins(:theme)
-              .where(game:, winner: true)
-              .where(nomination_type: %w[gotm retro])
-              .where('EXTRACT(YEAR FROM themes.creation_date) = ?', eligible_year)
-              .first
-  end
-
-  def fetch_eligible_gotw_games(eligible_year)
-    Nomination.joins(:theme)
-              .where(winner: true)
-              .where(nomination_type: 'retro')
-              .where('EXTRACT(YEAR FROM themes.creation_date) = ?', eligible_year)
-              .includes(:game, :user)
-              .map { |n| { id: n.game_id, name: n.game.preferred_name, nominator_id: n.user_id } }
-              .uniq { |g| g[:id] }
-  end
-
-  def find_original_gotw_nomination(game, eligible_year)
-    Nomination.joins(:theme)
-              .where(game:, winner: true)
-              .where(nomination_type: 'retro')
-              .where('EXTRACT(YEAR FROM themes.creation_date) = ?', eligible_year)
-              .first
+  def find_original_nomination(game, year, types)
+    Nomination.goty_eligible(year, types).where(game:).first
   end
 end
