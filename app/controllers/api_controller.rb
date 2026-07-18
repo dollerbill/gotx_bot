@@ -8,8 +8,9 @@ class ApiController < ActionController::Base
   end
 
   def authenticate_token
+    expected = ENV['API_TOKEN']
     authenticate_with_http_token do |token|
-      token == ENV['API_TOKEN']
+      expected.present? && ActiveSupport::SecurityUtils.secure_compare(token, expected)
     end
   end
 end
