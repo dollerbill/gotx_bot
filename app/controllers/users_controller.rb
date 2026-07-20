@@ -55,6 +55,6 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:current_points, :earned_points, :redeemed_points, :premium_points)
+    params.require(:user).permit(:current_points, :earned_points, :redeemed_points, :premium_points, :admin)
   end
 end

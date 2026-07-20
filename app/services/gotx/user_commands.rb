@@ -21,9 +21,11 @@ module Gotx
     end
 
     application_command(:membership) do |event|
+      next event.respond(content: I18n.t('errors.not_authorized'), ephemeral: true) unless CommandBase.admin?(event.user)
+
       member = event.bot.user(event.options['member'])
       user = ::Users::FindOrCreate.(member)
-      event.respond(content: 'Update premium membership status:') do |_, view|
+      event.respond(content: 'Update premium membership status:', ephemeral: true) do |_, view|
         view.row do |r|
           r.button(label: 'Membership status', style: :secondary, custom_id: "#{user.id}_premium_member_status", emoji: EMOJI)
           r.button(label: 'Remove membership', style: :danger, custom_id: "#{user.id}_update_premium_member_remove", emoji: EMOJI)
@@ -48,6 +50,8 @@ module Gotx
     end
 
     application_command(:no_nom_completion) do |event|
+      next event.respond(content: I18n.t('errors.not_authorized'), ephemeral: true) unless CommandBase.admin?(event.user)
+
       member = event.bot.user(event.options['member'])
       user = ::Users::FindOrCreate.(member)
 
@@ -63,6 +67,8 @@ module Gotx
     end
 
     button(custom_id: /\d_premium_member_status/) do |event|
+      next event.respond(content: I18n.t('errors.not_authorized'), ephemeral: true) unless CommandBase.admin?(event.user)
+
       user = User.find(event.interaction.button.custom_id.split('_')[0])
       membership_status = user.premium_subscriber
       next event.update_message(content: "#{user.name} is not a premium subscriber.") unless membership_status
@@ -71,6 +77,8 @@ module Gotx
     end
 
     button(custom_id: /\d_update_premium_member_/) do |event|
+      next event.respond(content: I18n.t('errors.not_authorized'), ephemeral: true) unless CommandBase.admin?(event.user)
+
       atts = event.interaction.button.custom_id.split('_update_premium_member_')
       user = User.find(atts[0])
       update = atts[1] == 'add'
@@ -92,6 +100,8 @@ module Gotx
     end
 
     button(custom_id: /\d_add_premium_membership_/) do |event|
+      next event.respond(content: I18n.t('errors.not_authorized'), ephemeral: true) unless CommandBase.admin?(event.user)
+
       atts = event.interaction.button.custom_id.split('_add_premium_membership_')
       user = User.find(atts[0])
       status = atts[1]

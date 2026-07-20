@@ -34,6 +34,9 @@ en:
     formats:
       month_year: '%B %Y'
 
+  errors:
+    not_authorized: "You don't have permission to use this command."
+
   nominations:
     missing: '%{search} has not been a GotX game. Nominate it if you want to see it win!'
     none: 'No current GotM winners have been selected.'

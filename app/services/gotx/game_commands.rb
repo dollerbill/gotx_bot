@@ -55,6 +55,8 @@ module Gotx
     end
 
     application_command(:complete) do |event|
+      next event.respond(content: I18n.t('errors.not_authorized'), ephemeral: true) unless CommandBase.admin?(event.user)
+
       member = event.bot.user(event.options['member'])
       user = ::Users::FindOrCreate.(member)
 
@@ -121,6 +123,8 @@ module Gotx
     end
 
     button(custom_id: /\d_game_complete/) do |event|
+      next event.respond(content: I18n.t('errors.not_authorized'), ephemeral: true) unless CommandBase.admin?(event.user)
+
       user = User.find(event.interaction.button.custom_id.split('_')[0])
       type = event.interaction.button.custom_id.split('game_complete_')[1]
       available = Nominations::FindCompletable.(user, type)

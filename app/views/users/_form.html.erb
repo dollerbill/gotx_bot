@@ -1,4 +1,7 @@
-<%= form_with(model: user, class: "space-y-6") do |form| %>
+<%# Confirm only when the submit actually grants admin — not on every save, and not when revoking. %>
+<%= form_with(model: user, class: "space-y-6",
+      data: { turbo: false },
+      onsubmit: user.admin? ? nil : "return !this.elements['user[admin]'].checked || confirm('Make #{j user.name} a Discord admin? They will be able to grant premium membership and award points. Continue?')") do |form| %>
   <% if user.errors.any? %>
     <div class="rounded-md bg-red-50 p-4">
       <div class="flex">
@@ -50,6 +53,16 @@
       <div class="mt-1">
         <%= form.number_field :premium_points, class: "shadow-sm block w-full sm:text-sm border-gray-300 rounded-md" %>
       </div>
+    </div>
+
+    <div class="rounded-md border border-red-300 bg-red-50 p-4">
+      <div class="flex items-center">
+        <%= form.check_box :admin, class: "h-4 w-4 text-red-600 border-gray-300 rounded focus:ring-red-500" %>
+        <%= form.label :admin, "Administrator", class: "ml-2 block text-sm font-medium text-red-900" %>
+      </div>
+      <p class="mt-2 text-sm text-red-700">
+        &#9888; Grants full control over premium membership, completions, and points via Discord commands.
+      </p>
     </div>
   </div>
 

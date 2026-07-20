@@ -32,6 +32,17 @@ RSpec.describe User, type: :model do
       .backed_by_column_of_type(:string)
   end
 
+  describe 'admin' do
+    it 'defaults to false' do
+      expect(create(:user).admin).to be(false)
+    end
+
+    it 'persists when set' do
+      user = create(:user, admin: true)
+      expect(user.reload.admin?).to be(true)
+    end
+  end
+
   describe 'associations' do
     it { is_expected.to have_many :completions }
     it { is_expected.to have_many :nominations }
