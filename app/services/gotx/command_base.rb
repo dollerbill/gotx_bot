@@ -14,5 +14,9 @@ module Gotx
       rank: ENV['RANK_CHANNEL_ID'],
       gotx: ENV['GOTX_CHANNEL_ID']
     }.freeze
+
+    def self.admin?(discord_user)
+      User.find_by(discord_id: discord_user.id)&.admin? || false
+    end
   end
 end
