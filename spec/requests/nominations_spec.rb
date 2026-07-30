@@ -38,6 +38,28 @@ RSpec.describe 'Nominations', type: :request do
       expect(response).to have_http_status(:ok)
       expect(response.body).to include('GotM Nominations').and include('RPGotQ Nominations').and include('Winner')
     end
+
+    context 'when nominations span multiple pages' do
+      let!(:paged) do
+        Array.new(25) do |i|
+          trait = i.even? ? :gotm : :rpg
+          game = create(:game, year: '1998', title_world: "Paged Game #{format('%02d', i)}")
+          trait == :gotm ? create(:nomination, game:) : create(:nomination, :rpg, game:)
+        end
+      end
+      let(:current) { Nomination.where(id: paged.map(&:id)) }
+
+      it 'shows every nomination across the paginated set' do
+        titles = paged.map { |n| n.game.title_world }
+
+        seen = (1..2).flat_map do |page|
+          get current_nominations_path, params: { page: }
+          titles.select { |t| response.body.include?(t) }
+        end
+
+        expect(seen).to match_array(titles)
+      end
+    end
   end
 
   describe 'GET /show' do
