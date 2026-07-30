@@ -11,7 +11,10 @@ class NominationsController < ApplicationController
   end
 
   def current_nominations
-    @pagy, @nominations = pagy(Nomination.current_nominations.joins(:game).order(:year))
+    @pagy, nominations = pagy(Nomination.current_nominations.joins(:game).order(:year, :id))
+    by_type = nominations.group_by(&:nomination_type)
+    @gotm_nominations = by_type.fetch('gotm', [])
+    @rpg_nominations = by_type.fetch('rpg', [])
   end
 
   def show; end
