@@ -16,6 +16,7 @@ RSpec.describe Memberships::UpdateSubscribers do
     allow(Gotx::Bot).to receive(:initialize_bot).and_return(mock_bot)
     allow(mock_bot).to receive(:server).with('123456789').and_return(mock_server)
     allow(mock_bot).to receive(:send_message)
+    allow(mock_bot).to receive(:token).and_return('Bot fake-token')
   end
 
   subject { described_class.call }
@@ -46,8 +47,8 @@ RSpec.describe Memberships::UpdateSubscribers do
       allow(mock_bot).to receive(:member).with('123456789', 111111111).and_return(mock_member_with_role)
       allow(mock_bot).to receive(:member).with('123456789', 222222222).and_return(mock_member_without_role)
       allow(mock_bot).to receive(:member).with('123456789', 333333333).and_return(nil)
-      # Stub additional calls for update_new_subscribers method
       allow(mock_server).to receive(:roles).and_return([])
+      allow(Discordrb::API::Server).to receive(:resolve_members).and_return([].to_json)
 
       allow(Users::UpdatePremiumStatus).to receive(:call)
     end
@@ -87,72 +88,76 @@ RSpec.describe Memberships::UpdateSubscribers do
     let!(:existing_supporter) { create(:user, :supporter, discord_id: 555555555) }
     let!(:user_to_upgrade) { create(:user, discord_id: 666666666) }
 
-    let(:mock_supporter_role) do
-      instance_double('Discordrb::Role').tap do |role|
-        allow(role).to receive(:name).and_return('SUPPORTER')
-        allow(role).to receive(:members).and_return([
-                                                      mock_existing_member,
-                                                      mock_new_member
-                                                    ])
-      end
-    end
+    let(:supporter_role) { instance_double('Discordrb::Role', name: 'SUPPORTER', id: 9001) }
+    let(:champion_role) { instance_double('Discordrb::Role', name: 'CHAMPION', id: 9002) }
 
-    let(:mock_champion_role) do
-      instance_double('Discordrb::Role').tap do |role|
-        allow(role).to receive(:name).and_return('CHAMPION')
-        allow(role).to receive(:members).and_return([])
-      end
-    end
-
-    let(:mock_existing_member) do
-      instance_double('Discordrb::Member').tap do |member|
-        allow(member).to receive(:id).and_return('555555555')
-      end
-    end
-
-    let(:mock_new_member) do
-      instance_double('Discordrb::Member').tap do |member|
-        allow(member).to receive(:id).and_return('666666666')
-      end
+    let(:guild_members_json) do
+      [
+        { 'user' => { 'id' => '555555555', 'username' => existing_supporter.name }, 'roles' => ['9001'] },
+        { 'user' => { 'id' => '666666666', 'username' => user_to_upgrade.name }, 'roles' => ['9001'] }
+      ].to_json
     end
 
     before do
-      # Stub remove_canceled_subscribers method calls - ensure no premium users exist for this context
       allow(User).to receive(:premium).and_return([])
-      allow(mock_server).to receive(:roles).and_return([mock_supporter_role, mock_champion_role])
-      allow(User).to receive(:find_by).with(discord_id: '555555555').and_return(existing_supporter)
-      allow(User).to receive(:find_by).with(discord_id: '666666666').and_return(user_to_upgrade)
+      allow(mock_server).to receive(:roles).and_return([supporter_role, champion_role])
+      allow(Discordrb::API::Server).to receive(:resolve_members)
+        .with('Bot fake-token', '123456789', 1000, nil)
+        .and_return(guild_members_json)
     end
 
     it 'does not update users who already have the correct membership level' do
       expect { subject }.not_to change { existing_supporter.reload.premium_subscriber }
     end
 
-    it 'processes users who need membership updates' do
-      # This test verifies the logic identifies users needing updates
-      # The actual update is commented out in the service, so we just verify identification
-      expect(User).to receive(:find_by).with(discord_id: '666666666')
+    it 'upgrades users who gain a premium role' do
+      expect(Users::UpdatePremiumStatus).to receive(:call).with(user_to_upgrade, 'supporter')
 
+      subject
+    end
+
+    it 'skips members without a premium role' do
+      no_role_json = [
+        { 'user' => { 'id' => '777777777', 'username' => 'nobody' }, 'roles' => ['1234'] }
+      ].to_json
+      allow(Discordrb::API::Server).to receive(:resolve_members).and_return(no_role_json)
+
+      expect(Users::UpdatePremiumStatus).not_to receive(:call)
       subject
     end
 
     it 'maps roles to correct membership levels' do
       service_instance = described_class.new
 
-      supporter_role = instance_double('Discordrb::Role', name: 'SUPPORTER')
-      champion_role = instance_double('Discordrb::Role', name: 'CHAMPION')
-      legend_role = instance_double('Discordrb::Role', name: 'LEGEND')
-      rh_supporter_role = instance_double('Discordrb::Role', name: 'RH Supporter')
-
-      expect(service_instance.send(:membership_mapping, supporter_role)).to eq('supporter')
-      expect(service_instance.send(:membership_mapping, champion_role)).to eq('champion')
-      expect(service_instance.send(:membership_mapping, legend_role)).to eq('legend')
-      expect(service_instance.send(:membership_mapping, rh_supporter_role)).to eq('supporter')
+      expect(service_instance.send(:membership_mapping, instance_double('Discordrb::Role', name: 'SUPPORTER'))).to eq('supporter')
+      expect(service_instance.send(:membership_mapping, instance_double('Discordrb::Role', name: 'CHAMPION'))).to eq('champion')
+      expect(service_instance.send(:membership_mapping, instance_double('Discordrb::Role', name: 'LEGEND'))).to eq('legend')
+      expect(service_instance.send(:membership_mapping, instance_double('Discordrb::Role', name: 'RH Supporter'))).to eq('supporter')
     end
 
     it 'sends notification about new subscribers' do
       expect(mock_bot).to receive(:send_message).with('987654321', /Users:.*have become premium subscribers/)
       subject
+    end
+
+    it 'paginates when the first page is full' do
+      page1 = Array.new(1000) do |i|
+        { 'user' => { 'id' => (800_000 + i).to_s, 'username' => "user#{i}" }, 'roles' => [] }
+      end
+      page2 = [
+        { 'user' => { 'id' => '900000', 'username' => 'lastuser' }, 'roles' => [] }
+      ]
+
+      allow(Discordrb::API::Server).to receive(:resolve_members)
+        .with('Bot fake-token', '123456789', 1000, nil)
+        .and_return(page1.to_json)
+      allow(Discordrb::API::Server).to receive(:resolve_members)
+        .with('Bot fake-token', '123456789', 1000, page1.last['user']['id'])
+        .and_return(page2.to_json)
+
+      subject
+
+      expect(Discordrb::API::Server).to have_received(:resolve_members).twice
     end
   end
 
@@ -175,6 +180,7 @@ RSpec.describe Memberships::UpdateSubscribers do
       before do
         allow(mock_bot).to receive(:member).and_raise(StandardError, 'API Error')
         allow(mock_server).to receive(:roles).and_return([])
+        allow(Discordrb::API::Server).to receive(:resolve_members).and_return([].to_json)
         allow(Rails.logger).to receive(:error)
       end
 
@@ -191,41 +197,32 @@ RSpec.describe Memberships::UpdateSubscribers do
       let!(:user2) { create(:user, discord_id: 100002) }
       let!(:user3) { create(:user, discord_id: 100003) }
 
-      let(:roles_data) do
+      let(:mock_roles) do
         [
-          { name: 'SUPPORTER', members: [{ id: '100001' }] },
-          { name: 'RH Champion', members: [{ id: '100002' }] },
-          { name: 'LEGEND', members: [{ id: '100003' }] }
+          instance_double('Discordrb::Role', name: 'SUPPORTER', id: 7001),
+          instance_double('Discordrb::Role', name: 'RH Champion', id: 7002),
+          instance_double('Discordrb::Role', name: 'LEGEND', id: 7003)
         ]
       end
 
-      before do
-        mock_roles = roles_data.map do |role_data|
-          instance_double('Discordrb::Role').tap do |role|
-            allow(role).to receive(:name).and_return(role_data[:name])
-
-            mock_members = role_data[:members].map do |member_data|
-              instance_double('Discordrb::Member').tap do |member|
-                allow(member).to receive(:id).and_return(member_data[:id])
-              end
-            end
-
-            allow(role).to receive(:members).and_return(mock_members)
-          end
-        end
-
-        allow(mock_server).to receive(:roles).and_return(mock_roles)
-
-        # Mock User.find_by calls
-        allow(User).to receive(:find_by).with(discord_id: '100001').and_return(user1)
-        allow(User).to receive(:find_by).with(discord_id: '100002').and_return(user2)
-        allow(User).to receive(:find_by).with(discord_id: '100003').and_return(user3)
+      let(:guild_members_json) do
+        [
+          { 'user' => { 'id' => '100001', 'username' => 'u1' }, 'roles' => ['7001'] },
+          { 'user' => { 'id' => '100002', 'username' => 'u2' }, 'roles' => ['7002'] },
+          { 'user' => { 'id' => '100003', 'username' => 'u3' }, 'roles' => ['7003'] }
+        ].to_json
       end
 
-      it 'handles different premium role types correctly' do
-        expect(User).to receive(:find_by).with(discord_id: '100001')
-        expect(User).to receive(:find_by).with(discord_id: '100002')
-        expect(User).to receive(:find_by).with(discord_id: '100003')
+      before do
+        allow(User).to receive(:premium).and_return([])
+        allow(mock_server).to receive(:roles).and_return(mock_roles)
+        allow(Discordrb::API::Server).to receive(:resolve_members).and_return(guild_members_json)
+      end
+
+      it 'upgrades each user to the matching membership level' do
+        expect(Users::UpdatePremiumStatus).to receive(:call).with(user1, 'supporter')
+        expect(Users::UpdatePremiumStatus).to receive(:call).with(user2, 'champion')
+        expect(Users::UpdatePremiumStatus).to receive(:call).with(user3, 'legend')
 
         subject
       end
