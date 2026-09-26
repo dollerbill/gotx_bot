@@ -10,9 +10,9 @@
         <%= form_with url: create_weekly_retrobit_games_path, method: :post, class: "space-y-4" do |form| %>
           <div class="space-y-2">
             <%= form.label :screenscraper_id, 'Screenscraper ID', class: 'block text-sm font-medium text-gray-700' %>
-            <%= form.text_field :screenscraper_id, class: 'mt-1 block w-full rounded-md border-gray-300 shadow-sm' %>
+            <%= form.text_field :screenscraper_id, class: 'mt-1 block w-full rounded-md border-gray-300 shadow-xs' %>
           </div>
-          <%= form.submit 'Create RetroBit', class: 'inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700' %>
+          <%= form.submit 'Create RetroBit', class: 'inline-flex justify-center py-2 px-4 border border-transparent shadow-xs text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700' %>
         <% end %>
       </div>
     </div>
@@ -26,20 +26,20 @@
         <%= form_with url: create_monthly_rpg_games_path, method: :post, class: "space-y-4" do |form| %>
           <div class="space-y-2">
             <%= form.label :screenscraper_id, 'Screenscraper ID', class: 'block text-sm font-medium text-gray-700' %>
-            <%= form.text_field :screenscraper_id, class: 'mt-1 block w-full rounded-md border-gray-300 shadow-sm' %>
+            <%= form.text_field :screenscraper_id, class: 'mt-1 block w-full rounded-md border-gray-300 shadow-xs' %>
           </div>
           <div class="space-y-2">
             <%= form.label :time_to_beat, 'Hours to Beat', class: 'block text-sm font-medium text-gray-700' %>
-            <%= form.text_field :time_to_beat, class: 'mt-1 block w-full rounded-md border-gray-300 shadow-sm' %>
+            <%= form.text_field :time_to_beat, class: 'mt-1 block w-full rounded-md border-gray-300 shadow-xs' %>
           </div>
           <div class="space-y-2">
             <%= form.label :theme_id, 'RPGotQ Theme', class: 'block text-sm font-medium text-gray-700' %>
             <%= form.select :theme_id, 
                 Theme.rpg.order(created_at: :desc).limit(3).collect { |t| [t.title, t.id] },
                 {},
-                class: 'mt-1 block w-full rounded-md border-gray-300 shadow-sm' %>
+                class: 'mt-1 block w-full rounded-md border-gray-300 shadow-xs' %>
           </div>
-          <%= form.submit 'Create RPGotQ', class: 'inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700' %>
+          <%= form.submit 'Create RPGotQ', class: 'inline-flex justify-center py-2 px-4 border border-transparent shadow-xs text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700' %>
         <% end %>
       </div>
     </div>
@@ -52,7 +52,7 @@
         <p class="text-gray-600 mb-4">Create a new monthly Theme for GotM.</p>
         <%= link_to 'Create Theme', 
             new_theme_path(creation_date: Date.current.next_month.beginning_of_month), 
-            class: "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700" %>
+            class: "inline-flex justify-center py-2 px-4 border border-transparent shadow-xs text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700" %>
       </div>
     </div>
   </div>
@@ -64,7 +64,7 @@
         <p class="text-gray-600 mb-4">Pick the winning game nominations for the current GotM or RPGotQ.</p>
         <%= link_to 'Pick Winners',
             current_nominations_path,
-            class: 'inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700' %>
+            class: 'inline-flex justify-center py-2 px-4 border border-transparent shadow-xs text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700' %>
       </div>
     </div>
   </div>
@@ -84,7 +84,7 @@
                      @focus="open = true"
                      @click.away="open = false"
                      placeholder="Search for the winning game..."
-                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" />
+                     class="mt-1 block w-full rounded-md border-gray-300 shadow-xs" />
 
               <ul x-show="open"
                   x-cloak
@@ -103,7 +103,7 @@
             </div>
           </div>
           <%= form.submit "Create #{next_goty_year} GotY Theme",
-              class: 'inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700' %>
+              class: 'inline-flex justify-center py-2 px-4 border border-transparent shadow-xs text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700' %>
         <% end %>
       </div>
     </div>
@@ -116,7 +116,7 @@
       <div class="p-4">
         <p class="text-gray-600 mb-4">View users that have previously finished GotX games.</p>
         <a href="<%= previous_finishers_path %>" 
-           class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+           class="inline-flex justify-center py-2 px-4 border border-transparent shadow-xs text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
           Finishers
         </a>
       </div>
@@ -131,20 +131,20 @@
         <%= form_with url: create_message_path, method: :post, class: "space-y-4" do |form| %>
           <div class="space-y-2">
             <%= form.label :message, 'Message', class: 'block text-sm font-medium text-gray-700' %>
-            <%= form.text_field :message, class: 'mt-1 block w-full rounded-md border-gray-300 shadow-sm' %>
+            <%= form.text_field :message, class: 'mt-1 block w-full rounded-md border-gray-300 shadow-xs' %>
           </div>
           <div class="space-y-2">
             <%= form.label :member_id, '(Discord) User ID - optional', class: 'block text-sm font-medium text-gray-700' %>
-            <%= form.text_field :member_id, class: 'mt-1 block w-full rounded-md border-gray-300 shadow-sm' %>
+            <%= form.text_field :member_id, class: 'mt-1 block w-full rounded-md border-gray-300 shadow-xs' %>
           </div>
           <div class="space-y-2">
             <%= form.label :channel, 'Server Channel', class: 'block text-sm font-medium text-gray-700' %>
             <%= form.select :channel, 
                 available_channels,
                 {},
-                class: 'mt-1 block w-full rounded-md border-gray-300 shadow-sm' %>
+                class: 'mt-1 block w-full rounded-md border-gray-300 shadow-xs' %>
           </div>
-          <%= form.submit 'Send message', class: 'inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700' %>
+          <%= form.submit 'Send message', class: 'inline-flex justify-center py-2 px-4 border border-transparent shadow-xs text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700' %>
         <% end %>
       </div>
     </div>

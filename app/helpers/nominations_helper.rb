@@ -14,7 +14,7 @@ module NominationsHelper
         concat(content_tag(:i, '', class: 'fas fa-crown ml-1'))
       end
     else
-      button_to select_winner_nomination_path(nomination), method: :patch, class: 'px-4 py-2 border rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700' do
+      button_to select_winner_nomination_path(nomination), method: :patch, class: 'px-4 py-2 border rounded-md shadow-xs text-sm font-medium text-white bg-blue-600 hover:bg-blue-700' do
         concat(content_tag(:i, '', class: 'fas fa-check mr-1'))
         concat('Pick Winner')
       end
