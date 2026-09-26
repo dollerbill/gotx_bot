@@ -32,9 +32,10 @@ RSpec.describe Game, type: :model do
     {
       '1985' => :pre96,
       '1995' => :pre96,
-      '1996' => :late90s,
-      '1999' => :late90s,
-      '2000' => :modern,
+      '1996' => :turn_of_century,
+      '1999' => :turn_of_century,
+      '2001' => :turn_of_century,
+      '2002' => :modern,
       '2024' => :modern
     }.each do |year, expected_era|
       it "returns #{expected_era} for year #{year}" do
@@ -48,12 +49,12 @@ RSpec.describe Game, type: :model do
   end
 
   describe '.in_era' do
-    let!(:pre96)   { create(:game, year: '1990') }
-    let!(:late90s) { create(:game, year: '1998') }
-    let!(:modern)  { create(:game, year: '2010') }
+    let!(:pre96) { create(:game, year: '1990') }
+    let!(:turn_of_century) { create(:game, year: '1998') }
+    let!(:modern) { create(:game, year: '2010') }
 
     it { expect(Game.in_era(:pre96)).to contain_exactly(pre96) }
-    it { expect(Game.in_era(:late90s)).to contain_exactly(late90s) }
+    it { expect(Game.in_era(:turn_of_century)).to contain_exactly(turn_of_century) }
     it { expect(Game.in_era(:modern)).to contain_exactly(modern) }
     it { expect { Game.in_era(:unknown) }.to raise_error(KeyError) }
   end

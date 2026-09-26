@@ -24,8 +24,8 @@
 class Game < ApplicationRecord
   ERAS = {
     pre96: '0000'..'1995',
-    late90s: '1996'..'1999',
-    modern: '2000'..'9999'
+    turn_of_century: '1996'..'2001',
+    modern: '2002'..'9999'
   }.freeze
 
   has_many :nominations

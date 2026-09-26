@@ -83,7 +83,7 @@ RSpec.describe Nomination, type: :model do
         Nomination.destroy_all
         theme = create(:theme)
         pre96_nom   = create(:nomination, game: create(:game, year: '1990'), theme:)
-        late90s_nom = create(:nomination, game: create(:game, year: '1998'), theme:)
+        turn_of_century_nom = create(:nomination, game: create(:game, year: '1998'), theme:)
         modern_nom  = create(:nomination, game: create(:game, year: '2010'), theme:)
         create(:nomination, :rpg, theme: create(:theme, :rpg))
 
@@ -91,7 +91,7 @@ RSpec.describe Nomination, type: :model do
         allow(Theme).to receive(:current_rpg).and_return([])
 
         expect(Nomination.current_in_era(:pre96)).to contain_exactly(pre96_nom)
-        expect(Nomination.current_in_era(:late90s)).to contain_exactly(late90s_nom)
+        expect(Nomination.current_in_era(:turn_of_century)).to contain_exactly(turn_of_century_nom)
         expect(Nomination.current_in_era(:modern)).to contain_exactly(modern_nom)
       end
     end
