@@ -9,14 +9,14 @@
         <label for="month-picker" class="block text-sm font-medium text-gray-700">
           Select date:
         </label>
-        <div class="flex-grow">
+        <div class="grow">
           <input type="month" 
                  id="month-picker" 
                  name="month-year" 
-                 class="shadow-sm block w-full sm:text-sm border-gray-300 rounded-md">
+                 class="shadow-xs block w-full sm:text-sm border-gray-300 rounded-md">
         </div>
         <button type="submit" 
-                class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+                class="inline-flex justify-center py-2 px-4 border border-transparent shadow-xs text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
           Go
         </button>
       </div>
@@ -29,13 +29,13 @@
         </h2>
       </div>
 
-      <div class="bg-white shadow overflow-hidden rounded-lg">
+      <div class="bg-white shadow-sm overflow-hidden rounded-lg">
         <ul class="divide-y divide-gray-200">
           <% @winners.each do |nomination| %>
             <li class="hover:bg-gray-50">
               <%= link_to nomination, class: "block px-6 py-4" do %>
                 <div class="flex items-center">
-                  <div class="flex-shrink-0 h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center">
+                  <div class="shrink-0 h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center">
                     <span class="text-lg font-medium text-blue-600">
                       <%= nomination.game.preferred_name[0].upcase %>
                     </span>
@@ -75,7 +75,7 @@
   </div>
 
   <div class="px-6 py-4 bg-gray-50 border-t border-gray-200">
-    <%= link_to nominations_path, class: "inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50" do %>
+    <%= link_to nominations_path, class: "inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-xs text-sm font-medium text-gray-700 bg-white hover:bg-gray-50" do %>
       <svg class="-ml-1 mr-2 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
       </svg>

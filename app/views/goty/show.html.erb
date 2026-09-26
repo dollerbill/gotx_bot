@@ -49,7 +49,7 @@
         <%= form.label :description, 'Category Name', class: 'block text-sm font-medium text-gray-700' %>
         <%= form.text_field :description,
             placeholder: "e.g., #{@theme.creation_date.year} GotY Runner up, Best RPG",
-            class: 'mt-1 block w-full rounded-md border-gray-300 shadow-sm' %>
+            class: 'mt-1 block w-full rounded-md border-gray-300 shadow-xs' %>
       </div>
 
       <div class="space-y-2">
@@ -60,7 +60,7 @@
                  @focus="open = true"
                  @click.away="open = false"
                  placeholder="Search for a game..."
-                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" />
+                 class="mt-1 block w-full rounded-md border-gray-300 shadow-xs" />
 
           <ul x-show="open"
               x-cloak
@@ -80,7 +80,7 @@
       </div>
 
       <%= form.submit 'Add Category Winner',
-          class: 'inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700' %>
+          class: 'inline-flex justify-center py-2 px-4 border border-transparent shadow-xs text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700' %>
     <% end %>
   </div>
 </div>
@@ -118,7 +118,7 @@
                    @focus="gotwOpen = true"
                    @click.away="gotwOpen = false"
                    placeholder="Search for a Game of the Week..."
-                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" />
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-xs" />
 
             <ul x-show="gotwOpen"
                 x-cloak
@@ -138,7 +138,7 @@
         </div>
 
         <%= form.submit 'Add GotWotY Winner',
-            class: 'inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700' %>
+            class: 'inline-flex justify-center py-2 px-4 border border-transparent shadow-xs text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700' %>
       <% end %>
     <% end %>
   </div>
