@@ -29,6 +29,24 @@ RSpec.describe 'Goty', type: :request do
       end
     end
 
+    context 'when a winning game is selected' do
+      let!(:eligible_theme) { create(:theme, creation_date: Date.new(Date.current.year, 6, 1), title: 'June') }
+      let!(:winning_game) { create(:game, title_world: 'Chrono Trigger') }
+      let!(:nominator) { create(:user, name: 'OriginalNominator') }
+      let!(:winning_nomination) do
+        create(:nomination, :winner, game: winning_game, user: nominator, theme: eligible_theme, nomination_type: 'gotm')
+      end
+
+      subject { post goty_index_path, params: { game_id: winning_game.id } }
+
+      it 'attributes the winner nomination to the original nominator' do
+        subject
+        nomination = Theme.goty.last.nominations.first
+        expect(nomination.game).to eq(winning_game)
+        expect(nomination.user).to eq(nominator)
+      end
+    end
+
     context 'when GotY theme already exists for the next year to be created' do
       it 'creates themes for consecutive years when called multiple times' do
         expect { subject }.to change { Theme.goty.count }.by(1)
