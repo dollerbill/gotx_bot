@@ -20,12 +20,11 @@ RSpec.shared_examples 'successful completion' do
 end
 
 RSpec.describe Nominations::Complete do
-  let(:skip) { nil }
   let(:user) { nomination.user }
-  let(:nomination) { create(:nomination) }
+  let(:nomination) { create(:nomination, :winner) }
   let(:earned_points) { 1 }
 
-  subject(:complete) { described_class.new(user, nomination, skip) }
+  subject(:complete) { described_class.new(user, nomination) }
   describe 'new' do
     context 'completion points' do
       context 'gotm' do
@@ -61,10 +60,12 @@ RSpec.describe Nominations::Complete do
         expect { complete.call }.to change { streak.reload.streak_count }.from(2).to(3)
       end
 
-      context 'when providing skip' do
-        let(:skip) { true }
+      context 'for a past gotm winner' do
+        let(:nomination) { create(:nomination, :winner, theme: create(:theme, :previous)) }
 
         before { allow(Streaks::Increase).to receive(:call) }
+
+        it_behaves_like 'successful completion'
 
         it 'does not update the streak' do
           expect { complete.call }.not_to change { streak.reload.streak_count }
