@@ -31,7 +31,7 @@ class GotyController < ApplicationController
     user = nil
 
     if game
-      original_nomination = find_original_nomination(game, year)
+      original_nomination = find_original_nomination(game, year, Nomination::GOTY_ELIGIBLE_TYPES)
       user = original_nomination&.user
     end
 
