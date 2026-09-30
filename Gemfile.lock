@@ -1,15 +1,16 @@
 GIT
   remote: https://github.com/shardlab/discordrb.git
-  revision: edad88dc5d2fcb79985a8bf9d7da24702a544783
+  revision: 05cd95d27c50685e663c1ce12fb7570d7a29a198
   ref: main
   specs:
-    discordrb (3.5.0)
-      discordrb-webhooks (~> 3.5.0)
+    discordrb (3.8.0)
+      base64 (~> 0.2)
+      discordrb-webhooks (~> 3.8.0)
       ffi (>= 1.9.24)
       opus-ruby
       rest-client (>= 2.0.0)
-      websocket-client-simple (>= 0.3.0)
-    discordrb-webhooks (3.5.0)
+      websocket-client-simple (>= 0.9.0)
+    discordrb-webhooks (3.8.0)
       rest-client (>= 2.0.0)
 
 GEM
@@ -113,7 +114,7 @@ GEM
     database_cleaner-core (2.1.0)
     date (3.5.1)
     diff-lcs (1.5.1)
-    domain_name (0.6.20240107)
+    domain_name (0.6.20260921)
     dotenv (3.1.2)
     dotenv-rails (3.1.2)
       dotenv (= 3.1.2)
@@ -127,11 +128,16 @@ GEM
     factory_bot_rails (6.4.4)
       factory_bot (~> 6.5)
       railties (>= 5.0.0)
-    ffi (1.16.3)
+    ffi (1.17.4-aarch64-linux-gnu)
+    ffi (1.17.4-arm-linux-gnu)
+    ffi (1.17.4-arm64-darwin)
+    ffi (1.17.4-x86-linux-gnu)
+    ffi (1.17.4-x86_64-darwin)
+    ffi (1.17.4-x86_64-linux-gnu)
     globalid (1.4.0)
       activesupport (>= 6.1)
     http-accept (1.7.0)
-    http-cookie (1.0.5)
+    http-cookie (1.1.6)
       domain_name (~> 0.5)
     i18n (1.15.2)
       concurrent-ruby (~> 1.0)
@@ -156,15 +162,17 @@ GEM
       net-smtp
     marcel (1.2.1)
     method_source (1.1.0)
-    mime-types (3.5.2)
-      mime-types-data (~> 3.2015)
-    mime-types-data (3.2024.0507)
+    mime-types (3.7.0)
+      logger
+      mime-types-data (~> 3.2025, >= 3.2025.0507)
+    mime-types-data (3.2026.0929)
     mini_mime (1.1.5)
     mini_portile2 (2.8.9)
     minitest (6.0.6)
       drb (~> 2.0)
       prism (~> 1.5)
     msgpack (1.8.3)
+    mutex_m (0.3.0)
     net-imap (0.6.6)
       date
       net-protocol
@@ -344,9 +352,11 @@ GEM
     unicode-display_width (2.5.0)
     uri (1.1.1)
     useragent (0.16.11)
-    websocket (1.2.10)
-    websocket-client-simple (0.8.0)
+    websocket (1.2.11)
+    websocket-client-simple (0.9.0)
+      base64
       event_emitter
+      mutex_m
       websocket
     websocket-driver (0.8.2)
       base64
