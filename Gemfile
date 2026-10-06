@@ -43,7 +43,7 @@ end
 
 group :test do
   gem 'database_cleaner-active_record', '~> 2.2'
-  gem 'shoulda-matchers', '~> 5.3'
+  gem 'shoulda-matchers', '~> 8.0'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
