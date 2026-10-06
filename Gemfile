@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.3.6'
 
 gem 'bootsnap', '>= 1.4.4', require: false
-gem 'connection_pool', '< 3'
+gem 'connection_pool', '< 4'
 gem 'discordrb', git: 'https://github.com/shardlab/discordrb.git', ref: 'main'
 gem 'dotenv-rails'
 gem 'pagy'
