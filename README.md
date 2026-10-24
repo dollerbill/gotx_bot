@@ -15,3 +15,4 @@ A simple discord bot to handle Game of the X operations.
 8. `/redeem_points` - Redeem GotX points.
 9. `/streak` - Check your GotM completion streak.
 10. `/goty_games` - Returns the list of current GotY games.
+11. `/search` - Search ScreenScraper for a game's ID by name.

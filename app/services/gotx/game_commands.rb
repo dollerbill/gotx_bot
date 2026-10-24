@@ -111,6 +111,28 @@ module Gotx
       event.user.dm(user_message)
     end
 
+    application_command(:search) do |event|
+      event.defer(ephemeral: true)
+      event.edit_response(content: search_results(event.options['name']))
+    rescue StandardError => e
+      Sentry.capture_exception(e) unless e.is_a?(::Scrapers::Screenscraper::ApiUnavailable)
+      key = e.is_a?(::Scrapers::Screenscraper::ApiUnavailable) ? 'search.unavailable' : 'search.error'
+      event.edit_response(content: I18n.t(key))
+    end
+
+    def self.search_results(name)
+      results = ::Scrapers::ScreenscraperSearch.('name' => name)
+      return I18n.t('search.none', search: name) if results.empty?
+
+      response = "**ScreenScraper results for #{name}:**\n"
+      results.each do |game|
+        details = [game[:system], game[:year]].compact.join(', ')
+        response += "#{game[:title]}#{" (#{details})" if details.present?} - ID **#{game[:screenscraper_id]}** "
+        response += "<https://screenscraper.fr/gameinfos.php?gameid=#{game[:screenscraper_id]}>\n"
+      end
+      response
+    end
+
     def self.build_description(game, game_atts)
       description = ":video_game: #{game.preferred_name}\n"
       description += ":calendar_spiral: #{game.year}\n" if game.year

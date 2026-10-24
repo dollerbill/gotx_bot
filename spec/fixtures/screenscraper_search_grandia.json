@@ -1,0 +1,33 @@
+{
+  "header": {
+    "APIversion": "2.0",
+    "dateTime": "2026-10-24",
+    "commandRequested": "https://www.screenscraper.fr/api2/jeuRecherche.php?devid=user&devpassword=pass&softname=zzz&output=json&ssid=user&sspassword=pass&crc=&recherche=grandia",
+    "success": "true",
+    "error": ""
+  },
+  "response": {
+    "jeux": [
+      {
+        "id": "19289",
+        "noms": [
+          { "region": "ss", "text": "Grandia" },
+          { "region": "us", "text": "Grandia" },
+          { "region": "jp", "text": "グランディア" }
+        ],
+        "systeme": { "id": "57", "text": "Playstation" },
+        "dates": [
+          { "region": "us", "text": "1999-10-01" },
+          { "region": "jp", "text": "1997-12-18" }
+        ]
+      },
+      {
+        "id": "13513",
+        "noms": [
+          { "region": "jp", "text": "Grandia (Saturn)" }
+        ],
+        "systeme": { "id": "22", "text": "Saturn" }
+      }
+    ]
+  }
+}

@@ -53,6 +53,10 @@ en:
     completed:
       retro: "has completed %{game} and been awarded half a point! They have earned %{points} total points from GotX."
       base: "has completed %{game} and been awarded 1 point! They have earned %{points} total points from GotX."
+  search:
+    none: 'No ScreenScraper games found for %{search}.'
+    unavailable: 'ScreenScraper is currently unavailable. Please try your search again later.'
+    error: 'An error occurred searching ScreenScraper, please try again.'
   points:
     redeem: 'Your request to redeem your points has been sent, you will be contacted shortly.'
   users:
