@@ -75,13 +75,80 @@ RSpec.describe 'Nominations', type: :request do
   end
 
   describe 'GET /new' do
-    subject { get nomination_path(nomination.id) }
+    subject { get new_nomination_path }
 
     it_behaves_like 'unauthorized'
 
-    it 'displays a games data' do
+    it 'renders the admin nomination form' do
       subject
       expect(response).to have_http_status(:ok)
+      expect(response.body).to include('Add GotM Nomination')
+    end
+  end
+
+  describe 'POST /create' do
+    let(:theme) { create(:theme) }
+    let(:user) { create(:user) }
+    let(:screenscraper_id) { '19626' }
+    let(:params) { { nomination: { theme_id: theme.id, user_id: user.id, screenscraper_id:, description: 'Late one' } } }
+
+    subject { post nominations_path, params: }
+
+    before do
+      allow(Nomination).to receive(:open?).and_return(false)
+      allow_any_instance_of(Scrapers::Screenscraper).to receive(:call).and_return(attributes_for(:game, :screenscraper_attributes))
+    end
+
+    it_behaves_like 'unauthorized'
+
+    it 'scrapes a new game and nominates it on the chosen theme despite nominations being closed' do
+      expect { subject }.to change(Nomination, :count).by(1).and change(Game, :count).by(1)
+      created = Nomination.last
+      expect(created).to have_attributes(user:, theme:, description: 'Late one', nomination_type: 'gotm')
+      expect(created.game.screenscraper_id).to eq(19_626)
+      expect(created.game.nominations).to eq([created])
+    end
+
+    context 'when the game already exists' do
+      let!(:game) { create(:game, screenscraper_id: 19_626) }
+
+      it 'reuses it without scraping' do
+        expect_any_instance_of(Scrapers::Screenscraper).not_to receive(:call)
+        expect { subject }.to change(Nomination, :count).by(1).and change(Game, :count).by(0)
+        expect(Nomination.last.game).to eq(game)
+      end
+    end
+
+    context 'when the user already nominated for that theme' do
+      before { create(:nomination, user:, theme:) }
+
+      it 'rejects without saving anything' do
+        expect { subject }.not_to change(Nomination, :count)
+        expect(Game.where(screenscraper_id: 19_626)).to be_empty
+        expect(response).to have_http_status(422)
+        expect(response.body).to include('You may only nominate one game')
+      end
+    end
+
+    context 'when the scraped game lands in a full era' do
+      before do
+        Nomination::CATEGORY_LIMIT.times { create(:nomination, theme:, game: create(:game, year: '1997')) }
+      end
+
+      it 'rejects the new game after scraping' do
+        expect { subject }.not_to change(Game, :count)
+        expect(response.body).to include('reached the maximum number of nominations')
+      end
+    end
+
+    context 'when ScreenScraper cannot find the game' do
+      before { allow_any_instance_of(Scrapers::Screenscraper).to receive(:call).and_raise(Scrapers::Screenscraper::GameNotFound, 'nope') }
+
+      it 're-renders the form with the error' do
+        expect { subject }.not_to change(Nomination, :count)
+        expect(response).to have_http_status(422)
+        expect(response.body).to include('ScreenScraper lookup failed for ID 19626')
+      end
     end
   end
 
