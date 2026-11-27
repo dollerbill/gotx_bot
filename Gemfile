@@ -35,7 +35,7 @@ end
 
 group :development do
   gem 'annotate'
-  gem 'listen', '~> 3.3'
+  gem 'listen', '~> 3.10'
   gem 'rubocop', require: false
   gem 'spring'
   gem 'whenever', require: false
