@@ -338,7 +338,7 @@ GEM
       logger
     shoulda-matchers (8.0.1)
       activesupport (>= 7.2)
-    spring (4.2.1)
+    spring (4.7.0)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
