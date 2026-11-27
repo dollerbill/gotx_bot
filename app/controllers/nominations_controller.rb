@@ -20,7 +20,24 @@ class NominationsController < ApplicationController
   def show; end
 
   def new
-    @nomination = Nomination.new
+    @nomination = Nomination.new(theme: Theme.current_gotm_theme.first)
+  end
+
+  # Admin-only GotM nomination that bypasses the nomination window (late or missing nominations).
+  def create
+    @nomination = Nomination.new(params.require(:nomination).permit(:description))
+    @nomination.user = User.find(params[:nomination][:user_id])
+    @nomination.theme = Theme.gotm.find(params[:nomination][:theme_id])
+    @screenscraper_id = params.dig(:nomination, :screenscraper_id).to_s.strip
+    game = find_or_scrape_game(@screenscraper_id)
+    error = Games::ValidateNomination.('user' => @nomination.user, 'theme' => @nomination.theme, 'game' => game,
+                                       'screenscraper_id' => @screenscraper_id, 'skip_window' => true)
+    return render_new_with_error(error) if error
+
+    @nomination.update!(game:)
+    redirect_to nomination_url(@nomination), notice: "#{game.preferred_name} nominated for #{@nomination.user.name}."
+  rescue Scrapers::Screenscraper::GameNotFound, Scrapers::Screenscraper::ApiUnavailable => e
+    render_new_with_error("ScreenScraper lookup failed for ID #{@screenscraper_id}: #{e.message}")
   end
 
   def edit; end
@@ -63,6 +80,16 @@ class NominationsController < ApplicationController
 
   def set_nomination
     @nomination = Nomination.find(params[:id])
+  end
+
+  def find_or_scrape_game(screenscraper_id)
+    Game.find_by(screenscraper_id:) ||
+      Game.new(Scrapers::Screenscraper.('screenscraper_id' => screenscraper_id).except(:nominations_attributes))
+  end
+
+  def render_new_with_error(message)
+    flash.now[:alert] = message
+    render :new, status: :unprocessable_entity
   end
 
   def nomination_params

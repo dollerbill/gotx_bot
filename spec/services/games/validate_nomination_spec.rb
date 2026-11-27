@@ -53,6 +53,27 @@ RSpec.describe Games::ValidateNomination do
         it_behaves_like 'invalid nomination', 'Nominations are closed'
       end
 
+      context 'with an explicit theme and skip_window' do
+        let(:open)  { false }
+        let(:theme) { create(:theme) }
+        let(:atts)  { super().merge('theme' => theme, 'skip_window' => true) }
+
+        it 'ignores the closed window' do
+          expect(subject).to be_nil
+        end
+
+        it 'ignores nominations on other themes' do
+          create(:nomination, user:, theme: create(:theme, creation_date: 1.month.ago))
+          expect(subject).to be_nil
+        end
+
+        context 'when the user already nominated for that theme' do
+          before { create(:nomination, user:, theme:) }
+
+          it_behaves_like 'invalid nomination', 'You may only nominate one game'
+        end
+      end
+
       context 'user already nominated' do
         let!(:nomination) { create(:nomination, user:) }
 

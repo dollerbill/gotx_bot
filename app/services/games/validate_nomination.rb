@@ -2,7 +2,7 @@
 
 module Games
   class ValidateNomination
-    attr_reader :user, :screenscraper_id, :game
+    attr_reader :user, :screenscraper_id, :game, :theme
 
     def self.call(atts)
       new(atts).call
@@ -12,10 +12,13 @@ module Games
       @user = atts['user']
       @screenscraper_id = atts['screenscraper_id']
       @game = atts['game'] || Game.find_by(screenscraper_id:)
+      # Admin-added nominations pass an explicit theme and bypass the nomination window.
+      @theme = atts['theme']
+      @skip_window = atts['skip_window']
     end
 
     def call
-      return I18n.t('nominations.closed', time: Nomination.nominations_open_est) unless Nomination.open?
+      return I18n.t('nominations.closed', time: Nomination.nominations_open_est) unless @skip_window || Nomination.open?
       return I18n.t('nominations.existing_user_nomination') if user_already_nominated?
       return I18n.t('nominations.existing_game_nomination', game: @game.preferred_name) if game_already_nominated?
       return I18n.t('nominations.category_full', category: game.era) if category_full?
@@ -40,18 +43,22 @@ module Games
       @game&.nominations&.joins(:theme)&.retro&.winners&.where(theme: { creation_date: 1.year.ago.. })&.any?
     end
 
+    def in_theme(nominations)
+      theme ? nominations.where(theme:) : nominations.current_nominations
+    end
+
     def user_already_nominated?
-      user.nominations.current_nominations.gotm.any?
+      in_theme(user.nominations).gotm.any?
     end
 
     def game_already_nominated?
-      @game&.nominations&.current_nominations&.gotm&.any?
+      @game.present? && in_theme(@game.nominations).gotm.any?
     end
 
     def category_full?
       return false unless game&.era
 
-      Nomination.current_in_era(game.era).count >= Nomination::CATEGORY_LIMIT
+      in_theme(Nomination.gotm).joins(:game).merge(Game.in_era(game.era)).count >= Nomination::CATEGORY_LIMIT
     end
   end
 end
