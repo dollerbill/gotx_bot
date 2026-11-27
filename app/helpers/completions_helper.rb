@@ -7,6 +7,8 @@ module CompletionsHelper
         concat('100% Achievements')
         concat(content_tag(:i, '', class: 'fas fa-trophy ml-1'))
       end
+    elsif !completion.current_rpg_winner?
+      content_tag(:span, '—', class: 'text-gray-400')
     else
       button_to '100% Completed',
                 completion_path(completion, completion: { rpg_achievements: true }),

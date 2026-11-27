@@ -65,9 +65,27 @@ module Gotx
           r.button(label: 'GotM', style: :primary, custom_id: "#{user.id}_game_complete_gotm", emoji: 1042504406064701500)
           r.button(label: 'Retrobit', style: :secondary, custom_id: "#{user.id}_game_complete_retro", emoji: 1042504406064701500)
           r.button(label: 'RPGotQ', style: :success, custom_id: "#{user.id}_game_complete_rpg", emoji: 1042504406064701500)
+          r.button(label: 'RPGotQ + 100%', style: :success, custom_id: "#{user.id}_game_complete_rpg_100", emoji: 1042504406064701500)
           r.button(label: 'GotY', style: :danger, custom_id: "#{user.id}_game_complete_goty", emoji: 1042504406064701500)
         end
       end
+    end
+
+    application_command(:rpg_achievements) do |event|
+      next event.respond(content: I18n.t('errors.not_authorized'), ephemeral: true) unless CommandBase.admin?(event.user)
+
+      member = event.bot.user(event.options['member'])
+      user = ::Users::FindOrCreate.(member)
+      event.respond(content: rpg_achievements_message(user, member))
+    end
+
+    def self.rpg_achievements_message(user, member)
+      completion = user.completions.joins(:nomination).merge(Nomination.current_rpg_winners).first
+      return "#{user.name} hasn't completed the current RPGotQ." unless completion
+      return "#{user.name} already has 100% on #{completion.game.preferred_name}." if completion.rpg_achievements?
+
+      completion.update!(rpg_achievements: true)
+      "#{member.mention} earned 100% achievements on #{completion.game.preferred_name}!"
     end
 
     application_command(:nominate) do |event|
@@ -127,6 +145,8 @@ module Gotx
 
       user = User.find(event.interaction.button.custom_id.split('_')[0])
       type = event.interaction.button.custom_id.split('game_complete_')[1]
+      achievements = type.end_with?('_100')
+      type = type.delete_suffix('_100')
       available = Nominations::FindCompletable.(user, type)
 
       next event.update_message(content: "There are no remaining #{type} games to complete for #{user.name}.") if available.empty?
@@ -135,6 +155,8 @@ module Gotx
         member = event.bot.user(user.discord_id)
         nomination = available.first
         ::Nominations::Complete.(user, nomination)
+        user.completions.find_by!(nomination_id: nomination.id).update!(rpg_achievements: true) if achievements
+        user.reload
         event.respond(content: "#{member.mention} #{completion_message(nomination, user)}")
         event.delete_message(event.message)
       else
