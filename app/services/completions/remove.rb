@@ -11,6 +11,7 @@ module Completions
     def initialize(completion)
       @completion = completion
       @points = Completion::COMPLETION_POINTS[completion.nomination.nomination_type]
+      @points += Completion::RPG_ACHIEVEMENT_POINTS if completion.rpg_achievements?
       @streak = Streak.active.find_by(user: completion.user)
     end
 

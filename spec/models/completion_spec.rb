@@ -41,12 +41,39 @@ RSpec.describe Completion, type: :model do
         end
       end
 
-      context 'for rpg nominations' do
-        subject { build(:completion, :rpg) }
+      context 'for the current rpg winner' do
+        subject { create(:completion, nomination: create(:nomination, :rpg, :winner)) }
 
         it 'allows rpg_achievements' do
           expect(subject.update(rpg_achievements: true)).to eq(true)
           expect(subject).to be_valid
+        end
+      end
+
+      context 'achievement points' do
+        subject { create(:completion, nomination: create(:nomination, :rpg, :winner)) }
+
+        it 'awards 2 points once when flagged' do
+          expect { subject.update!(rpg_achievements: true) }
+            .to change { subject.user.reload.earned_points }.by(2)
+            .and change { subject.user.reload.current_points }.by(2)
+          expect { subject.update!(completed_at: Time.current) }.not_to change { subject.user.reload.earned_points }
+        end
+      end
+
+      context 'for a past rpg winner' do
+        let(:past_theme) { create(:theme, :rpg, creation_date: Date.current.last_quarter.beginning_of_quarter) }
+
+        subject { create(:completion, nomination: create(:nomination, :rpg, :winner, theme: past_theme)) }
+
+        it 'rejects rpg_achievements' do
+          expect(subject.update(rpg_achievements: true)).to eq(false)
+          expect(subject.errors.full_messages).to eq(['Rpg achievements can only be set for the current RPGotQ'])
+        end
+
+        it 'still allows saving a completion that was already flagged' do
+          subject.update_column(:rpg_achievements, true)
+          expect(subject.reload.update(completed_at: Time.current)).to eq(true)
         end
       end
     end

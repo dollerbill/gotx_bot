@@ -18,6 +18,19 @@ RSpec.describe Completions::Remove do
         .and change { completion.user.reload.current_points }.by(-1)
     end
 
+    context 'with 100% achievements' do
+      let(:completion) { create(:completion, nomination: create(:nomination, :rpg, :winner)) }
+
+      before do
+        completion.update!(rpg_achievements: true)
+        completion.user.update(earned_points: 3, current_points: 3)
+      end
+
+      it 'refunds the completion and achievement points' do
+        expect { subject }.to change { completion.user.reload.earned_points }.by(-3)
+      end
+    end
+
     context 'with an active streak' do
       let(:streak) { create(:streak, :active, user: completion.user) }
 

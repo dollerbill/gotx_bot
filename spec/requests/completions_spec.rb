@@ -110,7 +110,7 @@ RSpec.describe 'Completions', type: :request do
     it_behaves_like 'unauthorized'
 
     context 'with rpg nominations' do
-      let(:completion) { create(:completion, :rpg) }
+      let(:completion) { create(:completion, nomination: create(:nomination, :rpg, :winner)) }
 
       context 'with valid attributes' do
         it 'updates the record' do
