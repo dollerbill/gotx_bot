@@ -85,7 +85,8 @@ module Gotx
       return "#{user.name} already has 100% on #{completion.game.preferred_name}." if completion.rpg_achievements?
 
       completion.update!(rpg_achievements: true)
-      "#{member.mention} earned 100% achievements on #{completion.game.preferred_name}!"
+      game = completion.game.preferred_name
+      "#{member.mention} #{I18n.t('nominations.rpg_achievements', game:, points: user.reload.earned_points)}"
     end
 
     application_command(:nominate) do |event|
@@ -157,7 +158,7 @@ module Gotx
         ::Nominations::Complete.(user, nomination)
         user.completions.find_by!(nomination_id: nomination.id).update!(rpg_achievements: true) if achievements
         user.reload
-        event.respond(content: "#{member.mention} #{completion_message(nomination, user)}")
+        event.respond(content: "#{member.mention} #{completion_message(nomination, user, achievements:)}")
         event.delete_message(event.message)
       else
         event.update_message(content: 'Select the game to complete') do |_, view|
@@ -173,8 +174,14 @@ module Gotx
       end
     end
 
-    def self.completion_message(nomination, user)
-      type = %w[retro gotwoty].include?(nomination.nomination_type) ? 'retro' : 'base'
+    def self.completion_message(nomination, user, achievements: false)
+      type = if achievements
+               'rpg_achievements'
+             elsif %w[retro gotwoty].include?(nomination.nomination_type)
+               'retro'
+             else
+               'base'
+             end
       I18n.t("nominations.completed.#{type}", game: nomination.game.preferred_name, points: user.earned_points)
     end
 
